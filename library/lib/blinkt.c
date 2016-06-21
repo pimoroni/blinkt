@@ -87,9 +87,9 @@ void show(void){
 		write_byte((leds[x] >> 24) & 0xFF);
 	}
 	write_byte(0xff);
-	write_byte(0xff);
-	write_byte(0xff);
-	write_byte(0xff);
+	//write_byte(0xff);
+	//write_byte(0xff);
+	//write_byte(0xff);
 }
 
 void stop(void){

@@ -11,7 +11,7 @@ _blinkt = Extension(
 
 setup(
 	name = 'blinkt',
-	version = '0.0.1',
+	version = '0.0.2',
 	author = "Philip Howard",
 	author_email = "phil@pimoroni.com",
 	url = "",

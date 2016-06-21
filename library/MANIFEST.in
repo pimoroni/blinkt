@@ -1,0 +1,7 @@
+include README.md
+include README.txt
+include CHANGELOG.txt
+include setup.py
+include blinkt_wrap.c 
+include blinkt.py
+include lib/*

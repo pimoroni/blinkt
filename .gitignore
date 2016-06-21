@@ -7,3 +7,4 @@ build/
 dist/
 __pycache__
 .DS_Store
+library/blinkt
