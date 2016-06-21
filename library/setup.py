@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
 	name = 'blinkt',
-	version = '0.0.3',
+	version = '0.0.4',
 	author = "Philip Howard",
 	author_email = "phil@pimoroni.com",
 	url = "",
