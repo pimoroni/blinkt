@@ -20,4 +20,4 @@ while True:
     step+=1
     step%=3
     show()
-    time.sleep(0.1)
+    time.sleep(0.5)

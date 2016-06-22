@@ -1,0 +1,5 @@
+0.0.5 - Range clamping and coercion to integers
+0.0.4 - Bugfix
+0.0.3 - Switch to Python
+0.0.2 - Bugfix
+0.0.1 - Original C Library

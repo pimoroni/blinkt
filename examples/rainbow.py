@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
 import time
-from blinkt import set_pixel, show
+from blinkt import set_brightness, set_pixel, show
 import colorsys
 
 spacing = 360.0 / 16.0
 hue = 0
+
+set_brightness(0.1)
 
 while True:
     hue = int(time.time() * 100) % 360
