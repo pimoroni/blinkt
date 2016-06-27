@@ -7,7 +7,7 @@ from tweepy.streaming import StreamListener
 
 ckey = '' # Consumer key
 csecret = '' # Consumer secret
-atoken = '-' # Access token
+atoken = '' # Access token
 asecret = '' # Access secret
 
 class listener(StreamListener):
