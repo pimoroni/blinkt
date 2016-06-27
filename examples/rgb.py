@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import sys
 import time
 from blinkt import set_pixel, show
