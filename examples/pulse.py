@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from blinkt import set_pixel, show, set_brightness
 import time, colorsys
 import numpy as np
