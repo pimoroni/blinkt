@@ -15,7 +15,7 @@ set_pixel(0,255,0,0)
 show()
 ```
 
-`set_pixel` takes an optional forth parameter; the brightness from 0.0 to 1.0.
+`set_pixel` takes an optional fifth parameter; the brightness from 0.0 to 1.0.
 
 You can also change the brightness with `set_brightness` from 0.0 to 1.0, for example:
 
