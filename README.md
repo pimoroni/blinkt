@@ -4,6 +4,28 @@ Eight super-bright RGB LED indicators, ideal for adding visual notifications to 
 
 Available from Pimoroni: https://shop.pimoroni.com/products/blinkt
 
+#Blinkt Python Library & Examples
+
+Here you'll find everything you need to start lighting up your Blinkt in python.
+
+Python users should probably ignore most of this repository and just:
+
+**Install for Python 3 ( idle3 ):**
+
+```bash
+sudo apt-get install python3-pip python3-dev
+sudo pip-3.2 install blinkt
+```
+
+**Install for Python 2 ( idle ):**
+
+```bash
+sudo apt-get install python-pip python-dev
+sudo pip install blinkt
+```
+
+Then proceed to [examples](examples).
+
 #Usage
 
 The two Blinkt methods you'll most commonly use are `set_pixel` and `show`. Here's a simple example:
