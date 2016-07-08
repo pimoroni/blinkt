@@ -1,4 +1,4 @@
-#Blinkt
+![Blinkt!](blinkt-logo.png)
 
 Eight super-bright RGB LED indicators, ideal for adding visual notifications to your Raspberry Pi on their own or on a pHAT stacking header.
 
