@@ -18,7 +18,7 @@ curl -sS get.pimoroni.com/blinkt | bash
 
 If you choose to download examples you'll find them in `/home/pi/Pimoroni/blinkt`.
 
-#Usage
+##Usage
 
 The two Blinkt methods you'll most commonly use are `set_pixel` and `show`. Here's a simple example:
 
@@ -39,7 +39,7 @@ from blinkt import set_brightness
 set_brightness(0.5)
 ```
 
-#Examples
+##Examples
 
 The examples in the `examples` folder should just work with Blinkt!, although you'll need to add Twitter developer access tokens and secrets in the `twitter_monitor.py` example. You can get these at [https://dev.twitter.com/](https://dev.twitter.com/), after setting up a new application.
 
