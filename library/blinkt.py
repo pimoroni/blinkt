@@ -55,4 +55,14 @@ def set_pixel(x, r, g, b, brightness=None):
         brightness = int(31.0 * brightness) & 0b11111
     pixels[x] = [int(r) & 0xff,int(g) & 0xff,int(b) & 0xff,brightness]
 
+def set_all_pixel(r, g, b, brightness=None):
+    if brightness is None:
+        for x in range(8):
+            brightness = pixels[x][3]
+            pixels[x] = [int(r) & 0xff,int(g) & 0xff,int(b) & 0xff,brightness]
+    else:
+        brightness = int(31.0 * brightness) & 0b11111
+        for x in range(8):
+            pixels[x] = [int(r) & 0xff,int(g) & 0xff,int(b) & 0xff,brightness]
+
 atexit.register(_exit)
