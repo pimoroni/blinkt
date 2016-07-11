@@ -20,6 +20,6 @@ def show_graph(v, r, g, b):
 set_brightness(0.1)
 
 while True:
-    v = psutil.phymem_usage().percent / 100.0
+    v = psutil.virtual_memory().percent / 100.0
     show_graph(v, 255, 0, 255)
     time.sleep(0.01)
