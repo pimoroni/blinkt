@@ -1,0 +1,6 @@
+README
+
+Blinkt! provides eight super-bright RGB LED indicators. Ideal for adding visual notifications to your Raspberry Pi.
+
+Learn more: https://shop.pimoroni.com/products/blinkt
+For examples run: `curl -sS get.pimoroni.com/blinkt | bash`
