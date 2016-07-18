@@ -7,4 +7,11 @@ build/
 dist/
 __pycache__
 .DS_Store
+*.deb
+*.dsc
+*.build
+*.changes
+*.orig.*
+packaging/*tar.xz
+library/debian/
 library/blinkt
