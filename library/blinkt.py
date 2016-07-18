@@ -12,10 +12,10 @@ GPIO.setup([DAT,CLK],GPIO.OUT)
 
 pixels = [[0,0,0,BRIGHTNESS]] * 8
 
-clear_on_exit = False
+_clear_on_exit = True
 
 def _exit():
-    if clear_on_exit:
+    if _clear_on_exit:
         clear()
         show()
     GPIO.cleanup()
@@ -54,5 +54,9 @@ def set_pixel(x, r, g, b, brightness=None):
     else:
         brightness = int(31.0 * brightness) & 0b11111
     pixels[x] = [int(r) & 0xff,int(g) & 0xff,int(b) & 0xff,brightness]
+
+def set_clear_on_exit(value):
+    global _clear_on_exit
+    _clear_on_exit = value
 
 atexit.register(_exit)
