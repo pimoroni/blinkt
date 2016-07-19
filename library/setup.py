@@ -42,7 +42,7 @@ setup(
     version         = '0.0.5',
     author          = 'Philip Howard',
     author_email    = 'phil@pimoroni.com',
-    description     = 'Blinkt! Driver',
+    description     = """Python library for driving Pimoroni Blinkt!""",
     long_description= open('README.txt').read() + open('CHANGELOG.txt').read(),
     license         = 'MIT',
     keywords        = 'Raspberry Pi LED',
