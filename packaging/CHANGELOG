@@ -1,0 +1,29 @@
+blinkt (0.0.5) UNRELEASED; urgency=low
+
+  * Range clamping and coercion to integers
+
+ -- Phil Howard <phil@pimoroni.com>  Wed, 22 Jun 2016 00:00:00 +0000
+
+blinkt (0.0.4) UNRELEASED; urgency=low
+
+  * Various bug fixes
+
+ -- Phil Howard <phil@pimoroni.com>  Tue, 21 Jun 2016 18:00:00 +0000
+
+blinkt (0.0.3) UNRELEASED; urgency=low
+
+  * Switch to Python
+
+ -- Phil Howard <phil@pimoroni.com>  Tue, 21 Jun 2016 12:00:00 +0000
+
+blinkt (0.0.2) UNRELEASED; urgency=low
+
+  * Bug fixes for C Library
+
+ -- Phil Howard <phil@pimoroni.com>  Tue, 21 Jun 2016 06:00:00 +0000
+
+blinkt (0.0.1) UNRELEASED; urgency=low
+
+  * Original C Library
+
+ -- Phil Howard <phil@pimoroni.com>  Tue, 21 Jun 2016 00:00:00 +0000
