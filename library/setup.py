@@ -38,16 +38,16 @@ classifiers = ['Development Status :: 5 - Production/Stable',
                'Topic :: System :: Hardware']
 
 setup(
-	name = 'blinkt',
-	version = '0.0.5',
-	author = 'Philip Howard',
-	author_email = 'phil@pimoroni.com',
-	description = 'Blinkt! Driver',
-	long_description= open('README.txt').read() + open('CHANGELOG.txt').read(),
-	license		= 'MIT',
-	keywords	= 'Raspberry Pi LED',
-	url = 'http://www.pimoroni.com',
-	classifiers	= classifiers,
-	py_modules = ['blinkt'],
-	install_requires = []
+    name            = 'blinkt',
+    version         = '0.0.5',
+    author          = 'Philip Howard',
+    author_email    = 'phil@pimoroni.com',
+    description     = """Python library for driving Pimoroni Blinkt!""",
+    long_description= open('README.txt').read() + open('CHANGELOG.txt').read(),
+    license         = 'MIT',
+    keywords        = 'Raspberry Pi LED',
+    url             = 'http://www.pimoroni.com',
+    classifiers     = classifiers,
+    py_modules      = ['blinkt'],
+    install_requires= []
 )
