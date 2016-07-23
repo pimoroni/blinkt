@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 
+import time, math
+from colorsys import hsv_to_rgb
 from blinkt import set_pixel, show, clear
 from envirophat import motion
-import time
-from colorsys import hsv_to_rgb
-import math
 
 offset = 0
 direction = 0

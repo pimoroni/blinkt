@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-import random
-import time
+import time, random
 from blinkt import set_pixel, show
 
 while True:

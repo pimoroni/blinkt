@@ -2,8 +2,12 @@
 
 import time
 from blinkt import set_pixel, show
-from tweepy import Stream, OAuthHandler
-from tweepy.streaming import StreamListener
+
+try:
+    from tweepy import Stream, OAuthHandler
+    from tweepy.streaming import StreamListener
+except ImportError:
+    exit("This library requires the tweepy module\nInstall with: sudo pip install tweepy")
 
 ckey = '' # Consumer key
 csecret = '' # Consumer secret

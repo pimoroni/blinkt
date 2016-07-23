@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
+import time
 from blinkt import set_pixel, show, clear
 from envirophat import motion
-import time
 
 x_avg = []
 

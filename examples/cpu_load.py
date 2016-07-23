@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
+import time, math
 from blinkt import set_brightness, set_pixel, show
-import time
-import math
-import psutil
+
+try:
+    import psutil
+except ImportError:
+    exit("This library requires the psutil module\nInstall with: sudo pip install psutil") 
 
 def show_graph(v, r, g, b):
     v *= 8
