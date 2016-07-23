@@ -6,12 +6,12 @@ from blinkt import set_pixel, show
 try:
     import drumhat
 except ImportError:
-    exit("This library requires the drumhat module\nInstall with: sudo pip install drumhat")
+    exit("This script requires the drumhat module\nInstall with: sudo pip install drumhat")
 
 try:
     import pygame
 except ImportError:
-    exit("This library requires the pygame module\nInstall with: sudo pip install pygame")
+    exit("This script requires the pygame module\nInstall with: sudo pip install pygame")
 
 DRUM_FOLDER = "drums2"
 
