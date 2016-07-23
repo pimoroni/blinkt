@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-import time
 from blinkt import set_pixel, show
+import time
 
 def show_all(state):
     for i in range(8):

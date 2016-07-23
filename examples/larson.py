@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-import time, math
 from blinkt import set_pixel, show, set_brightness
+import time, math
 
 reds = [0, 0, 0, 0, 0, 16, 64, 255, 64, 16, 0, 0, 0, 0, 0]
 

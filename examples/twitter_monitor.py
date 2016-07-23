@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-import time
-from blinkt import set_pixel, show
-
 try:
     from tweepy import Stream, OAuthHandler
     from tweepy.streaming import StreamListener
 except ImportError:
     exit("This script requires the tweepy module\nInstall with: sudo pip install tweepy")
+
+from blinkt import set_pixel, show
+import time
 
 ckey = '' # Consumer key
 csecret = '' # Consumer secret

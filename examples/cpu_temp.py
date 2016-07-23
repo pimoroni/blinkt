@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import time, math
-from subprocess import PIPE, Popen
 from blinkt import set_brightness, set_pixel, show
+from subprocess import PIPE, Popen
+import time, math
 
 def get_cpu_temperature():
     process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE)
