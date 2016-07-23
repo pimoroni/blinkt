@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 
-from blinkt import set_pixel, show, set_brightness
 import time, colorsys
-import numpy as np
+from blinkt import set_pixel, show, set_brightness
+
+try:
+    import numpy as np
+except ImportError:
+    exit("This library requires the numpy module\nInstall with: sudo pip install numpy")
 
 def make_gaussian(fwhm):
     x = np.arange(0, 8, 1, float)

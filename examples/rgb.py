@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-import sys
-import time
+import time, sys
 from blinkt import set_pixel, show
 
 def usage():
