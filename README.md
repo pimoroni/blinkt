@@ -37,6 +37,7 @@ You can also change the brightness with `set_brightness` from 0.0 to 1.0, for ex
 from blinkt import set_brightness
 
 set_brightness(0.5)
+show()
 ```
 
 ##Examples
