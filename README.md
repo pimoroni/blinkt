@@ -31,12 +31,15 @@ show()
 
 `set_pixel` takes an optional fifth parameter; the brightness from 0.0 to 1.0.
 
+`set_pixel(pixel_no, red, green, blue, brightness)`
+
 You can also change the brightness with `set_brightness` from 0.0 to 1.0, for example:
 
 ```
 from blinkt import set_brightness
 
 set_brightness(0.5)
+show()
 ```
 
 ##Examples
