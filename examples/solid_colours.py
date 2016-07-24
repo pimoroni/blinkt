@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-from blinkt import set_pixel, show
 import time
+
+from blinkt import set_pixel, show
+
 
 step = 0
 

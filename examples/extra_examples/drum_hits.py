@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+import glob
+import os
+import time
+
 try:
     import drumhat
 except ImportError:
@@ -11,7 +15,7 @@ except ImportError:
     exit("This script requires the pygame module\nInstall with: sudo pip install pygame")
 
 from blinkt import set_pixel, show
-import time, os, glob
+
 
 DRUM_FOLDER = "drums2"
 

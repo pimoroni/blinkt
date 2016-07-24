@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
+import random
+import time
+
 from blinkt import set_pixel, show, set_brightness
-import time, random
+
 
 set_brightness(0.1)
 

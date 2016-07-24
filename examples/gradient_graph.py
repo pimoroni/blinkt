@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
+import colorsys
+import math
+import time
+
 from blinkt import set_brightness, set_pixel, show
-import time, math, colorsys
+
 
 hue_range = 120
 hue_start = 0

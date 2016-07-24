@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
+import colorsys
+import time
+
 from blinkt import set_brightness, set_pixel, show
-import time, colorsys
+
 
 spacing = 360.0 / 16.0
 hue = 0

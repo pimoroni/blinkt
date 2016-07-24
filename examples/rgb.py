@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
+import sys
+import time
+
 from blinkt import set_pixel, show
-import time, sys
+
 
 def usage():
     print("Usage: sudo {} <r> <g> <b>".format(sys.argv[0]))

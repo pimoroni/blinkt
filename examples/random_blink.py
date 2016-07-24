@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
+import random
+import time
+
 from blinkt import set_pixel, show
-import time, random
+
 
 while True:
     pixels = random.sample(range(8), random.randint(1, 5))
