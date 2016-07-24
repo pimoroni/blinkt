@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 from time import localtime, sleep
+
 from blinkt import set_pixel, set_brightness, clear, show
+
 
 print("Hour = Red, Minute = Green, Second = Blue")
 

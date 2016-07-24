@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 import time
-from blinkt import set_pixel, show, clear
 
 try:
     from envirophat import motion
 except ImportError:
-    exit("This library requires the envirophat module\nInstall with: sudo pip install envirophat")
+    exit("This script requires the envirophat module\nInstall with: sudo pip install envirophat")
+
+from blinkt import set_pixel, show, clear
+
 
 x_avg = []
 

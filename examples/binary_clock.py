@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 from time import localtime, sleep
+
 from blinkt import set_pixel, clear, show
+
 
 MODE_HOUR = 0
 MODE_MIN = 1

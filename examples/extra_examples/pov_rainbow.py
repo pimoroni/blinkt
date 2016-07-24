@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 
-import time, math
+import math
+import time
 from colorsys import hsv_to_rgb
-from blinkt import set_pixel, show, clear
 
 try:
     from envirophat import motion
 except ImportError:
-    exit("This library requires the envirophat module\nInstall with: sudo pip install envirophat")
+    exit("This script requires the envirophat module\nInstall with: sudo pip install envirophat")
+
+from blinkt import set_pixel, show, clear
+
 
 offset = 0
 direction = 0
