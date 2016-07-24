@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-from blinkt import set_brightness, set_pixel, show
-import time
 import math
+import time
+
+from blinkt import set_brightness, set_pixel, show
+
 
 def show_graph(v, r, g, b):
     v *= 8
