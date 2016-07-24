@@ -2,7 +2,9 @@
 
 import random
 import time
+
 from blinkt import set_pixel, show, set_brightness
+
 
 set_brightness(0.1)
 
