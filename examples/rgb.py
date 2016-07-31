@@ -3,20 +3,14 @@
 import sys
 import time
 
-from blinkt import set_pixel, show
+from blinkt import set_pixel, set_clear_on_exit, show
 
 
 def usage():
-    print("Usage: sudo {} <r> <g> <b>".format(sys.argv[0]))
+    print("Usage: {} <r> <g> <b>".format(sys.argv[0]))
     sys.exit(1)
 
 if len(sys.argv) != 4:
-    usage()
-
-# Exit if not root. Mote will raise an ImportError if it's not run as root
-try:
-    import blinkt
-except ImportError:
     usage()
 
 # Exit if non integer value. int() will raise a ValueError
@@ -30,6 +24,8 @@ if max(r,g,b) > 255:
     usage()
 
 print("Setting Blinkt to {r},{g},{b}".format(r=r,g=g,b=b))
+
+set_clear_on_exit(False)
 
 for led in range(8):
     set_pixel(led, r, g, b)
