@@ -52,8 +52,11 @@ def on_message(client, userdata, msg):
                 pixel = None
             else:
                 pixel = int(pixel)
+                if pixel > 7:
+                    print("Pixel out of range: " + str(pixel))
+                    return
 
-            r, g, b = [int(x) for x in data]
+            r, g, b = [int(x) & 0xff for x in data]
 
             print(command, pixel, r, g, b)
 
