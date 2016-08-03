@@ -12,6 +12,10 @@ MQTT_SERVER = "iot.eclipse.org"
 MQTT_PORT = 1883
 MQTT_TOPIC = "pimoroni/blinkt"
 
+# Set these to use authorisation
+MQTT_USER = None
+MQTT_PASS = None
+
 print("""
 MQTT Blinkt! Control
 
@@ -23,6 +27,8 @@ rgb,<pixel>,<r>,<g>,<b> - Set a single pixel to an RGB colour. Example: rgb,1,25
 clr - Clear Blinkt!
 
 You can use the online MQTT tester at http://www.hivemq.com/demos/websocket-client/ to send messages.
+
+Use {server} as the host, and port 80 (Eclipse's websocket port). Set the topic to topic: {topic}
 """.format(
     server=MQTT_SERVER,
     port=MQTT_PORT,
@@ -77,6 +83,10 @@ def on_message(client, userdata, msg):
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
+
+if MQTT_USER is not None and MQTT_PASS is not None:
+    print("Using username: {un} and password: {pw}".format(un=MQTT_USER, pw="*" * len(MQTT_PASS)))
+    client.username_pw_set(username=MQTT_USER, password=MQTT_PASS)
 
 client.connect(MQTT_SERVER, MQTT_PORT, 60)
 
