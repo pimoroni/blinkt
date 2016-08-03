@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from blinkt import set_pixel, show
+from blinkt import set_pixel, show, clear
 
 try:
     import paho.mqtt.client as mqtt
