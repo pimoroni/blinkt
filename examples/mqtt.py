@@ -5,7 +5,7 @@ from blinkt import set_pixel, show, clear
 try:
     import paho.mqtt.client as mqtt
 except ImportError:
-    exit("This example requies the paho-mqtt module\nInstall with: sudo pip install paho-mqtt")
+    exit("This example requires the paho-mqtt module\nInstall with: sudo pip install paho-mqtt")
 
 
 MQTT_SERVER = "iot.eclipse.org"
