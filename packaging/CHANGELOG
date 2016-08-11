@@ -1,3 +1,9 @@
+blinkt (0.0.6) UNRELEASED; urgency=low
+
+  * set_clear_on_exit now method
+
+ -- Phil Howard <phil@pimoroni.com>  Thu, 11 Aug 2016 00:00:00 +0000
+
 blinkt (0.0.5) UNRELEASED; urgency=low
 
   * Range clamping and coercion to integers
