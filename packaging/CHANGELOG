@@ -1,3 +1,9 @@
+blinkt (0.0.7) UNRELEASED; urgency=low
+
+  * Fixed bug with APA102 pixels that have a small, black die (vs the larger, paler one)
+
+ -- Phil Howard <phil@pimoroni.com>  Wed, 24 Aug 2016 00:00:00 +0000
+
 blinkt (0.0.6) UNRELEASED; urgency=low
 
   * set_clear_on_exit now method
