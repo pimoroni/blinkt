@@ -1,3 +1,8 @@
+0.0.7
+-----
+
+* Fixed bug with APA102 pixels that have a small, black die (vs the larger, paler one)
+
 0.0.6
 -----
 
