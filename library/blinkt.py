@@ -35,8 +35,15 @@ def clear():
 
 def write_byte(byte):
     for x in range(8):
-        bit = (byte & (1 << (7-x))) > 0
-        GPIO.output(DAT, bit)
+        GPIO.output(DAT, byte & 0b10000000)
+        GPIO.output(CLK, 1)
+        byte <<= 1
+        GPIO.output(CLK, 0)
+
+# Emit exactly enough clock pulses to latch the small dark die APA102s which are weird
+def _latch():
+    GPIO.output(DAT, 0)
+    for x in range(36):
         GPIO.output(CLK, 1)
         GPIO.output(CLK, 0)
 
@@ -51,7 +58,7 @@ def show():
         write_byte(g)
         write_byte(r)
 
-    write_byte(0xff)
+    _latch()
 
 def set_pixel(x, r, g, b, brightness=None):
     if brightness is None:
