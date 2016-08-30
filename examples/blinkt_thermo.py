@@ -11,8 +11,8 @@ try:
 except ImportError:
     print("This example requires \"requests\" package.")
     print("Please install it by running \"sudo pip install requests\"")
-    
-    
+
+
 #Grab your API key here: http://openweathermap.org
 #List of city ID city.list.json.gz can be downloaded here http://bulk.openweathermap.org/sample/
 API_KEY='a217a2719b9b2640b50dc43ad5e0b468'
@@ -20,6 +20,7 @@ CITY_ID='2773913'
 
 url = 'http://api.openweathermap.org/data/2.5/weather'
 
+temp = 0
 
 def update_weather():
     payload = {
@@ -27,10 +28,11 @@ def update_weather():
         'units': 'metric',
         'appid': API_KEY
     }
+    global temp
     try:
         r = requests.get(url=url, params=payload)
         temp = r.json().get('main').get('temp')
-        return temp
+        print("Temperture = "+str(temp)+" C")
     except:
         print("Connection Error")
 
@@ -54,7 +56,6 @@ def draw_thermo(temp):
 blinkt.set_brightness(0.1)
 
 while 1:
-    temp = update_weather()
-    print("Temperture = "+str(temp)+" C")
+    update_weather()
     draw_thermo(temp)
     sleep(120)
