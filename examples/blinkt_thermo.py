@@ -15,8 +15,8 @@ except ImportError:
 
 #Grab your API key here: http://openweathermap.org
 #List of city ID city.list.json.gz can be downloaded here http://bulk.openweathermap.org/sample/
-API_KEY='a217a2719b9b2640b50dc43ad5e0b468'
-CITY_ID='2773913'
+API_KEY=''
+CITY_ID=''
 
 url = 'http://api.openweathermap.org/data/2.5/weather'
 
