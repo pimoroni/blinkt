@@ -4,8 +4,9 @@ import math
 import time
 from subprocess import PIPE, Popen
 
-from blinkt import set_brightness, set_pixel, show
+from blinkt import set_clear_on_exit, set_brightness, set_pixel, show
 
+set_clear_on_exit()
 
 def get_cpu_temperature():
     process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE)

@@ -3,7 +3,7 @@
 import sys
 import time
 
-from blinkt import set_pixel, set_clear_on_exit, show
+from blinkt import set_all, set_clear_on_exit, show
 
 
 def usage():
@@ -27,7 +27,6 @@ print("Setting Blinkt to {r},{g},{b}".format(r=r,g=g,b=b))
 
 set_clear_on_exit(False)
 
-for led in range(8):
-    set_pixel(led, r, g, b)
+set_all(r, g, b)
 
 show()

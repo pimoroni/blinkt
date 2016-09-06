@@ -3,12 +3,13 @@
 import colorsys
 import time
 
-from blinkt import set_brightness, set_pixel, show
+from blinkt import set_clear_on_exit, set_brightness, set_pixel, show
 
 
 spacing = 360.0 / 16.0
 hue = 0
 
+set_clear_on_exit()
 set_brightness(0.1)
 
 while True:
