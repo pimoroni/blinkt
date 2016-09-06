@@ -2,8 +2,9 @@ import atexit
 
 try:
     import RPi.GPIO as GPIO
-except ImportError:
-    exit("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
+except ImportError as e:
+    print("\n\nThis library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO\n\n")
+    raise ImportError(e)
 
 
 DAT = 23
