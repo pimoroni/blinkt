@@ -1,3 +1,10 @@
+0.0.9
+-----
+
+* Added set_all method to set all pixels
+* Changed default behaviour of clear on exit to reduce module side-effects
+* Move GPIO initialisation to show() to reduce module side-effects
+
 0.0.8
 -----
 

@@ -11,12 +11,9 @@ CLK = 24
 NUM_PIXELS = 8
 BRIGHTNESS = 7
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-GPIO.setup([DAT,CLK],GPIO.OUT)
-
 pixels = [[0,0,0,BRIGHTNESS]] * 8
 
+_gpio_setup = False
 _clear_on_exit = True
 
 def _exit():
@@ -61,6 +58,14 @@ def _sof():
 
 def show():
     """Output the buffer to Blinkt!"""
+    global _gpio_setup
+
+    if not _gpio_setup:
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        GPIO.setup([DAT,CLK],GPIO.OUT)
+        _gpio_setup = True
+
     _sof()
 
     for pixel in pixels:
@@ -71,6 +76,19 @@ def show():
         _write_byte(r)
 
     _eof()
+
+def set_all(r, g, b, brightness=None):
+    """Set the RGB value and optionally brightness of all pixels
+
+    If you don't supply a brightness value, the last value set for each pixel be kept.
+
+    :param r: Amount of red: 0 to 255
+    :param g: Amount of green: 0 to 255
+    :param b: Amount of blue: 0 to 255
+    :param brightness: Brightness: 0.0 to 1.0 (default around 0.2)
+    """
+    for x in range(NUM_PIXELS):
+        set_pixel(x, r, g, b, brightness)
 
 def set_pixel(x, r, g, b, brightness=None):
     """Set the RGB value, and optionally brightness, of a single pixel
@@ -90,13 +108,19 @@ def set_pixel(x, r, g, b, brightness=None):
 
     pixels[x] = [int(r) & 0xff,int(g) & 0xff,int(b) & 0xff,brightness]
 
-def set_clear_on_exit(value):
+def set_clear_on_exit(value=True):
     """Set whether Blinkt! should be cleared upon exit
 
-    :param value: True or False
+    By default Blinkt! will not turn off the pixels on exit, but calling::
+
+        blinkt.set_clear_on_exit()
+
+    Will ensure that it does.
+
+    :param value: True or False (default True)
     """
     global _clear_on_exit
     _clear_on_exit = value
 
-atexit.register(_exit)
+    atexit.register(_exit)
 

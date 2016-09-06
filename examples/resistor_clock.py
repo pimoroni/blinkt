@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import time
-from blinkt import set_brightness, set_pixel, show
+from blinkt import set_clear_on_exit, set_pixel, show
 
 colours = [
 [  0,  0,  0],#0 black
@@ -15,6 +15,8 @@ colours = [
 [255,255,100],#8 grey
 [255,255,255],#9 white
 ]
+
+set_clear_on_exit()
 
 while True:
     hour = time.localtime().tm_hour

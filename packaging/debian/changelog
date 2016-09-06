@@ -1,3 +1,11 @@
+blinkt (0.0.9) UNRELEASED; urgency=low
+
+  * Added set_all method to set all pixels
+  * Changed default behaviour of clear on exit to reduce module side-effects
+  * Move GPIO initialisation to show() to reduce module side-effects
+
+ -- Phil Howard <phil@pimoroni.com>  Wed, 06 Sep 2016 00:00:00 +0000
+
 blinkt (0.0.8) UNRELEASED; urgency=low
 
   * Tweaked some methods to show intent as implementation detail only

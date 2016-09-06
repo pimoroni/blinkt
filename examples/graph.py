@@ -3,8 +3,10 @@
 import math
 import time
 
-from blinkt import set_brightness, set_pixel, show
+from blinkt import set_clear_on_exit, set_brightness, set_pixel, show
 
+
+set_clear_on_exit()
 
 def show_graph(v, r, g, b):
     v *= 8

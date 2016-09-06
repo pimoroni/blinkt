@@ -6,6 +6,8 @@ from random import randint
 OFF = (0, 0, 0)
 grid = [OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF]
 
+blinkt.set_clear_on_exit()
+
 def random_color():
     return (randint(0, 255), randint(0, 255), randint(0, 50))
 
