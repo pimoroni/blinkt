@@ -26,14 +26,19 @@ def _exit():
     GPIO.cleanup()
 
 def set_brightness(brightness):
+    """Set the brightness of all pixels
+
+    :param brightness: Brightness: 0.0 to 1.0
+    """
     for x in range(NUM_PIXELS):
         pixels[x][3] = int(31.0 * brightness) & 0b11111
 
 def clear():
+    """Clear the pixel buffer"""
     for x in range(NUM_PIXELS):
         pixels[x][0:3] = [0,0,0]
 
-def write_byte(byte):
+def _write_byte(byte):
     for x in range(8):
         GPIO.output(DAT, byte & 0b10000000)
         GPIO.output(CLK, 1)
@@ -41,34 +46,57 @@ def write_byte(byte):
         GPIO.output(CLK, 0)
 
 # Emit exactly enough clock pulses to latch the small dark die APA102s which are weird
-def _latch():
+# for some reason it takes 36 clocks, the other IC takes just 4 (number of pixels/2)
+def _eof():
     GPIO.output(DAT, 0)
     for x in range(36):
         GPIO.output(CLK, 1)
         GPIO.output(CLK, 0)
 
+def _sof():
+    GPIO.output(DAT,0)
+    for x in range(32):
+        GPIO.output(CLK, 1)
+        GPIO.output(CLK, 0)
+
 def show():
-    for x in range(4):
-        write_byte(0)
+    """Output the buffer to Blinkt!"""
+    _sof()
 
     for pixel in pixels:
         r, g, b, brightness = pixel
-        write_byte(0b11100000 | brightness)
-        write_byte(b)
-        write_byte(g)
-        write_byte(r)
+        _write_byte(0b11100000 | brightness)
+        _write_byte(b)
+        _write_byte(g)
+        _write_byte(r)
 
-    _latch()
+    _eof()
 
 def set_pixel(x, r, g, b, brightness=None):
+    """Set the RGB value, and optionally brightness, of a single pixel
+    
+    If you don't supply a brightness value, the last value will be kept.
+
+    :param x: The horizontal position of the pixel: 0 to 7
+    :param r: Amount of red: 0 to 255
+    :param g: Amount of green: 0 to 255
+    :param b: Amount of blue: 0 to 255
+    :param brightness: Brightness: 0.0 to 1.0 (default around 0.2)
+    """
     if brightness is None:
         brightness = pixels[x][3]
     else:
         brightness = int(31.0 * brightness) & 0b11111
+
     pixels[x] = [int(r) & 0xff,int(g) & 0xff,int(b) & 0xff,brightness]
 
 def set_clear_on_exit(value):
+    """Set whether Blinkt! should be cleared upon exit
+
+    :param value: True or False
+    """
     global _clear_on_exit
     _clear_on_exit = value
 
 atexit.register(_exit)
+

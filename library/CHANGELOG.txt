@@ -1,3 +1,9 @@
+0.0.8
+-----
+
+* Tweaked some methods to show intent as implementation detail only
+* Added docstrings detailing public methods
+
 0.0.7
 -----
 
