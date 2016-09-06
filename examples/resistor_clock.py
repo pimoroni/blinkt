@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import time
+
 from blinkt import set_clear_on_exit, set_pixel, show
+
 
 colours = [
 [  0,  0,  0],#0 black
@@ -52,4 +54,3 @@ while True:
     show()
 
     time.sleep(0.5)
-
