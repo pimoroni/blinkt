@@ -3,8 +3,10 @@
 import math
 import time
 
-from blinkt import set_pixel, show, set_brightness
+from blinkt import set_clear_on_exit, set_pixel, show, set_brightness
 
+
+set_clear_on_exit()
 
 reds = [0, 0, 0, 0, 0, 16, 64, 255, 64, 16, 0, 0, 0, 0, 0]
 

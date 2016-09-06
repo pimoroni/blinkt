@@ -2,8 +2,9 @@
 
 from time import localtime, sleep
 
-from blinkt import set_pixel, clear, show
+from blinkt import set_clear_on_exit, set_pixel, clear, show
 
+set_clear_on_exit()
 
 MODE_HOUR = 0
 MODE_MIN = 1

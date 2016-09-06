@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from blinkt import set_pixel, show, clear
+from blinkt import set_clear_on_exit, set_pixel, show, clear
 
 try:
     import paho.mqtt.client as mqtt
@@ -79,6 +79,8 @@ def on_message(client, userdata, msg):
         show()
         return
 
+
+set_clear_on_exit()
 
 client = mqtt.Client()
 client.on_connect = on_connect

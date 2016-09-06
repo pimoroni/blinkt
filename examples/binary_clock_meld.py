@@ -2,10 +2,12 @@
 
 from time import localtime, sleep
 
-from blinkt import set_pixel, set_brightness, clear, show
+from blinkt import set_clear_on_exit, set_pixel, set_brightness, clear, show
 
 
 print("Hour = Red, Minute = Green, Second = Blue")
+
+set_clear_on_exit()
 
 set_brightness(0.2)
 

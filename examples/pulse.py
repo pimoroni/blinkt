@@ -8,8 +8,10 @@ try:
 except ImportError:
     exit("This script requires the numpy module\nInstall with: sudo pip install numpy")
 
-from blinkt import set_pixel, show, set_brightness
+from blinkt import set_clear_on_exit, set_pixel, show, set_brightness
 
+
+set_clear_on_exit()
 
 def make_gaussian(fwhm):
     x = np.arange(0, 8, 1, float)

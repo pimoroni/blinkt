@@ -2,14 +2,12 @@
 
 import time
 
-from blinkt import set_pixel, show
+from blinkt import set_clear_on_exit, set_all, show
 
+
+set_clear_on_exit()
 
 step = 0
-
-def set_all(r,g,b):
-    for x in range(8):
-        set_pixel(x,r,g,b)
 
 while True:
     if step == 0:
