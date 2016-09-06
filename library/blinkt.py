@@ -1,10 +1,5 @@
 import atexit
-
-try:
-    import RPi.GPIO as GPIO
-except ImportError as e:
-    print("\n\nThis library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO\n\n")
-    raise ImportError(e)
+import RPi.GPIO as GPIO
 
 
 DAT = 23
@@ -112,16 +107,16 @@ def set_pixel(x, r, g, b, brightness=None):
 def set_clear_on_exit(value=True):
     """Set whether Blinkt! should be cleared upon exit
 
-    By default Blinkt! will not turn off the pixels on exit, but calling::
+    By default Blinkt! will turn off the pixels on exit, but calling::
 
-        blinkt.set_clear_on_exit()
+        blinkt.set_clear_on_exit(False)
 
-    Will ensure that it does.
+    Will ensure that it does not.
 
     :param value: True or False (default True)
     """
     global _clear_on_exit
     _clear_on_exit = value
 
-    atexit.register(_exit)
+atexit.register(_exit)
 

@@ -1,3 +1,9 @@
+0.1.0
+-----
+
+* Removed try/except from RPi.GPIO import, output was misleading at best
+* Reverted default behaviour of clear on exit
+
 0.0.9
 -----
 
