@@ -2,8 +2,10 @@
 
 import time
 
-from blinkt import set_pixel, show
+from blinkt import set_clear_on_exit, set_pixel, show
 
+
+set_clear_on_exit()
 
 def show_all(state):
     for i in range(8):

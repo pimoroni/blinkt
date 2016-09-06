@@ -7,8 +7,9 @@ try:
 except ImportError:
     exit("This script requires the requests module\nInstall with: sudo pip install requests")
 
-from blinkt import set_pixel, show
+from blinkt import set_clear_on_exit, set_pixel, show
 
+set_clear_on_exit()
 
 while True:
     r = requests.get('http://api.thingspeak.com/channels/1417/field/2/last.json')

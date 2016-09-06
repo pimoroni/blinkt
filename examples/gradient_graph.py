@@ -4,8 +4,9 @@ import colorsys
 import math
 import time
 
-from blinkt import set_brightness, set_pixel, show
+from blinkt import set_clear_on_exit, set_brightness, set_pixel, show
 
+set_clear_on_exit()
 
 hue_range = 120
 hue_start = 0
