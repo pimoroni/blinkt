@@ -1,8 +1,10 @@
 #-*- coding: utf-8 -*-
 
-import mock
 import sys
 import site
+
+import mock
+
 
 PACKAGE_NAME = u"Blinkt!"
 PACKAGE_HANDLE = "Blinkt"
