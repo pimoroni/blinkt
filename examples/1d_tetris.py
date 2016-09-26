@@ -1,7 +1,10 @@
 #!/usr/bin/env python
-import blinkt
+
 import time
 from random import randint
+
+import blinkt
+
 
 OFF = (0, 0, 0)
 grid = [OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF]
