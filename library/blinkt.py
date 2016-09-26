@@ -1,4 +1,5 @@
 import atexit
+
 import RPi.GPIO as GPIO
 
 
@@ -23,6 +24,10 @@ def set_brightness(brightness):
 
     :param brightness: Brightness: 0.0 to 1.0
     """
+
+    if brightness < 0 or brightness > 1:
+        raise ValueError("Brightness should be between 0.0 and 1.0")
+
     for x in range(NUM_PIXELS):
         pixels[x][3] = int(31.0 * brightness) & 0b11111
 
