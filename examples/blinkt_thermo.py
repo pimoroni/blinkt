@@ -3,14 +3,14 @@
 #Data from OpenWeatherMap
 #show_graph function adapted from cpu_temp.py
 
-
-import blinkt
 from time import sleep
+
 try:
     import requests
 except ImportError:
-    print("This example requires \"requests\" package.")
-    print("Please install it by running \"sudo pip install requests\"")
+    exit("This script requires the requests module\nInstall with: sudo pip install requests")
+
+import blinkt
 
 
 #Grab your API key here: http://openweathermap.org
