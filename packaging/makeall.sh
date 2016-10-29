@@ -135,17 +135,24 @@ if ! grep -e "$libname" -e "$reponame" $debreadme &> /dev/null; then
     warning "README does not seem to mention product, repo or lib!" && FLAG=true
 fi
 
-# exit with summary
+# summary of checks pre build
 
 if $FLAG; then
-    warning "Check all of the above and correct!"
+    warning "Check all of the above and correct!" && exit 1
 else
-    success "all seems to be in order!"
-    ./makedeb.sh
-    lintian $(find -name "python*$version*.deb")
-    lintian $(find -name "python3*$version*.deb")
-    gpg --verify $(find -name "*$version*changes")
-    gpg --verify $(find -name "*$version*dsc")
+    inform "we're good to go... bulding!"
 fi
+
+# building deb and final checks
+
+./makedeb.sh
+
+inform "running lintian..."
+lintian -v $(find -name "python*$version*.deb")
+lintian -v $(find -name "python3*$version*.deb")
+
+inform "checking signatures..."
+gpg --verify $(find -name "*$version*changes")
+gpg --verify $(find -name "*$version*dsc")
 
 exit 0
