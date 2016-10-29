@@ -3,6 +3,7 @@
 #Data from OpenWeatherMap
 #show_graph function adapted from cpu_temp.py
 
+from sys import exit
 from time import sleep
 
 try:

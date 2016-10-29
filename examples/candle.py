@@ -1,8 +1,17 @@
-import time
-import random
-import numpy as np
+#!/usr/bin/env python
+
 import colorsys
+import random
+import time
+from sys import exit
+
+try:
+    import numpy as np
+except ImportError:
+    exit("This script requires the numpy module\nInstall with: sudo pip install numpy")
+
 from blinkt import set_pixel, set_brightness, show, clear
+
 
 clear()
 start = 0

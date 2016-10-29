@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
-from blinkt import set_clear_on_exit, set_pixel, show, clear
+from sys import exit
 
 try:
     import paho.mqtt.client as mqtt
 except ImportError:
     exit("This example requires the paho-mqtt module\nInstall with: sudo pip install paho-mqtt")
+
+from blinkt import set_clear_on_exit, set_pixel, show, clear
 
 
 MQTT_SERVER = "iot.eclipse.org"
