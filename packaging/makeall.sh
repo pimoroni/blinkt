@@ -143,9 +143,9 @@ else
     success "all seems to be in order!"
     ./makedeb.sh
     lintian $(find -name "python*$version*.deb")
-    gpg --verify $(find -name "*$version*.dsc")
     lintian $(find -name "python3*$version*.deb")
-    gpg --verify $(find -name "*$version*.dsc")
+    gpg --verify $(find -name "*$version*changes")
+    gpg --verify $(find -name "*$version*dsc")
 fi
 
 exit 0
