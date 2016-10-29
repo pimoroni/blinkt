@@ -11,9 +11,9 @@ debcopyright="debian/copyright"
 debrules="debian/rules"
 debreadme="debian/README"
 
-debdir="$(pwd)" # && echo $debdir
-rootdir="$(dirname $debdir)" # && echo $rootdir
-libdir="$rootdir/library" # && echo $libdir
+debdir="$(pwd)"
+rootdir="$(dirname $debdir)"
+libdir="$rootdir/library"
 
 FLAG=false
 
@@ -64,6 +64,8 @@ echo "reponame is $reponame and libname is $libname"
 # checking generating changelog file
 
 ./makelog.sh
+version=$(head -n 1 "$libdir/CHANGELOG.txt")
+echo "building $libname version $version"
 
 # checking debian/changelog file
 
@@ -72,7 +74,8 @@ inform "checking debian/changelog file..."
 if ! head -n 1 $debianlog | grep "$libname" &> /dev/null; then
     warning "library not mentioned in header!" && FLAG=true
 elif head -n 1 $debianlog | grep "UNRELEASED"; then
-    warning "this changelog is not going to generate a release" && FLAG=true
+    warning "this changelog is not going to generate a release!"
+    warning "change distribution to 'stable'" && FLAG=true
 fi
 
 # checking debian/copyright file
@@ -139,6 +142,10 @@ if $FLAG; then
 else
     success "all seems to be in order!"
     ./makedeb.sh
+    lintian $(find -name "python*$version*.deb")
+    gpg --verify $(find -name "*$version*.dsc")
+    lintian $(find -name "python3*$version*.deb")
+    gpg --verify $(find -name "*$version*.dsc")
 fi
 
 exit 0
