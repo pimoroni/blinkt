@@ -48,7 +48,7 @@ if [ -z "$reponame" ]; then
         repodir="$(dirname $rootdir)"
         reponame="$(basename $repodir)"
     else
-        repodir="$rootdir)"
+        repodir="$rootdir"
         reponame="$(basename $repodir)"
     fi
 fi
