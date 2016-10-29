@@ -3,6 +3,7 @@
 import glob
 import os
 import time
+from sys import exit
 
 try:
     import drumhat
