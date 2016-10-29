@@ -12,8 +12,8 @@ debrules="debian/rules"
 debreadme="debian/README"
 
 debdir="$(pwd)" # && echo $debdir
-repodir="$(dirname $debdir)" # && echo $repodir
-libdir="$repodir/library" # && echo $libdir
+rootdir="$(dirname $debdir)" # && echo $rootdir
+libdir="$rootdir/library" # && echo $libdir
 
 FLAG=false
 
@@ -44,7 +44,13 @@ else
 fi
 
 if [ -z "$reponame" ]; then
-    reponame="$(basename $repodir)"
+    if [[ $rootdir == *"python"* ]]; then
+        repodir="$(dirname $rootdir)"
+        reponame="$(basename $repodir)"
+    else
+        repodir="$rootdir)"
+        reponame="$(basename $repodir)"
+    fi
 fi
 
 if [ -z "$libname" ]; then
