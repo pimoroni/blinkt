@@ -4,6 +4,7 @@
 #show_graph function adapted from cpu_temp.py
 
 from time import sleep
+from sys import exit
 
 try:
     import requests
