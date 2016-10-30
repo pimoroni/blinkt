@@ -3,6 +3,7 @@
 import math
 import time
 from colorsys import hsv_to_rgb
+from sys import exit
 
 try:
     from envirophat import motion

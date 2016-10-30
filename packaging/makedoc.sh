@@ -2,7 +2,7 @@
 
 gettools="yes" # if set to yes downloads the tools required
 setup="yes" # if set to yes populates library folder
-buildeb="yes" # if set to yes builds the deb files
+buildoc="yes" # if set to yes builds the deb files
 cleanup="yes" # if set to yes cleans up build files
 pkgfiles=( "build" "changes" "deb" "dsc" "tar.xz" )
 
@@ -20,11 +20,10 @@ fi
 
 cd ../library
 
-if [ $buildeb == "yes" ]; then
+if [ $buildoc == "yes" ]; then
     debuild
     for file in ${pkgfiles[@]}; do
-        rm ../packaging/*.$file &> /dev/null
-        mv ../*.$file ../packaging
+        rm ../*.$file &> /dev/null
     done
     rm -R ../documentation/html &> /dev/null
     cp -R ./build/sphinx/html ../documentation
