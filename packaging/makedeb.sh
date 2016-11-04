@@ -21,7 +21,7 @@ fi
 cd ../library
 
 if [ $buildeb == "yes" ]; then
-    debuild
+    debuild -aarmhf
     for file in ${pkgfiles[@]}; do
         rm ../packaging/*.$file &> /dev/null
         mv ../*.$file ../packaging
