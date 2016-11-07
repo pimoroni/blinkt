@@ -51,12 +51,13 @@ if [ -z "$reponame" ]; then
         repodir="$rootdir"
         reponame="$(basename $repodir)"
     fi
+    reponame=$(echo "$reponame" | tr "[A-Z]" "[a-z]")
 fi
 
 if [ -z "$libname" ]; then
     cd "$libdir"
     libname=$(grep "name" setup.py | tr -d "[:space:]" | cut -c 7- | rev | cut -c 3- | rev)
-    cd "$debdir"
+    libname=$(echo "$libname" | tr "[A-Z]" "[a-z]") && cd "$debdir"
 fi
 
 echo "reponame is $reponame and libname is $libname"
