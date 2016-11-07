@@ -3,6 +3,8 @@ import atexit
 import RPi.GPIO as GPIO
 
 
+__version__ = '0.1.0'
+
 DAT = 23
 CLK = 24
 NUM_PIXELS = 8
