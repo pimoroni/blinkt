@@ -4,6 +4,9 @@
 .rst-content a:visited, .rst-content a:active {
     color:#87319a;
 }
+.rst-content .highlighted {
+	background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAJElEQVQIW2P8//9/PSMjYyMDEmAEsdElwILoEnBBZAkUQZgEABMWE4Kzp1KUAAAAAElFTkSuQmCC),rgba(246,167,4,0.2);
+}
 .wy-side-nav-search {
     background:#333333;
 }
