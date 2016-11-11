@@ -1,6 +1,10 @@
 .. role:: python(code)
    :language: python
 
+.. toctree::
+   :titlesonly:
+   :maxdepth: 0
+
 Welcome
 -------
 
@@ -10,9 +14,11 @@ available in the Blinkt! python library.
 Blinkt! is a tiny Raspberry Pi add-on with 8, APA102, RGB LEDs which you can drive
 independently for notifications, lighting effects, animation effetcs and more!
 
-.. toctree::
-   :titlesonly:
-   :maxdepth: 0
+At A Glance
+-----------
+
+.. automoduleoutline:: blinkt
+   :members:
 
 Set A Single Pixel
 ------------------
