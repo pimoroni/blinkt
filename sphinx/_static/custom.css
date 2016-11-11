@@ -28,3 +28,15 @@ code.literal {
 .rst-content #module-blinkt dl:not(.docutils) {
 	margin-bottom:0;
 }
+.wy-side-nav-search>a.icon-home {
+	padding:0;
+	padding-top:5px;
+}
+.wy-side-nav-search>a.icon-home:hover {
+	background:none;
+}
+.wy-side-nav-search>a img.logo {
+	background:#FFFFFF;
+	border-radius:5px;
+	padding:10px;
+}
