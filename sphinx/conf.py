@@ -20,6 +20,44 @@ sys.modules['RPi.GPIO'] = mock.Mock()
 
 sys.path.insert(0, '../library/')
 
+
+from sphinx.ext import autodoc
+
+
+class OutlineMethodDocumenter(autodoc.MethodDocumenter):
+    objtype = 'method'
+
+    def add_content(self, more_content, no_docstring=False):
+        return
+
+class OutlineFunctionDocumenter(autodoc.FunctionDocumenter):
+    objtype = 'function'
+
+    def add_content(self, more_content, no_docstring=False):
+        return
+
+class ModuleOutlineDocumenter(autodoc.ModuleDocumenter):
+    objtype = 'moduleoutline'
+
+    def __init__(self, directive, name, indent=u''):
+        # Monkey path the Method and Function documenters
+        sphinx_app.add_autodocumenter(OutlineMethodDocumenter)
+        sphinx_app.add_autodocumenter(OutlineFunctionDocumenter)
+        autodoc.ModuleDocumenter.__init__(self, directive, name, indent)
+
+    def __del__(self):
+        # Return the Method and Function documenters to normal
+        sphinx_app.add_autodocumenter(autodoc.MethodDocumenter)
+        sphinx_app.add_autodocumenter(autodoc.FunctionDocumenter)
+
+
+def setup(app):
+    global sphinx_app
+    sphinx_app = app
+    app.add_autodocumenter(ModuleOutlineDocumenter)
+
+    ModuleOutlineDocumenter.objtype = 'module'
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -31,6 +69,7 @@ sys.path.insert(0, '../library/')
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
 ]
 
