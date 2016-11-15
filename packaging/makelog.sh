@@ -3,7 +3,8 @@
 # script control variables
 
 libname="" # leave this blank for auto-detection
-vlibwarn="yes"
+sibname=() # name of sibling in packages list
+versionwarn="yes" # set to anything but 'yes' to turn off warning
 
 debdir="$(pwd)"
 rootdir="$(dirname $debdir)"
@@ -50,27 +51,32 @@ inform "pypi changelog generated"
 
 if [ -n $(grep version "$libdir/setup.py" &> /dev/null) ]; then
     inform "touched up version in setup.py"
-    sed -i "s/[0-9].[0-9].[0-9]/$version/" "$libdir/setup.py"
+    sed -i "s/'[0-9].[0-9].[0-9]'/'$version'/" "$libdir/setup.py"
 else
     warning "couldn't touch up version in setup, no match found"
 fi
 
-# touch up version in lib
+# touch up version in lib or package siblings
 
 if [ -z "$libname" ]; then
     cd "$libdir"
     libname=$(grep "name" setup.py | tr -d "[:space:]" | cut -c 7- | rev | cut -c 3- | rev)
     libname=$(echo "$libname" | tr "[A-Z]" "[a-z]") && cd "$debdir"
+    sibname+=( "$libname" )
+elif [ "$libname" != "package" ]; then
+    sibname+=( "$libname" )
 fi
 
-if grep -e "__version__" "$libdir/$libname.py" &> /dev/null; then
-    sed -i "s/__version__ = '[0-9].[0-9].[0-9]/__version__ = '$version/" "$libdir/$libname.py"
-    inform "touched up version in $(basename $libdir/$libname.py)"
-elif grep -e "__version__" "$libdir/$libname/__init__.py" &> /dev/null; then
-    sed -i "s/__version__ = '[0-9].[0-9].[0-9]/__version__ = '$version/" "$libdir/$libname/__init__.py"
-    inform "touched up version in $(basename $libdir/$libname/__init__.py)"
-elif [ "$vlibwarn" == "yes" ]; then
-    warning "couldn't touch up __version__ in lib, no match found"
-fi
+for sibling in ${sibname[@]}; do
+    if grep -e "__version__" "$libdir/$sibling.py" &> /dev/null; then
+        sed -i "s/__version__ = '[0-9].[0-9].[0-9]'/__version__ = '$version'/" "$libdir/$sibling.py"
+        inform "touched up version in $sibling.py"
+    elif grep -e "__version__" "$libdir/$sibling/__init__.py" &> /dev/null; then
+        sed -i "s/__version__ = '[0-9].[0-9].[0-9]'/__version__ = '$version'/" "$libdir/$sibling/__init__.py"
+        inform "touched up version in $sibling/__init__.py"
+    elif [ "$versionwarn" == "yes" ]; then
+        warning "couldn't touch up __version__ in $sibling, no match found"
+    fi
+done
 
 exit 0

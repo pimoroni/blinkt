@@ -4,6 +4,7 @@
 
 reponame="" # leave this blank for auto-detection
 libname="" # leave this blank for auto-detection
+packagename="" # leave this blank for auto-selection
 
 debianlog="debian/changelog"
 debcontrol="debian/control"
@@ -60,7 +61,12 @@ if [ -z "$libname" ]; then
     libname=$(echo "$libname" | tr "[A-Z]" "[a-z]") && cd "$debdir"
 fi
 
+if [ -z "$packagename" ]; then
+    packagename="$libname"
+fi
+
 echo "reponame is $reponame and libname is $libname"
+echo "output packages will be python-$packagename and python3-$packagename"
 
 # checking generating changelog file
 
@@ -83,11 +89,11 @@ fi
 
 inform "checking debian/copyright file..."
 
-if ! grep "^Source" $debcopyright | grep "$libname" $debcopyright &> /dev/null; then
+if ! grep "^Source" $debcopyright | grep "$reponame" &> /dev/null; then
     warning "$(grep "^Source" $debcopyright)" && FLAG=true
 fi
 
-if ! grep "^Upstream-Name" $debcopyright | grep "$libname" $debcopyright &> /dev/null; then
+if ! grep "^Upstream-Name" $debcopyright | grep "$libname" &> /dev/null; then
     warning "$(grep "^Upstream-Name" $debcopyright)" && FLAG=true
 fi
 
@@ -95,19 +101,19 @@ fi
 
 inform "checking debian/control file..."
 
-if ! grep "^Source" $debcontrol | grep "$libname" $debcontrol &> /dev/null; then
+if ! grep "^Source" $debcontrol | grep "$libname" &> /dev/null; then
     warning "$(grep "^Source" $debcontrol)" && FLAG=true
 fi
 
-if ! grep "^Homepage" $debcontrol | grep "$reponame" $debcontrol &> /dev/null; then
+if ! grep "^Homepage" $debcontrol | grep "$reponame" &> /dev/null; then
     warning "$(grep "^Homepage" $debcontrol)" && FLAG=true
 fi
 
-if ! grep "^Package: python-$libname" $debcontrol &> /dev/null; then
+if ! grep "^Package: python-$packagename" $debcontrol &> /dev/null; then
     warning "$(grep "^Package: python-" $debcontrol)" && FLAG=true
 fi
 
-if ! grep "^Package: python3-$libname" $debcontrol &> /dev/null; then
+if ! grep "^Package: python3-$packagename" $debcontrol &> /dev/null; then
     warning "$(grep "^Package: python3-" $debcontrol)" && FLAG=true
 fi
 
@@ -120,11 +126,11 @@ fi
 
 inform "checking debian/rules file..."
 
-if ! grep "debian/python-$libname" $debrules &> /dev/null; then
+if ! grep "debian/python-$packagename" $debrules &> /dev/null; then
     warning "$(grep "debian/python-" $debrules)" && FLAG=true
 fi
 
-if ! grep "debian/python3-$libname" $debrules &> /dev/null; then
+if ! grep "debian/python3-$packagename" $debrules &> /dev/null; then
     warning "$(grep "debian/python3-" $debrules)" && FLAG=true
 fi
 
