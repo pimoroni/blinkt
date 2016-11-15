@@ -46,8 +46,6 @@ other environments:
 sudo pip2 install blinkt
 ```
 
-In all cases you will have to enable the i2c bus.
-
 ##Usage
 
 The two Blinkt methods you'll most commonly use are `set_pixel` and `show`. Here's a simple example:
