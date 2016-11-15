@@ -6,6 +6,8 @@ Available from Pimoroni: https://shop.pimoroni.com/products/blinkt
 
 ##Installation
 
+**Full install ( recommended ):**
+
 We've created a super-easy installation script that will install all pre-requisites and get your Blinkt! up and running in a jiffy. To run it fire up Terminal which you'll find in Menu -> Accessories -> Terminal on your Raspberry Pi desktop like so:
 
 ![Finding the terminal](terminal.jpg)
@@ -13,10 +15,36 @@ We've created a super-easy installation script that will install all pre-requisi
 In the new terminal window type:
 
 ```bash
-curl -sS get.pimoroni.com/blinkt | bash
+curl -sS https://get.pimoroni.com/blinkt | bash
 ```
 
 If you choose to download examples you'll find them in `/home/pi/Pimoroni/blinkt`.
+
+**Library install for Python 3:**
+
+on Raspbian:
+
+```bash
+sudo apt-get install python3-blinkt
+```
+other environments: 
+
+```bash
+sudo pip3 install blinkt
+```
+
+**Library install for Python 2:**
+
+on Raspbian:
+
+```bash
+sudo apt-get install python-blinkt
+```
+other environments: 
+
+```bash
+sudo pip2 install blinkt
+```
 
 ##Usage
 
