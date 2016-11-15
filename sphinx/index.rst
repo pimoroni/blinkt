@@ -1,18 +1,28 @@
 .. role:: python(code)
    :language: python
 
-Welcome
--------
-
-Welcome to the Blinkt! documentation. This page will guide you through the methods
-available in the Blinkt! python library.
-
-Blinkt! is a tiny Raspberry Pi add-on with 8, APA102, RGB LEDs which you can drive
-independently for notifications, lighting effects, animation effetcs and more!
-
 .. toctree::
    :titlesonly:
    :maxdepth: 0
+
+Welcome
+-------
+
+This documentation will guide you through the methods available in the Blinkt! python library.
+
+Blinkt! is a tiny Raspberry Pi add-on with 8, APA102, RGB LEDs which you can drive
+independently for notifications, lighting effects, animation effects and more!
+
+* More information - https://shop.pimoroni.com/products/blinkt
+* Get the code - https://github.com/pimoroni/blinkt
+* Get started - https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-blinkt
+* Get help - http://forums.pimoroni.com/c/support
+
+At A Glance
+-----------
+
+.. automoduleoutline:: blinkt
+   :members:
 
 Set A Single Pixel
 ------------------
