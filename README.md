@@ -70,6 +70,13 @@ set_brightness(0.5)
 show()
 ```
 
+##Documentation & Support
+
+* Getting started - https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-blinkt
+* Function reference - http://docs.pimoroni.com/blinkt/
+* GPIO Pinout - https://pinout.xyz/pinout/blinkt
+* Get help - http://forums.pimoroni.com/c/support
+
 ##Examples
 
 The examples in the `examples` folder should just work with Blinkt!, although you'll need to add Twitter developer access tokens and secrets in the `twitter_monitor.py` example. You can get these at [https://dev.twitter.com/](https://dev.twitter.com/), after setting up a new application.
