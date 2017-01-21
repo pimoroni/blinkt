@@ -11,7 +11,7 @@ blinkt.show()
 
 colour = 'FFFFFF'
 status = 0
-brightness = 0.2
+brightness = 50
 
 # Unlike the mote library, the blinkt library doesn't have a get_pixel function so we'll need to keep track of things ourselves...
 anyLEDon = 0
@@ -25,7 +25,7 @@ def blinkt_on(c):
     global brightness
     r, g, b = hex_to_rgb(c)
     for pixel in range(8):
-        blinkt.set_pixel(pixel, r, g, b, brightness)
+        blinkt.set_pixel(pixel, r, g, b, float(brightness)/100)
     anyLEDon = 1
     blinkt.show()
     return True
@@ -84,10 +84,10 @@ def get_brightness():
     global colour, brightness
     return jsonify({'status': status, 'colour': colour, 'brightness' : brightness})
 
-@app.route('/blinkt/api/v1.0/brightness/<float:x>', methods=['GET'])
+@app.route('/blinkt/api/v1.0/brightness/<string:x>', methods=['GET'])
 def set_brightness(x):
     global status, colour, brightness
-    brightness = x
+    brightness = int(x)
     if status != 0:
         blinkt_on(colour)
         status = 1
