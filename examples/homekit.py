@@ -84,7 +84,7 @@ def get_brightness():
     global colour, brightness
     return jsonify({'status': status, 'colour': colour, 'brightness' : brightness})
 
-@app.route('/blinkt/api/v1.0/brightness/<string:c>', methods=['GET'])
+@app.route('/blinkt/api/v1.0/brightness/<float:x>', methods=['GET'])
 def set_brightness(x):
     global status, colour, brightness
     brightness = x
