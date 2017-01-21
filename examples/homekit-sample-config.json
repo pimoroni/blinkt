@@ -32,5 +32,21 @@
         }
     ],
 
-    "platforms": []
+    "platforms": [
+        {
+          "platform": "Camera-ffmpeg",
+          "cameras": [
+          {
+          "name": "PiCam",
+          "videoConfig": {
+            "source": "-re -i rtsp://127.0.0.1:8081",
+            "stillImageSource": "-i http://127.0.0.1:8081",
+            "maxStreams": 2,
+            "maxWidth": 1280,
+            "maxHeight": 720,
+            "maxFPS": 30
+            }
+          }
+        ]}
+    ]
 }
