@@ -27,7 +27,7 @@ on Raspbian:
 ```bash
 sudo apt-get install python3-blinkt
 ```
-other environments: 
+other environments:
 
 ```bash
 sudo pip3 install blinkt
@@ -40,7 +40,7 @@ on Raspbian:
 ```bash
 sudo apt-get install python-blinkt
 ```
-other environments: 
+other environments:
 
 ```bash
 sudo pip2 install blinkt
@@ -80,5 +80,8 @@ show()
 ##Examples
 
 The examples in the `examples` folder should just work with Blinkt!, although you'll need to add Twitter developer access tokens and secrets in the `twitter_monitor.py` example. You can get these at [https://dev.twitter.com/](https://dev.twitter.com/), after setting up a new application.
+
+###HomeKit Example
+
 
 The examples in the `examples/extra_examples` folder are designed to work with other pHATs and HATs, so be aware of that before trying them.
