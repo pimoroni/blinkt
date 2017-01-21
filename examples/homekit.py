@@ -5,7 +5,7 @@ from flask import Flask, jsonify, make_response
 app = Flask(__name__)
 
 # Initialize blinkt device
-blinkt.set_clear_on_exit()
+blinkt.set_clear_on_exit(True)
 blinkt.clear()
 blinkt.show()
 
