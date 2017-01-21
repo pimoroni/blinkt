@@ -63,12 +63,12 @@ def set_status(st):
         blinkt_off()
     elif st == 'status':
         status = get_status()
-    return jsonify({'status': status, 'colour': colour, 'brightness' : brightness})
+    return jsonify(status)
 
 @app.route('/blinkt/api/v1.0/set', methods=['GET'])
 def get_colour():
     global colour, brightness
-    return jsonify({'status': status, 'colour': colour, 'brightness' : brightness})
+    return jsonify(colour)
 
 @app.route('/blinkt/api/v1.0/set/<string:c>', methods=['GET'])
 def set_colour(c):
@@ -82,7 +82,7 @@ def set_colour(c):
 @app.route('/blinkt/api/v1.0/brightness', methods=['GET'])
 def get_brightness():
     global colour, brightness
-    return jsonify({'status': status, 'colour': colour, 'brightness' : brightness})
+    return jsonify(brightness)
 
 @app.route('/blinkt/api/v1.0/brightness/<string:x>', methods=['GET'])
 def set_brightness(x):
