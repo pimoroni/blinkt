@@ -92,5 +92,6 @@ def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 if __name__ == '__main__':
-    blinkt_off()
+    for i in range(NUM_PIXELS):
+        blinkt_off(i)
     app.run(host='0.0.0.0', debug=True)
