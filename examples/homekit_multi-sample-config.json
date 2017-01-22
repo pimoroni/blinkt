@@ -1,0 +1,183 @@
+{
+    "bridge": {
+        "name": "Homebridge",
+        "username": "CC:22:3D:E3:CE:32",
+        "port": 51826,
+        "pin": "031-45-155"
+    },
+
+    "description": "Homebridge",
+
+    "accessories": [
+        {
+            "accessory": "HTTP-RGB",
+            "name": "Blinkt1",
+
+            "switch": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/0/status",
+                "powerOn": "http://127.0.0.1:5000/blinkt/api/v1.0/0/on",
+                "powerOff": "http://127.0.0.1:5000/blinkt/api/v1.0/0/off"
+            },
+
+            "brightness": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/0/brightness",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/0/brightness/%s"
+            },
+
+            "color": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/0/set",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/0/set/%s",
+                "brightness": true
+            }
+        },
+        {
+            "accessory": "HTTP-RGB",
+            "name": "Blinkt2",
+
+            "switch": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/1/status",
+                "powerOn": "http://127.0.0.1:5000/blinkt/api/v1.0/1/on",
+                "powerOff": "http://127.0.0.1:5000/blinkt/api/v1.0/1/off"
+            },
+
+            "brightness": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/1/brightness",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/1/brightness/%s"
+            },
+
+            "color": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/1/set",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/1/set/%s",
+                "brightness": true
+            }
+        },
+        {
+            "accessory": "HTTP-RGB",
+            "name": "Blinkt3",
+
+            "switch": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/2/status",
+                "powerOn": "http://127.0.0.1:5000/blinkt/api/v1.0/2/on",
+                "powerOff": "http://127.0.0.1:5000/blinkt/api/v1.0/2/off"
+            },
+
+            "brightness": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/2/brightness",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/2/brightness/%s"
+            },
+
+            "color": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/2/set",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/2/set/%s",
+                "brightness": true
+            }
+        },
+        {
+            "accessory": "HTTP-RGB",
+            "name": "Blinkt4",
+
+            "switch": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/3/status",
+                "powerOn": "http://127.0.0.1:5000/blinkt/api/v1.0/3/on",
+                "powerOff": "http://127.0.0.1:5000/blinkt/api/v1.0/3/off"
+            },
+
+            "brightness": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/3/brightness",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/3/brightness/%s"
+            },
+
+            "color": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/3/set",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/3/set/%s",
+                "brightness": true
+            }
+        },
+        {
+            "accessory": "HTTP-RGB",
+            "name": "Blinkt5",
+
+            "switch": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/4/status",
+                "powerOn": "http://127.0.0.1:5000/blinkt/api/v1.0/4/on",
+                "powerOff": "http://127.0.0.1:5000/blinkt/api/v1.0/4/off"
+            },
+
+            "brightness": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/4/brightness",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/4/brightness/%s"
+            },
+
+            "color": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/4/set",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/4/set/%s",
+                "brightness": true
+            }
+        },
+        {
+            "accessory": "HTTP-RGB",
+            "name": "Blinkt6",
+
+            "switch": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/5/status",
+                "powerOn": "http://127.0.0.1:5000/blinkt/api/v1.0/5/on",
+                "powerOff": "http://127.0.0.1:5000/blinkt/api/v1.0/5/off"
+            },
+
+            "brightness": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/5/brightness",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/5/brightness/%s"
+            },
+
+            "color": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/5/set",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/5/set/%s",
+                "brightness": true
+            }
+        },
+        {
+            "accessory": "HTTP-RGB",
+            "name": "Blinkt7",
+
+            "switch": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/6/status",
+                "powerOn": "http://127.0.0.1:5000/blinkt/api/v1.0/6/on",
+                "powerOff": "http://127.0.0.1:5000/blinkt/api/v1.0/6/off"
+            },
+
+            "brightness": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/6/brightness",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/6/brightness/%s"
+            },
+
+            "color": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/6/set",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/6/set/%s",
+                "brightness": true
+            }
+        },
+        {
+            "accessory": "HTTP-RGB",
+            "name": "Blinkt8",
+
+            "switch": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/7/status",
+                "powerOn": "http://127.0.0.1:5000/blinkt/api/v1.0/7/on",
+                "powerOff": "http://127.0.0.1:5000/blinkt/api/v1.0/7/off"
+            },
+
+            "brightness": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/7/brightness",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/7/brightness/%s"
+            },
+
+            "color": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/7/set",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/7/set/%s",
+                "brightness": true
+            }
+        }
+    ],
+
+    "platforms": []
+}
