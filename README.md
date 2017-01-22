@@ -145,5 +145,8 @@ homebridge
 ```
 If you're running iOS 10 or above, you can now open the Home app and the device will be shown, allowing you to change colour, brightness and other goodness. Enjoy!
 
+####HomeKit_Multi
+There's also an example which configures HomeKit to address each LED separately - instructions and usage is almost identical to the HomeKit example, just look at the files `examples/homekit_multi.py` and `examples/homekit_multi-sample-config.json`.
+
 ###Extra Examples
 The examples in the `examples/extra_examples` folder are designed to work with other pHATs and HATs, so be aware of that before trying them.
