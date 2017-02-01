@@ -10,7 +10,7 @@ CLK = 24
 NUM_PIXELS = 8
 BRIGHTNESS = 7
 
-pixels = [[0,0,0,BRIGHTNESS]] * 8
+pixels = [[0,0,0,BRIGHTNESS]] * NUM_PIXELS
 
 _gpio_setup = False
 _clear_on_exit = True
