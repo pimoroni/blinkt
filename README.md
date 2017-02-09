@@ -82,3 +82,9 @@ show()
 The examples in the `examples` folder should just work with Blinkt!, although you'll need to add Twitter developer access tokens and secrets in the `twitter_monitor.py` example. You can get these at [https://dev.twitter.com/](https://dev.twitter.com/), after setting up a new application.
 
 The examples in the `examples/extra_examples` folder are designed to work with other pHATs and HATs, so be aware of that before trying them.
+
+## Unofficial / Third-party libraries
+
+A Blinkt library is provided for Golang by [Alex Ellis](https://www.alexellis.io).
+
+* [alexellis/blinkt_go_examples](https://github.com/alexellis/blinkt_go_examples)
