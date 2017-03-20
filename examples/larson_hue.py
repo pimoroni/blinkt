@@ -4,7 +4,7 @@ import math
 import time
 import colorsys
 
-from blinkt import set_clear_on_exit, set_pixel, show, set_brightness
+from blinkt import set_clear_on_exit, set_pixel, show, set_brightness, NUM_PIXELS
 
 FALLOFF = 1.9
 SCAN_SPEED = 4
@@ -28,11 +28,11 @@ while True:
     # Now we generate a value from 0 to 7
     offset = int(round(offset * 7))
 
-    for x in range(8):
+    for x in range(NUM_PIXELS):
         sat = 1.0
  
-        val = 7 - (abs(offset - x) * FALLOFF)
-        val /= 7.0 # Convert to 0.0 to 1.0
+        val = (NUM_PIXELS-1) - (abs(offset - x) * FALLOFF)
+        val /= ((NUM_PIXELS-1)*1.0) # Convert to 0.0 to 1.0
         val = max(val,0.0) # Ditch negative values
 
         xhue = hue # Grab hue for this pixel

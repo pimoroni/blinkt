@@ -7,7 +7,7 @@ try:
 except ImportError:
     exit("This example requires the paho-mqtt module\nInstall with: sudo pip install paho-mqtt")
 
-from blinkt import set_clear_on_exit, set_pixel, show, clear
+from blinkt import set_clear_on_exit, set_pixel, show, clear, NUM_PIXELS
 
 
 MQTT_SERVER = "iot.eclipse.org"
@@ -73,7 +73,7 @@ def on_message(client, userdata, msg):
             return
 
         if pixel is None:
-            for x in range(8):
+            for x in range(NUM_PIXELS):
                 set_pixel(x, r, g, b)
         else:
             set_pixel(pixel, r, g, b)

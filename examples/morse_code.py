@@ -2,13 +2,13 @@
 
 import time
 
-from blinkt import set_clear_on_exit, set_pixel, show
+from blinkt import set_clear_on_exit, set_pixel, show, NUM_PIXELS
 
 
 set_clear_on_exit()
 
 def show_all(state):
-    for i in range(8):
+    for i in range(NUM_PIXELS):
         val = state * 255
         set_pixel(i, val, val, val)
     show()

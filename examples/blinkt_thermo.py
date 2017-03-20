@@ -38,7 +38,7 @@ def update_weather():
         print("Connection Error")
 
 def show_graph(v, r, g, b):
-    v *= 8
+    v *= NUM_PIXELS
     for x in range(8):
         if v  < 0:
             r, g, b = 0, 0, 0

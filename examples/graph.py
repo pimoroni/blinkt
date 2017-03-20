@@ -3,14 +3,14 @@
 import math
 import time
 
-from blinkt import set_clear_on_exit, set_brightness, set_pixel, show
+from blinkt import set_clear_on_exit, set_brightness, set_pixel, show, NUM_PIXELS
 
 
 set_clear_on_exit()
 
 def show_graph(v, r, g, b):
-    v *= 8
-    for x in range(8):
+    v *= NUM_PIXELS
+    for x in range(NUM_PIXELS):
         if v  < 0:
             r, g, b = 0, 0, 0
         else:
