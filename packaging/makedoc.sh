@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gettools="yes" # if set to yes downloads the tools required
+gettools="no" # if set to yes downloads the tools required
 setup="yes" # if set to yes populates library folder
 buildoc="yes" # if set to yes builds the deb files
 cleanup="yes" # if set to yes cleans up build files

@@ -20,6 +20,44 @@ sys.modules['RPi.GPIO'] = mock.Mock()
 
 sys.path.insert(0, '../library/')
 
+
+from sphinx.ext import autodoc
+
+
+class OutlineMethodDocumenter(autodoc.MethodDocumenter):
+    objtype = 'method'
+
+    def add_content(self, more_content, no_docstring=False):
+        return
+
+class OutlineFunctionDocumenter(autodoc.FunctionDocumenter):
+    objtype = 'function'
+
+    def add_content(self, more_content, no_docstring=False):
+        return
+
+class ModuleOutlineDocumenter(autodoc.ModuleDocumenter):
+    objtype = 'moduleoutline'
+
+    def __init__(self, directive, name, indent=u''):
+        # Monkey path the Method and Function documenters
+        sphinx_app.add_autodocumenter(OutlineMethodDocumenter)
+        sphinx_app.add_autodocumenter(OutlineFunctionDocumenter)
+        autodoc.ModuleDocumenter.__init__(self, directive, name, indent)
+
+    def __del__(self):
+        # Return the Method and Function documenters to normal
+        sphinx_app.add_autodocumenter(autodoc.MethodDocumenter)
+        sphinx_app.add_autodocumenter(autodoc.FunctionDocumenter)
+
+
+def setup(app):
+    global sphinx_app
+    sphinx_app = app
+    app.add_autodocumenter(ModuleOutlineDocumenter)
+
+    ModuleOutlineDocumenter.objtype = 'module'
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -31,6 +69,7 @@ sys.path.insert(0, '../library/')
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
 ]
 
@@ -52,7 +91,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = PACKAGE_NAME
-copyright = u'2016, Phil Howard'
+copyright = u'2016, Pimoroni Ltd'
 author = u'Phil Howard'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -129,7 +168,10 @@ html_theme = 'sphinx_rtd_theme'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'collapse_navigation': False,
+    'display_version': True
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = [
@@ -149,13 +191,13 @@ html_theme_path = [
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
 #
-# html_logo = None
+html_logo = 'shop-logo.png'
 
 # The name of an image file (relative to this directory) to use as a favicon of
 # the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
 #
-# html_favicon = None
+html_favicon = 'favicon.png'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -194,7 +236,7 @@ html_static_path = ['_static']
 
 # If false, no index is generated.
 #
-# html_use_index = True
+html_use_index = False
 
 # If true, the index is split into individual pages for each letter.
 #
@@ -202,11 +244,11 @@ html_static_path = ['_static']
 
 # If true, links to the reST sources are added to the pages.
 #
-# html_show_sourcelink = True
+html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 #
-# html_show_sphinx = True
+html_show_sphinx = False
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
 #

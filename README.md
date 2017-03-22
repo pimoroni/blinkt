@@ -6,6 +6,8 @@ Available from Pimoroni: https://shop.pimoroni.com/products/blinkt
 
 ##Installation
 
+**Full install ( recommended ):**
+
 We've created a super-easy installation script that will install all pre-requisites and get your Blinkt! up and running in a jiffy. To run it fire up Terminal which you'll find in Menu -> Accessories -> Terminal on your Raspberry Pi desktop like so:
 
 ![Finding the terminal](terminal.jpg)
@@ -13,10 +15,36 @@ We've created a super-easy installation script that will install all pre-requisi
 In the new terminal window type:
 
 ```bash
-curl -sS get.pimoroni.com/blinkt | bash
+curl -sS https://get.pimoroni.com/blinkt | bash
 ```
 
 If you choose to download examples you'll find them in `/home/pi/Pimoroni/blinkt`.
+
+**Library install for Python 3:**
+
+on Raspbian:
+
+```bash
+sudo apt-get install python3-blinkt
+```
+other environments: 
+
+```bash
+sudo pip3 install blinkt
+```
+
+**Library install for Python 2:**
+
+on Raspbian:
+
+```bash
+sudo apt-get install python-blinkt
+```
+other environments: 
+
+```bash
+sudo pip2 install blinkt
+```
 
 ##Usage
 
@@ -42,8 +70,21 @@ set_brightness(0.5)
 show()
 ```
 
+##Documentation & Support
+
+* Getting started - https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-blinkt
+* Function reference - http://docs.pimoroni.com/blinkt/
+* GPIO Pinout - https://pinout.xyz/pinout/blinkt
+* Get help - http://forums.pimoroni.com/c/support
+
 ##Examples
 
 The examples in the `examples` folder should just work with Blinkt!, although you'll need to add Twitter developer access tokens and secrets in the `twitter_monitor.py` example. You can get these at [https://dev.twitter.com/](https://dev.twitter.com/), after setting up a new application.
 
 The examples in the `examples/extra_examples` folder are designed to work with other pHATs and HATs, so be aware of that before trying them.
+
+## Unofficial / Third-party libraries
+
+A Blinkt library is provided for Golang by [Alex Ellis](https://www.alexellis.io).
+
+* [alexellis/blinkt_go_examples](https://github.com/alexellis/blinkt_go_examples)
