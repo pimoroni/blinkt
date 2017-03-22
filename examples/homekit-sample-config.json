@@ -1,0 +1,36 @@
+{
+    "bridge": {
+        "name": "Homebridge",
+        "username": "CC:22:3D:E3:CE:32",
+        "port": 51826,
+        "pin": "031-45-155"
+    },
+
+    "description": "Homebridge",
+
+    "accessories": [
+        {
+            "accessory": "HTTP-RGB",
+            "name": "Blinkt",
+
+            "switch": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/status",
+                "powerOn": "http://127.0.0.1:5000/blinkt/api/v1.0/on",
+                "powerOff": "http://127.0.0.1:5000/blinkt/api/v1.0/off"
+            },
+
+            "brightness": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/brightness",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/brightness/%s"
+            },
+
+            "color": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/set",
+                "url": "http://127.0.0.1:5000/blinkt/api/v1.0/set/%s",
+                "brightness": true
+            }
+        }
+    ],
+
+    "platforms": []
+}
