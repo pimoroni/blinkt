@@ -4,15 +4,14 @@ import math
 import time
 import colorsys
 
-from blinkt import set_clear_on_exit, set_pixel, show, set_brightness, NUM_PIXELS
+import blinkt as apa
 
 FALLOFF = 1.9
 SCAN_SPEED = 4
 
-set_clear_on_exit()
+apa.set_clear_on_exit()
 
 start_time = time.time()
-
 
 while True:
     delta = (time.time() - start_time)
@@ -28,11 +27,12 @@ while True:
     # Now we generate a value from 0 to 7
     offset = int(round(offset * 7))
 
-    for x in range(NUM_PIXELS):
+    max_val = apa.NUM_PIXELS-1
+    for x in range(apa.NUM_PIXELS):
         sat = 1.0
  
-        val = (NUM_PIXELS-1) - (abs(offset - x) * FALLOFF)
-        val /= ((NUM_PIXELS-1)*1.0) # Convert to 0.0 to 1.0
+        val = max_val - (abs(offset - x) * FALLOFF)
+        val /= float(max_val) # Convert to 0.0 to 1.0
         val = max(val,0.0) # Ditch negative values
 
         xhue = hue # Grab hue for this pixel
@@ -42,8 +42,8 @@ while True:
 
         r, g, b = [int(c*255) for c in colorsys.hsv_to_rgb(xhue, sat, val)]
 
-        set_pixel(x, r, g, b, val / 4)
+        apa.set_pixel(x, r, g, b, val / 4)
 
-    show()
+    apa.show()
 
     time.sleep(0.001)
