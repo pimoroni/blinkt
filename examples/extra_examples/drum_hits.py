@@ -15,7 +15,7 @@ try:
 except ImportError:
     exit("This script requires the pygame module\nInstall with: sudo pip install pygame")
 
-from blinkt import set_pixel, show
+import blinkt
 
 
 DRUM_FOLDER = "drums2"
@@ -33,8 +33,8 @@ samples = [pygame.mixer.Sound(f) for f in files]
 def show_all(state):
     for i in range(8):
         val = state * 255
-        set_pixel(i, val, val, val)
-    show()
+        blinkt.set_pixel(i, val, val, val)
+    blinkt.show()
 
 def handle_hit(event):
     samples[event.channel].play(loops=0)

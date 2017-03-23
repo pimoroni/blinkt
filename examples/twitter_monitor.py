@@ -9,7 +9,7 @@ try:
 except ImportError:
     exit("This script requires the tweepy module\nInstall with: sudo pip install tweepy")
 
-from blinkt import set_pixel, show
+import blinkt 
 
 
 ckey = '' # Consumer key
@@ -28,12 +28,12 @@ class listener(StreamListener):
 def blink_blinkt():
     for i in range(3):
         for j in range(NUM_PIXELS):
-            set_pixel(j, 255, 0, 0)
-        show()
+            blinkt.set_pixel(j, 255, 0, 0)
+        blinkt.show()
         time.sleep(0.1)
         for j in range(NUM_PIXELS):
-            set_pixel(j, 0, 0, 0)
-        show()
+            blinkt.set_pixel(j, 0, 0, 0)
+        blinkt.show()
         time.sleep(0.2)
 
 auth = OAuthHandler(ckey, csecret)

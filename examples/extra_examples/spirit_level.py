@@ -8,7 +8,7 @@ try:
 except ImportError:
     exit("This script requires the envirophat module\nInstall with: sudo pip install envirophat")
 
-from blinkt import set_pixel, show, clear
+import blinkt
 
 
 x_avg = []
@@ -23,23 +23,23 @@ while True:
     x = max(-1,x)
     x = min( 1,x)
 
-    clear()
+    blinkt.clear()
     if(abs(x) < 0.05):
-        set_pixel(3, 0, 255, 0)
-        set_pixel(4, 0, 255 ,0)
+        blinkt.set_pixel(3, 0, 255, 0)
+        blinkt.set_pixel(4, 0, 255 ,0)
     elif x > 0:
         val = abs(x) * 4.0
         for x in range(4):
             if val < 0: break
-            set_pixel(3-x, int(255.0 * min(val,1.0)), 0, 0)
+            blinkt.set_pixel(3-x, int(255.0 * min(val,1.0)), 0, 0)
             val -= 1
     elif x < 0:
         val = abs(x) * 4.0
         for x in range(4):
             if val < 0: break
-            set_pixel(4+x, int(255.0 * min(val,1.0)), 0, 0)
+            blinkt.set_pixel(4+x, int(255.0 * min(val,1.0)), 0, 0)
             val -= 1
 
-    show()
+    blinkt.show()
 
     time.sleep(0.01)

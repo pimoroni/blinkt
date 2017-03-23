@@ -2,7 +2,7 @@
 
 import time
 
-from blinkt import set_clear_on_exit, set_pixel, show
+import blinkt
 
 
 colours = [
@@ -18,7 +18,7 @@ colours = [
 [255,255,255],#9 white
 ]
 
-set_clear_on_exit()
+blinkt.set_clear_on_exit()
 
 while True:
     hour = time.localtime().tm_hour
@@ -30,27 +30,27 @@ while True:
     minuteunit = minute % 10
 
     r, g, b = colours[hourten]
-    set_pixel(0,r,g,b)
-    set_pixel(1,r,g,b)
+    blinkt.set_pixel(0,r,g,b)
+    blinkt.set_pixel(1,r,g,b)
 
     r, g, b = colours[hourunit]
-    set_pixel(2,r,g,b)
-    set_pixel(3,r,g,b)
+    blinkt.set_pixel(2,r,g,b)
+    blinkt.set_pixel(3,r,g,b)
 
     r, g, b = colours[minuteten]
-    set_pixel(4,r,g,b)
-    set_pixel(5,r,g,b)
+    blinkt.set_pixel(4,r,g,b)
+    blinkt.set_pixel(5,r,g,b)
 
     r, g, b = colours[minuteunit]
-    set_pixel(6,r,g,b)
-    set_pixel(7,r,g,b)
+    blinkt.set_pixel(6,r,g,b)
+    blinkt.set_pixel(7,r,g,b)
 
-    show()
+    blinkt.show()
 
     time.sleep(0.5)
 
-    set_pixel(7,0,0,0)
+    blinkt.set_pixel(7,0,0,0)
 
-    show()
+    blinkt.show()
 
     time.sleep(0.5)
