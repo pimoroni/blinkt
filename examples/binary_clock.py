@@ -2,9 +2,9 @@
 
 from time import localtime, sleep
 
-from blinkt import set_clear_on_exit, set_pixel, clear, show
+import blinkt
 
-set_clear_on_exit()
+blinkt.set_clear_on_exit()
 
 MODE_HOUR = 0
 MODE_MIN = 1
@@ -33,33 +33,33 @@ while True:
     lm = m
     lh = h
 
-    clear()
+    blinkt.clear()
 
     if (s % 2) == 0:
-        set_pixel(1, 64, 64, 64)
+        blinkt.set_pixel(1, 64, 64, 64)
 
     if mode == MODE_HOUR:
-        set_pixel(0, 255, 0, 0)
+        blinkt.set_pixel(0, 255, 0, 0)
         for x in range(6):
             bit = (h & (1 << x)) > 0
             r, g, b = [128 * bit] * 3
-            set_pixel(7 - x, r, g, b)
+            blinkt.set_pixel(7 - x, r, g, b)
 
     if mode == MODE_MIN:
-        set_pixel(0, 0, 255, 0)
+        blinkt.set_pixel(0, 0, 255, 0)
         for x in range(6):
             bit = (m & (1 << x)) > 0
             r, g, b = [128 * bit] * 3
-            set_pixel(7 - x, r, g, b)
+            blinkt.set_pixel(7 - x, r, g, b)
 
     if mode == MODE_SEC:
-        set_pixel(0, 0, 0, 255)
+        blinkt.set_pixel(0, 0, 0, 255)
         for x in range(6):
             bit = (s & (1 << x)) > 0
             r, g, b = [128 * bit] * 3
-            set_pixel(7 - x, r, g, b)
+            blinkt.set_pixel(7 - x, r, g, b)
 
-    show()
+    blinkt.show()
 
     time_in_mode += 1
     if time_in_mode == time_to_stay_in_mode:

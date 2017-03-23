@@ -9,23 +9,23 @@ try:
 except ImportError:
     exit("This script requires the psutil module\nInstall with: sudo pip install psutil")
 
-from blinkt import set_clear_on_exit, set_brightness, set_pixel, show, NUM_PIXELS
+import blinkt
 
-set_clear_on_exit()
+blinkt.set_clear_on_exit()
 
 def show_graph(v, r, g, b):
-    v *= NUM_PIXELS
-    for x in range(NUM_PIXELS):
+    v *= blinkt.NUM_PIXELS
+    for x in range(blinkt.NUM_PIXELS):
         if v  < 0:
             r, g, b = 0, 0, 0
         else:
             r, g, b = [int(min(v,1.0) * c) for c in [r,g,b]]
-        set_pixel(x, r, g, b)
+        blinkt.set_pixel(x, r, g, b)
         v -= 1
 
-    show()
+    blinkt.show()
 
-set_brightness(0.1)
+blinkt.set_brightness(0.1)
 
 while True:
     v = psutil.cpu_percent() / 100.0

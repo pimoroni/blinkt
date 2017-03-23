@@ -4,7 +4,6 @@ import colorsys
 import math
 import time
 
-from blinkt import NUM_PIXELS
 import blinkt
 
 blinkt.set_clear_on_exit()
@@ -14,9 +13,9 @@ hue_start = 0
 max_brightness = 0.2
 
 def show_graph(v, r, g, b):
-    v *= NUM_PIXELS
-    for x in range(NUM_PIXELS):
-        hue = ((hue_start + ((x/float(NUM_PIXELS)) * hue_range)) % 360) / 360.0
+    v *= blinkt.NUM_PIXELS
+    for x in range(blinkt.NUM_PIXELS):
+        hue = ((hue_start + ((x/float(blinkt.NUM_PIXELS)) * hue_range)) % 360) / 360.0
         r, g, b = [int(c * 255) for c in colorsys.hsv_to_rgb(hue,1.0,1.0)]
         if v  < 0:
             brightness = 0

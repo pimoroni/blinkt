@@ -2,16 +2,15 @@
 
 import time
 
-from blinkt import set_clear_on_exit, set_pixel, show, NUM_PIXELS
+import blinkt
 
-
-set_clear_on_exit()
+blinkt.set_clear_on_exit()
 
 def show_all(state):
-    for i in range(NUM_PIXELS):
+    for i in range(blinkt.NUM_PIXELS):
         val = state * 255
-        set_pixel(i, val, val, val)
-    show()
+        blinkt.set_pixel(i, val, val, val)
+    blinkt.show()
 
 def dot():
     show_all(1)
