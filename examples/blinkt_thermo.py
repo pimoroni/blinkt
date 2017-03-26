@@ -39,7 +39,7 @@ def update_weather():
 
 def show_graph(v, r, g, b):
     v *= blinkt.NUM_PIXELS
-    for x in range(8):
+    for x in range(blinkt.NUM_PIXELS):
         if v  < 0:
             r, g, b = 0, 0, 0
         else:
