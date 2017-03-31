@@ -23,7 +23,7 @@ class listener(StreamListener):
         return True
 
     def on_error(self, status):
-        print status
+        print(status)
 
 def blink_blinkt():
     for i in range(3):
