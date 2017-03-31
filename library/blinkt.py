@@ -66,7 +66,8 @@ def show():
     if not _gpio_setup:
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        GPIO.setup([DAT,CLK],GPIO.OUT)
+        GPIO.setup(DAT,GPIO.OUT)
+        GPIO.setup(CLK,GPIO.OUT)
         _gpio_setup = True
 
     _sof()
