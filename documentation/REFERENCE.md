@@ -1,4 +1,4 @@
-#Blinkt Function Reference
+# Blinkt Function Reference
 
 The two Blinkt methods you'll most commonly use are `set_pixel` and `show`. Here's a simple example:
 
