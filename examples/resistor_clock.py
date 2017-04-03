@@ -24,10 +24,10 @@ while True:
     hour = time.localtime().tm_hour
     minute = time.localtime().tm_min
 
-    hourten = hour / 10
-    hourunit = hour % 10
-    minuteten = minute / 10
-    minuteunit = minute % 10
+    hourten = int(hour / 10)
+    hourunit = int(hour % 10)
+    minuteten = int(minute / 10)
+    minuteunit = int(minute % 10)
 
     r, g, b = colours[hourten]
     set_pixel(0,r,g,b)
