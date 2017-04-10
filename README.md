@@ -76,6 +76,5 @@ sudo python3 setup.py install
 
 ## Unofficial / Third-party libraries
 
-A Blinkt library is provided for Golang by [Alex Ellis](https://www.alexellis.io).
-
-* [alexellis/blinkt_go_examples](https://github.com/alexellis/blinkt_go_examples)
+* Golang library & examples by [Alex Ellis](https://www.alexellis.io) - https://github.com/alexellis/blinkt_go_examples
+* Java library by Jim Darby - https://github.com/hackerjimbo/PiJava
