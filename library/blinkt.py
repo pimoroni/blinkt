@@ -94,6 +94,14 @@ def set_all(r, g, b, brightness=None):
     for x in range(NUM_PIXELS):
         set_pixel(x, r, g, b, brightness)
 
+def get_pixel(x):
+    """Get the RGB and brightness value of a specific pixel"""
+
+    r, g, b, brightness = pixels[x]
+    brightness /= 31.0
+
+    return r, g, b, round(brightness,3)
+
 def set_pixel(x, r, g, b, brightness=None):
     """Set the RGB value, and optionally brightness, of a single pixel
     
