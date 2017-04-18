@@ -5,24 +5,27 @@ from random import randint
 
 import blinkt
 
+max_size=4
+max_grid=blinkt.NUM_PIXELS+max_size-1
 
 OFF = (0, 0, 0)
-grid = [OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF]
+grid = [OFF]*(max_grid+1)
 
 blinkt.set_clear_on_exit()
 
+# The tetris algorithm fail when random_color was 0,0,0 now avoided
 def random_color():
-    return (randint(0, 255), randint(0, 255), randint(0, 50))
+    return (randint(0, 255), randint(0, 255), randint(1, 50))
 
 def random_tile(max_size, min_size=1):
     return (randint(min_size, max_size), random_color())
 
 def place(tile):
     for i in range(0, tile[0]):
-        grid[11-i-len(tile)] = tile[1]
+        grid[max_grid-i-len(tile)] = tile[1]
 
 def update():
-    for i in range(0, 8):
+    for i in range(blinkt.NUM_PIXELS):
         blinkt.set_pixel(i, grid[i][0], grid[i][1], grid[i][2])
     blinkt.show()
 
@@ -61,7 +64,7 @@ def gravity():
 
 def main():
     blinkt.set_brightness(0.1)
-    place(random_tile(max_size=4))
+    place(random_tile(max_size))
     update()
     
     while True:
@@ -70,7 +73,7 @@ def main():
         if has_lines():
             blink_lines()
             remove_lines()
-            place(random_tile(max_size=4))
+            place(random_tile(max_size))
         else:
             gravity()
         

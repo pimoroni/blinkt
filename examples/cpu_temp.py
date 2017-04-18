@@ -4,9 +4,9 @@ import math
 import time
 from subprocess import PIPE, Popen
 
-from blinkt import set_clear_on_exit, set_brightness, set_pixel, show
+import blinkt
 
-set_clear_on_exit()
+blinkt.set_clear_on_exit()
 
 def get_cpu_temperature():
     process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE)
@@ -21,18 +21,18 @@ def get_cpu_temperature():
     return temp
 
 def show_graph(v, r, g, b):
-    v *= 8
-    for x in range(8):
+    v *= blinkt.NUM_PIXELS
+    for x in range(blinkt.NUM_PIXELS):
         if v  < 0:
             r, g, b = 0, 0, 0
         else:
             r, g, b = [int(min(v,1.0) * c) for c in [r,g,b]]
-        set_pixel(x, r, g, b)
+        blinkt.set_pixel(x, r, g, b)
         v -= 1
 
-    show()
+    blinkt.show()
 
-set_brightness(0.1)
+blinkt.set_brightness(0.1)
 
 while True:
     v = get_cpu_temperature() / 100.0

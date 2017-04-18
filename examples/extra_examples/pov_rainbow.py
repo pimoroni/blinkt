@@ -10,8 +10,7 @@ try:
 except ImportError:
     exit("This script requires the envirophat module\nInstall with: sudo pip install envirophat")
 
-from blinkt import set_pixel, show, clear
-
+import blinkt
 
 offset = 0
 direction = 0
@@ -57,8 +56,8 @@ while True:
     r, g, b = [int(x * 255.0) for x in hsv_to_rgb(hue,1.0,1.0)] 
 
     for x in range(8):
-        set_pixel(x, r, g, b)
+        blinkt.set_pixel(x, r, g, b)
 
-    show()
+    blinkt.show()
 
     time.sleep(0.0001)

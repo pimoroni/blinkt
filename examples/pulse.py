@@ -9,13 +9,12 @@ try:
 except ImportError:
     exit("This script requires the numpy module\nInstall with: sudo pip install numpy")
 
-from blinkt import set_clear_on_exit, set_pixel, show, set_brightness
+import blinkt
 
-
-set_clear_on_exit()
+blinkt.set_clear_on_exit()
 
 def make_gaussian(fwhm):
-    x = np.arange(0, 8, 1, float)
+    x = np.arange(0, blinkt.NUM_PIXELS, 1, float)
     y = x[:, np.newaxis]
     x0, y0 = 3.5, 3.5
     fwhm = fwhm
@@ -28,14 +27,14 @@ while True:
         gauss = make_gaussian(fwhm)
         start = time.time()
         y = 4
-        for x in range(8):
+        for x in range(blinkt.NUM_PIXELS):
             h = 0.5
             s = 1.0
             v = gauss[x, y]
             rgb = colorsys.hsv_to_rgb(h, s, v)
             r, g, b = [int(255.0 * i) for i in rgb]
-            set_pixel(x, r, g, b)
-        show()
+            blinkt.set_pixel(x, r, g, b)
+        blinkt.show()
         end = time.time()
         t = end - start
         if t < 0.04:

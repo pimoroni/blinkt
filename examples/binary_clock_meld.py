@@ -2,14 +2,14 @@
 
 from time import localtime, sleep
 
-from blinkt import set_clear_on_exit, set_pixel, set_brightness, clear, show
+import blinkt
 
 
 print("Hour = Red, Minute = Green, Second = Blue")
 
-set_clear_on_exit()
+blinkt.set_clear_on_exit()
 
-set_brightness(0.2)
+blinkt.set_brightness(0.2)
 
 on_value = 64
 
@@ -19,11 +19,11 @@ while True:
 
     print("{h}:{m}:{s}".format(h=h,m=m,s=s))
 
-    clear()
+    blinkt.clear()
 
     # Blink LED 0
     c = on_value * (s % 2)
-    set_pixel(0, c, c, c)
+    blinkt.set_pixel(0, c, c, c)
 
     for n in range(6):
         # Grab the n'th bit from hour, min and second
@@ -33,8 +33,8 @@ while True:
 
         r, g, b = [int(c * on_value) for c in (bit_h,bit_m,bit_s)]
 
-        set_pixel(7 - n, r, g, b)
+        blinkt.set_pixel(7 - n, r, g, b)
 
-    show()
+    blinkt.show()
 
     sleep(1)

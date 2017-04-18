@@ -9,9 +9,9 @@ try:
 except ImportError:
     exit("This script requires the requests module\nInstall with: sudo pip install requests")
 
-from blinkt import set_clear_on_exit, set_all, show
+import blinkt
 
-set_clear_on_exit()
+blinkt.set_clear_on_exit()
 
 def hex_to_rgb(col_hex):
     col_hex = col_hex.lstrip("#")
@@ -24,7 +24,9 @@ while True:
     r = requests.get("http://api.thingspeak.com/channels/1417/field/2/last.json", timeout=2)
     r, g, b = hex_to_rgb(r.json()["field2"])
 
-    set_all(r, g, b)
+    for i in range(blinkt.NUM_PIXELS):
+        blinkt.set_pixel(i, r, g, b)
+        
+    blinkt.show()
 
-    show()
     time.sleep(5) # Be friendly to the API
