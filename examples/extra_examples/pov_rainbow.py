@@ -39,7 +39,7 @@ while True:
         t = t[-5:] 
 
     if len(t) > 0:
-        total_time = float(sum(t)) / len(t) 
+        total_time = float(sum(t)) / len(t)
 
     offset = ((millis() - t_start) / total_time)
 
@@ -53,7 +53,7 @@ while True:
     if direction == -1:
         hue = 1.0 - offset
 
-    r, g, b = [int(x * 255.0) for x in hsv_to_rgb(hue,1.0,1.0)] 
+    r, g, b = [int(x * 255.0) for x in hsv_to_rgb(hue, 1.0, 1.0)]
 
     for x in range(8):
         blinkt.set_pixel(x, r, g, b)

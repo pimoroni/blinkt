@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import sys
-import time
 
 import blinkt 
 
@@ -20,10 +19,10 @@ except ValueError:
     usage()
 
 # Exit if any of r, g, b are greater than 255
-if max(r,g,b) > 255:
+if max(r, g, b) > 255:
     usage()
 
-print("Setting Blinkt to {r},{g},{b}".format(r=r,g=g,b=b))
+print("Setting Blinkt to {r},{g},{b}".format(r=r, g=g, b=b))
 
 blinkt.set_clear_on_exit(False)
 

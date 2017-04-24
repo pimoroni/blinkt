@@ -17,6 +17,7 @@ while True:
         offset = x * spacing
         h = ((hue + offset) % 360) / 360.0
         r, g, b = [int(c*255) for c in colorsys.hsv_to_rgb(h, 1.0, 1.0)]
-        blinkt.set_pixel(x,r,g,b)
+        blinkt.set_pixel(x, r, g, b)
+
     blinkt.show()
     time.sleep(0.001)

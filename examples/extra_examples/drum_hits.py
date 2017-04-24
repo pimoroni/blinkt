@@ -39,7 +39,7 @@ def show_all(state):
 def handle_hit(event):
     samples[event.channel].play(loops=0)
     show_all(1)
-    print("You hit pad {}, playing: {}".format(event.pad,files[event.channel]))
+    print("You hit pad {}, playing: {}".format(event.pad, files[event.channel]))
 
 def handle_release():
     show_all(0)

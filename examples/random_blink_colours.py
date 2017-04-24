@@ -10,6 +10,7 @@ blinkt.set_brightness(0.1)
 
 while True:
     for i in range(blinkt.NUM_PIXELS):
-        blinkt.set_pixel(i, random.randint(0,255), random.randint(0,255), random.randint(0,255))
+        blinkt.set_pixel(i, random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
     blinkt.show()
     time.sleep(0.05)

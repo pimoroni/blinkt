@@ -1,7 +1,0 @@
-The following example do not work with Python3.
-Feel free to fix it.
-
-cheerlights.py
-cpu_temp.py
-resistor_clock.py
-twitter_monitor.py

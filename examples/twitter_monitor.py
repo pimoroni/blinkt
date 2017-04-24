@@ -27,11 +27,11 @@ class listener(StreamListener):
 
 def blink_blinkt():
     for i in range(3):
-        for j in range(NUM_PIXELS):
+        for j in range(blinkt.NUM_PIXELS):
             blinkt.set_pixel(j, 255, 0, 0)
         blinkt.show()
         time.sleep(0.1)
-        for j in range(NUM_PIXELS):
+        for j in range(blinkt.NUM_PIXELS):
             blinkt.set_pixel(j, 0, 0, 0)
         blinkt.show()
         time.sleep(0.2)

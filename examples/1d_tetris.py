@@ -5,11 +5,11 @@ from random import randint
 
 import blinkt
 
-max_size=4
-max_grid=blinkt.NUM_PIXELS+max_size-1
+MAX_SIZE = 4
+MAX_GRID = blinkt.NUM_PIXELS + MAX_SIZE - 1
 
 OFF = (0, 0, 0)
-grid = [OFF]*(max_grid+1)
+grid = [OFF] * (MAX_GRID + 1)
 
 blinkt.set_clear_on_exit()
 
@@ -22,7 +22,7 @@ def random_tile(max_size, min_size=1):
 
 def place(tile):
     for i in range(0, tile[0]):
-        grid[max_grid-i-len(tile)] = tile[1]
+        grid[MAX_GRID - i - len(tile)] = tile[1]
 
 def update():
     for i in range(blinkt.NUM_PIXELS):
@@ -46,7 +46,7 @@ def blink_lines():
         for line in get_lines():
             blinkt.set_pixel(line, 0, 0, 0)
         blinkt.show()
-    
+
     hide()
     time.sleep(0.5)
     update()
@@ -64,19 +64,19 @@ def gravity():
 
 def main():
     blinkt.set_brightness(0.1)
-    place(random_tile(max_size))
+    place(random_tile(MAX_SIZE))
     update()
-    
+
     while True:
         time.sleep(0.5)
-        
+
         if has_lines():
             blink_lines()
             remove_lines()
-            place(random_tile(max_size))
+            place(random_tile(MAX_SIZE))
         else:
             gravity()
-        
+
         update()
 
 if __name__ == "__main__":

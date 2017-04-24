@@ -17,7 +17,7 @@ while True:
     t = localtime()
     h, m, s = t.tm_hour, t.tm_min, t.tm_sec
 
-    print("{h}:{m}:{s}".format(h=h,m=m,s=s))
+    print("{h}:{m}:{s}".format(h=h, m=m, s=s))
 
     blinkt.clear()
 
@@ -31,7 +31,7 @@ while True:
         bit_m = (m & (1 << n)) > 0
         bit_s = (s & (1 << n)) > 0
 
-        r, g, b = [int(c * on_value) for c in (bit_h,bit_m,bit_s)]
+        r, g, b = [int(c * on_value) for c in (bit_h, bit_m, bit_s)]
 
         blinkt.set_pixel(7 - n, r, g, b)
 

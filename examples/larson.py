@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
-import math
 import time
 
 import blinkt
 
 blinkt.set_clear_on_exit()
 
-reds = [0, 0, 0, 0, 0, 16, 64, 255, 64, 16, 0, 0, 0, 0, 0]
+REDS = [0, 0, 0, 0, 0, 16, 64, 255, 64, 16, 0, 0, 0, 0, 0]
 
 start_time = time.time()
 
@@ -21,7 +20,8 @@ while True:
     offset = int(abs((delta % 16) - 8))
 
     for i in range(8):
-        blinkt.set_pixel(i , reds[offset + i], 0, 0)
+        blinkt.set_pixel(i , REDS[offset + i], 0, 0)
+
     blinkt.show()
 
     time.sleep(0.1)
