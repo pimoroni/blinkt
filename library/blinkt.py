@@ -3,7 +3,7 @@ import atexit
 import RPi.GPIO as GPIO
 
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 DAT = 23
 CLK = 24
