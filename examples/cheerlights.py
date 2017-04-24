@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import time
-import struct
 from sys import exit
 
 try:
@@ -16,10 +15,7 @@ blinkt.set_clear_on_exit()
 def hex_to_rgb(col_hex):
     """Convert a hex colour to an RGB tuple"""
     col_hex = col_hex.lstrip("#")
-    try:
-        return struct.unpack("BBB", bytes.fromhex(col_hex))
-    except AttributeError:
-        return struct.unpack("BBB", col_hex.decode("hex"))
+    return bytearray.fromhex(col_hex)
 
 while True:
     r = requests.get("http://api.thingspeak.com/channels/1417/field/2/last.json", timeout=2)
