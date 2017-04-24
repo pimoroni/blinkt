@@ -3,14 +3,14 @@ import atexit
 import RPi.GPIO as GPIO
 
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 DAT = 23
 CLK = 24
 NUM_PIXELS = 8
 BRIGHTNESS = 7
 
-pixels = [[0,0,0,BRIGHTNESS]] * NUM_PIXELS
+pixels = [[0, 0, 0, BRIGHTNESS]] * NUM_PIXELS
 
 _gpio_setup = False
 _clear_on_exit = True
@@ -36,7 +36,7 @@ def set_brightness(brightness):
 def clear():
     """Clear the pixel buffer"""
     for x in range(NUM_PIXELS):
-        pixels[x][0:3] = [0,0,0]
+        pixels[x][0:3] = [0, 0, 0]
 
 def _write_byte(byte):
     for x in range(8):
@@ -54,7 +54,7 @@ def _eof():
         GPIO.output(CLK, 0)
 
 def _sof():
-    GPIO.output(DAT,0)
+    GPIO.output(DAT, 0)
     for x in range(32):
         GPIO.output(CLK, 1)
         GPIO.output(CLK, 0)
@@ -66,8 +66,8 @@ def show():
     if not _gpio_setup:
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        GPIO.setup(DAT,GPIO.OUT)
-        GPIO.setup(CLK,GPIO.OUT)
+        GPIO.setup(DAT, GPIO.OUT)
+        GPIO.setup(CLK, GPIO.OUT)
         _gpio_setup = True
 
     _sof()
@@ -100,11 +100,11 @@ def get_pixel(x):
     r, g, b, brightness = pixels[x]
     brightness /= 31.0
 
-    return r, g, b, round(brightness,3)
+    return r, g, b, round(brightness, 3)
 
 def set_pixel(x, r, g, b, brightness=None):
     """Set the RGB value, and optionally brightness, of a single pixel
-    
+
     If you don't supply a brightness value, the last value will be kept.
 
     :param x: The horizontal position of the pixel: 0 to 7
@@ -118,7 +118,7 @@ def set_pixel(x, r, g, b, brightness=None):
     else:
         brightness = int(31.0 * brightness) & 0b11111
 
-    pixels[x] = [int(r) & 0xff,int(g) & 0xff,int(b) & 0xff,brightness]
+    pixels[x] = [int(r) & 0xff, int(g) & 0xff, int(b) & 0xff, brightness]
 
 def set_clear_on_exit(value=True):
     """Set whether Blinkt! should be cleared upon exit

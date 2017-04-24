@@ -73,15 +73,21 @@ Enable/Disable Clear On Exit
 
 Sometimes you want a script that runs and quits, leaving a pattern up on Blinkt!
 
-
 .. automodule:: blinkt
    :noindex:
    :members: set_clear_on_exit
 
+Get A Single Pixel
+------------------
+
+.. automodule:: blinkt
+   :noindex:
+   :members: get_pixel
+
 Constants
 ---------
 
-Blinkt! has 8 pixels. Simple. Use the constant :python:`NUM_PIXELS` when you're iterating over pixels,
+Blinkt! has 8 pixels. Simple. Use the constant :python:`blinkt.NUM_PIXELS` when you're iterating over pixels,
 so you can avoid a *magic number* in your code.
 
-:python:`NUM_PIXELS = 8`
+:python:`blinkt.NUM_PIXELS = 8`
