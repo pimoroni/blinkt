@@ -13,7 +13,7 @@ Architecture: all
 Section: python
 Depends: ${misc:Depends}, ${python:Depends}, python-rpi.gpio
 Suggests: python-psutil, python-requests
-Description: python library designed to control Blinkt!
+Description: Python library for the Pimoroni Blinkt!
  Blinkt! provides eight super-bright RGB LED indicators.
  Ideal for adding visual notifications to your Raspberry Pi.
  .
@@ -24,7 +24,7 @@ Architecture: all
 Section: python
 Depends: ${misc:Depends}, ${python3:Depends}, python3-rpi.gpio
 Suggests: python3-psutil, python3-requests
-Description: python library designed to control Blinkt!
+Description: Python library for the Pimoroni Blinkt!
  Blinkt! provides eight super-bright RGB LED indicators.
  Ideal for adding visual notifications to your Raspberry Pi.
  .
