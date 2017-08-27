@@ -1,4 +1,16 @@
 #!/usr/bin/env python
+#
+# to set pixel 4 to red 0.5 brightness
+#/set/4/255/0/0/0.5
+#/set/[Pixel]/[R]/[G]/[B]/[Brightness]
+#
+# to set all pixels to red full brightness
+#/all/255/0/0/1 
+#/all/[R]/[G]/[B]/[Brightness]
+#
+# to clear all pixels
+#/clear 
+
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from pathlib import Path
