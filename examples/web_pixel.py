@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 #
 # to set pixel 4 to red 0.5 brightness
-# http://[IP Address]:[port]/set/4/255/0/0/0.5
-# http://[IP Address]:[port]/set/[Pixel]/[R]/[G]/[B]/[Brightness]
+# http://[IP Address]:[Port]/set/4/255/0/0/0.5
+# http://[IP Address]:[Port]/set/[Pixel]/[Red]/[Green]/[Blue]/[Brightness]
 #
 # to set all pixels to red full brightness
-# http://[IP Address]:[port]/all/255/0/0/1 
-# http://[IP Address]:[port]/all/[R]/[G]/[B]/[Brightness]
+# http://[IP Address]:[Port]/all/255/0/0/1 
+# http://[IP Address]:[Port]/all/[Red]/[Green]/[Blue]/[Brightness]
 #
 # to clear all pixels
-# http://[IP Address]:[port]/clear 
+# http://[IP Address]:[Port]/clear 
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
