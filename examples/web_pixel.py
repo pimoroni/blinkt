@@ -1,15 +1,25 @@
 #!/usr/bin/env python
+# 
+# You can change the pixel via any web browser or tool like curl or wget.
+# If you want to change the pixel from a remote computer 
+#  change 127.0.0.1 to your Pi's ip address.
 #
-# to set pixel 4 to red 0.5 brightness
-# http://[IP Address]:[Port]/set/4/255/0/0/0.5
+# Set a pixel
 # http://[IP Address]:[Port]/set/[Pixel]/[Red]/[Green]/[Blue]/[Brightness]
 #
-# to set all pixels to red full brightness
-# http://[IP Address]:[Port]/all/255/0/0/1 
+# Set all pixels
 # http://[IP Address]:[Port]/all/[Red]/[Green]/[Blue]/[Brightness]
 #
-# to clear all pixels
+# Clear all pixels
 # http://[IP Address]:[Port]/clear 
+#
+#
+# Example 1: set pixel 4 to red 0.5 brightness via curl
+# curl http://127.0.0.1:8000/set/4/255/0/0/0.5
+#
+# Example 2: set all pixels to green full brightness via wget
+# wget http://127.0.0.1:8000/all/0/255/0/1
+#
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
@@ -61,7 +71,8 @@ class S(BaseHTTPRequestHandler):
   def do_POST(self):
     # Doesn't do anything with posted data
     self._set_fail_headers()
-    self.wfile.write("<html><body><h1>POST not handled</h1></body></html>".encode("utf-8"))
+    result = "<html><body><h1>No POST</h1></body></html>"
+    self.wfile.write(result.encode("utf-8"))
 
   def do_HEAD(self):
     self._set_success_headers()
