@@ -68,6 +68,7 @@ def show():
         GPIO.setwarnings(False)
         GPIO.setup(DAT, GPIO.OUT)
         GPIO.setup(CLK, GPIO.OUT)
+        atexit.register(_exit)
         _gpio_setup = True
 
     _sof()
@@ -133,6 +134,4 @@ def set_clear_on_exit(value=True):
     """
     global _clear_on_exit
     _clear_on_exit = value
-
-atexit.register(_exit)
 
