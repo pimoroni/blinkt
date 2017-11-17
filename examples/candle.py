@@ -24,6 +24,7 @@ while True:
     if limit > blinkt.NUM_PIXELS:
         limit = blinkt.NUM_PIXELS
 
+    blinkt.clear()
     for pixel in range(limit):
         hue = start + (((end - start) / float(blinkt.NUM_PIXELS)) * pixel)
         r, g, b = [int(c * 255) for c in colorsys.hsv_to_rgb(hue/360.0, 1.0, 1.0)]
