@@ -65,7 +65,7 @@ uint32_t rgb(uint8_t r, uint8_t g, uint8_t b){
 	return rgbb(r, g, b, DEFAULT_BRIGHTNESS);
 }
 
-inline void write_byte(uint8_t byte){
+inline static void write_byte(uint8_t byte){
 	int n;
 	for(n = 0; n < 8; n++){
 		bcm2835_gpio_write(MOSI, (byte & (1 << (7-n))) > 0);
