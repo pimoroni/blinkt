@@ -1,0 +1,25 @@
+{
+    "bridge": {
+        "name": "Homebridge",
+        "username": "CC:22:3D:E3:CE:32",
+        "port": 51826,
+        "pin": "031-45-155"
+    },
+
+    "description": "Homebridge",
+
+    "accessories": [
+        {
+            "accessory": "HTTP-RGB",
+            "name": "BlinktCycle",
+
+            "switch": {
+                "status": "http://127.0.0.1:5000/blinkt/api/v1.0/pattern/cycle/status",
+                "powerOn": "http://127.0.0.1:5000/blinkt/api/v1.0/pattern/cycle/on",
+                "powerOff": "http://127.0.0.1:5000/blinkt/api/v1.0/pattern/cycle/off"
+            }
+        }
+    ],
+
+    "platforms": []
+}
