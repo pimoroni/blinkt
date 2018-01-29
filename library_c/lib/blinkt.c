@@ -37,17 +37,19 @@ void clear(){
 }
 
 void set_pixel(uint8_t led, uint8_t r, uint8_t g, uint8_t b){
-	if(led > NUM_LEDS) return;
+	if(led >= NUM_LEDS) return;
 
 	leds[led] = rgbb(r,g,b,leds[led] & 0b11111);
 }
 
 void set_pixel_brightness(uint8_t led, uint8_t brightness){
+	if(led >= NUM_LEDS) return;
+	
 	leds[led] = (leds[led] & 0xFFFFFF00) | (brightness & 0b11111);
 }
 
 void set_pixel_uint32(uint8_t led, uint32_t color){
-	if(led > NUM_LEDS) return;
+	if(led >= NUM_LEDS) return;
 
 	leds[led] = color;
 }
