@@ -43,9 +43,10 @@ def _write_byte(byte):
     for x in range(8):
         GPIO.output(DAT, byte & 0b10000000)
         GPIO.output(CLK, 1)
-        time.sleep(0.000001)
+        time.sleep(0.0000005)
         byte <<= 1
         GPIO.output(CLK, 0)
+        time.sleep(0.0000005)
 
 # Emit exactly enough clock pulses to latch the small dark die APA102s which are weird
 # for some reason it takes 36 clocks, the other IC takes just 4 (number of pixels/2)
@@ -53,15 +54,17 @@ def _eof():
     GPIO.output(DAT, 0)
     for x in range(36):
         GPIO.output(CLK, 1)
-        time.sleep(0.000001)
+        time.sleep(0.0000005)
         GPIO.output(CLK, 0)
+        time.sleep(0.0000005)
 
 def _sof():
     GPIO.output(DAT, 0)
     for x in range(32):
         GPIO.output(CLK, 1)
-        time.sleep(0.000001)
+        time.sleep(0.0000005)
         GPIO.output(CLK, 0)
+        time.sleep(0.0000005)
 
 def show():
     """Output the buffer to Blinkt!"""
