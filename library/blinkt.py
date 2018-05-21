@@ -1,4 +1,5 @@
 import atexit
+import time
 
 import RPi.GPIO as GPIO
 
@@ -42,6 +43,7 @@ def _write_byte(byte):
     for x in range(8):
         GPIO.output(DAT, byte & 0b10000000)
         GPIO.output(CLK, 1)
+        time.sleep(0.000001)
         byte <<= 1
         GPIO.output(CLK, 0)
 
@@ -51,12 +53,14 @@ def _eof():
     GPIO.output(DAT, 0)
     for x in range(36):
         GPIO.output(CLK, 1)
+        time.sleep(0.000001)
         GPIO.output(CLK, 0)
 
 def _sof():
     GPIO.output(DAT, 0)
     for x in range(32):
         GPIO.output(CLK, 1)
+        time.sleep(0.000001)
         GPIO.output(CLK, 0)
 
 def show():
