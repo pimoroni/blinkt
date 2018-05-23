@@ -39,11 +39,11 @@ classifiers = ['Development Status :: 5 - Production/Stable',
 
 setup(
     name            = 'blinkt',
-    version         = '0.1.1',
+    version         = '0.1.2',
     author          = 'Philip Howard',
     author_email    = 'phil@pimoroni.com',
     description     = """Python library for driving Pimoroni Blinkt!""",
-    long_description= open('README.txt').read() + open('CHANGELOG.txt').read(),
+    long_description= open('README.rst').read() + "\n" + open('CHANGELOG.txt').read(),
     license         = 'MIT',
     keywords        = 'Raspberry Pi LED',
     url             = 'http://www.pimoroni.com',

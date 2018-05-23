@@ -4,7 +4,7 @@ import time
 import RPi.GPIO as GPIO
 
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 DAT = 23
 CLK = 24
