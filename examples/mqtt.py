@@ -51,7 +51,15 @@ parser.add_argument( '-p', '--pass', dest = 'pw',
                         help = 'MQTT broker password' )
 parser.add_argument( '-q', '--quiet', default = False, action = 'store_true',
                         help = 'Minimal output (eg for running as a daemon)' )
+parser.add_argument( '-D', '--daemon', default = False, action = 'store_true',
+                        help = 'Run as a daemon (implies -q)' )
 args = parser.parse_args()
+
+if args.daemon:
+    try:
+        import daemon
+    except ImportError:
+        exit("--daemon requires the daemon module.  Install with: sudo pip install python-daemon")
 
 MQTT_SERVER = args.host
 MQTT_PORT = args.port
@@ -115,16 +123,24 @@ def on_message(client, userdata, msg):
         return
 
 
-blinkt.set_clear_on_exit()
+def mqtt_subscriber():
+    blinkt.set_clear_on_exit()
 
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
+    client = mqtt.Client()
+    client.on_connect = on_connect
+    client.on_message = on_message
 
-if MQTT_USER is not None and MQTT_PASS is not None:
-    print("Using username: {un} and password: {pw}".format(un=MQTT_USER, pw="*" * len(MQTT_PASS)))
-    client.username_pw_set(username=MQTT_USER, password=MQTT_PASS)
+    if MQTT_USER is not None and MQTT_PASS is not None:
+        print("Using username: {un} and password: {pw}".format(un=MQTT_USER, pw="*" * len(MQTT_PASS)))
+        client.username_pw_set(username=MQTT_USER, password=MQTT_PASS)
 
-client.connect(MQTT_SERVER, MQTT_PORT, 60)
+    client.connect(MQTT_SERVER, MQTT_PORT, 60)
 
-client.loop_forever()
+    client.loop_forever()
+
+if args.daemon:
+    args.quiet = True
+    with daemon.DaemonContext():
+            mqtt_subscriber()
+else:
+    mqtt_subscriber()
