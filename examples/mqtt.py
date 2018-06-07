@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from sys import exit
+import argparse
 
 try:
     import paho.mqtt.client as mqtt
@@ -18,7 +19,7 @@ MQTT_TOPIC = "pimoroni/blinkt"
 MQTT_USER = None
 MQTT_PASS = None
 
-print("""
+description = """\
 MQTT Blinkt! Control
 
 This example uses public MQTT messages from {server} on port {port} to control Blinkt!
@@ -36,10 +37,31 @@ Use {server} as the host, and port 80 (Eclipse's websocket port). Set the topic 
     server=MQTT_SERVER,
     port=MQTT_PORT,
     topic=MQTT_TOPIC
-))
+)
+parser = argparse.ArgumentParser(description = description, formatter_class = argparse.RawDescriptionHelpFormatter)
+parser.add_argument( '-H', '--host', default = MQTT_SERVER,
+                        help = 'MQTT broker to connect to' )
+parser.add_argument( '-P', '--port', default = MQTT_PORT, type = int,
+                        help = 'port on MQTT broker to connect to' )
+parser.add_argument( '-T', '--topic', default = MQTT_TOPIC,
+                        help = 'MQTT topic to subscribe to' )
+parser.add_argument( '-u', '--user',
+                        help = 'MQTT broker user name' )
+parser.add_argument( '-p', '--pass', dest = 'pw',
+                        help = 'MQTT broker password' )
+parser.add_argument( '-q', '--quiet', default = False, action = 'store_true',
+                        help = 'Minimal output (eg for running as a daemon)' )
+args = parser.parse_args()
+
+MQTT_SERVER = args.host
+MQTT_PORT = args.port
+MQTT_TOPIC = args.topic
+MQTT_USER = args.user
+MQTT_PASS = args.pw
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+    if not args.quiet:
+        print("Connected to {s}:{p}/{t} with result code {r}.\nSee {c} --help for options.".format(s = MQTT_SERVER, p = MQTT_PORT, t = MQTT_TOPIC, r = rc, c = parser.prog))
 
     client.subscribe(MQTT_TOPIC)
 
