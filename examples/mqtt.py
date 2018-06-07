@@ -27,6 +27,7 @@ It will monitor the {topic} topic by default, and understands the following mess
 
 rgb,<pixel>,<r>,<g>,<b> - Set a single pixel to an RGB colour. Example: rgb,1,255,0,255
 clr - Clear Blinkt!
+bri,<val> - Set global brightness (for val in range 0.0-1.0)
 
 You can use the online MQTT tester at http://www.hivemq.com/demos/websocket-client/ to send messages.
 
@@ -49,6 +50,16 @@ def on_message(client, userdata, msg):
 
     if command == "clr" and len(data) == 0:
         blinkt.clear()
+        blinkt.show()
+        return
+
+    if command == "bri" and len(data) == 1:
+        try:
+            bri = float(data[0])
+        except ValueError:
+            print("Malformed command: ", str(msg.payload))
+            return
+        blinkt.set_brightness(bri)
         blinkt.show()
         return
 
