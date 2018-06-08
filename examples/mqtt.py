@@ -51,6 +51,8 @@ parser.add_argument( '-p', '--pass', dest = 'pw',
                         help = 'MQTT broker password' )
 parser.add_argument( '-q', '--quiet', default = False, action = 'store_true',
                         help = 'Minimal output (eg for running as a daemon)' )
+parser.add_argument( '-g', '--green-hack', default = False, action = 'store_true',
+                        help = 'Apply hack to green channel to improve colour saturation' )
 parser.add_argument( '-D', '--daemon', default = False, action = 'store_true',
                         help = 'Run as a daemon (implies -q)' )
 args = parser.parse_args()
@@ -106,6 +108,18 @@ def on_message(client, userdata, msg):
                     return
 
             r, g, b = [int(x) & 0xff for x in data]
+            if args.green_hack:
+                # Green is about twice the luminosity for a given value
+                # than red or blue, so apply a hackish linear compensation
+                # here taking care of corner cases at 0 and 255.  To do it
+                # properly, it should really be a curve but this approximation
+                # is quite a lot better than nothing.
+                if r not in [0,255]:
+                    r = r + 1
+                if g not in [0]:
+                    g = g/2 + 1
+                if b not in [0,255]:
+                    b = b + 1
 
             print(command, pixel, r, g, b)
 
