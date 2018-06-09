@@ -74,36 +74,28 @@ MQTT_TOPIC = args.topic
 MQTT_USER = args.user
 MQTT_PASS = args.pw
 
-def on_connect(client, userdata, flags, rc):
-    if not args.quiet:
-        print("Connected to {s}:{p}/{t} with result code {r}.\nSee {c} --help for options.".format(s = MQTT_SERVER, p = MQTT_PORT, t = MQTT_TOPIC, r = rc, c = parser.prog))
+class PixelClient( mqtt.Client ):
+    def __init__( self, prog_args, *args, **kwargs ):
+        super( PixelClient, self ).__init__( *args, **kwargs )
+        self.args = prog_args
+        self.on_connect = self.on_connect
+        self.on_message = self.on_message
 
-    client.subscribe(MQTT_TOPIC)
-
-def on_message(client, userdata, msg):
-
-    data = msg.payload.split(',')
-    command = data.pop(0)
-
-    if command == "clr" and len(data) == 0:
+    def cmd_clear( self ):
         blinkt.clear()
         blinkt.show()
-        return
 
-    if command == "bri" and len(data) == 1:
+    def cmd_brightness( self, bri ):
         try:
-            bri = float(data[0])
+            bri = float(bri)
         except ValueError:
             print("Malformed command: ", str(msg.payload))
             return
         blinkt.set_brightness(bri)
         blinkt.show()
-        return
 
-    if command == "rgb" and len(data) == 4:
+    def cmd_rgb( self, pixel, data ):
         try:
-            pixel = data.pop(0)
-
             if pixel == "*":
                 pixel = None
             else:
@@ -126,7 +118,8 @@ def on_message(client, userdata, msg):
                 if b not in [0,255]:
                     b = b + 1
 
-            print(command, pixel, r, g, b)
+            if not self.args.quiet:
+                print('rgb', pixel, r, g, b)
 
         except ValueError:
             print("Malformed command: " + str(msg.payload))
@@ -139,7 +132,29 @@ def on_message(client, userdata, msg):
             blinkt.set_pixel(pixel, r, g, b)
 
         blinkt.show()
-        return
+
+    def on_connect(self, client, userdata, flags, rc):
+        if not args.quiet:
+            print("Connected to {s}:{p}/{t} with result code {r}.\nSee {c} --help for options.".format(s = MQTT_SERVER, p = MQTT_PORT, t = MQTT_TOPIC, r = rc, c = parser.prog))
+
+        client.subscribe(MQTT_TOPIC)
+
+    def on_message(self, client, userdata, msg):
+
+        data = msg.payload.split(',')
+        command = data.pop(0)
+
+        if command == "clr" and len(data) == 0:
+            self.cmd_clear()
+            return
+
+        if command == "bri" and len(data) == 1:
+            self.cmd_brightness( data[0] )
+            return
+
+        if command == "rgb" and len(data) == 4:
+            self.cmd_rgb( data[0], data[1:] )
+            return
 
 def mqtt_subscriber():
     blinkt.set_clear_on_exit()
@@ -147,9 +162,7 @@ def mqtt_subscriber():
     blinkt.show()
 
     global client
-    client = mqtt.Client()
-    client.on_connect = on_connect
-    client.on_message = on_message
+    client = PixelClient( args )
 
     if MQTT_USER is not None and MQTT_PASS is not None:
         print("Using username: {un} and password: {pw}".format(un=MQTT_USER, pw="*" * len(MQTT_PASS)))
