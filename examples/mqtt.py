@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from sys import exit
+import argparse
 
 try:
     import paho.mqtt.client as mqtt
@@ -18,7 +19,7 @@ MQTT_TOPIC = "pimoroni/blinkt"
 MQTT_USER = None
 MQTT_PASS = None
 
-print("""
+description = """\
 MQTT Blinkt! Control
 
 This example uses public MQTT messages from {server} on port {port} to control Blinkt!
@@ -27,6 +28,7 @@ It will monitor the {topic} topic by default, and understands the following mess
 
 rgb,<pixel>,<r>,<g>,<b> - Set a single pixel to an RGB colour. Example: rgb,1,255,0,255
 clr - Clear Blinkt!
+bri,<val> - Set global brightness (for val in range 0.0-1.0)
 
 You can use the online MQTT tester at http://www.hivemq.com/demos/websocket-client/ to send messages.
 
@@ -35,10 +37,46 @@ Use {server} as the host, and port 80 (Eclipse's websocket port). Set the topic 
     server=MQTT_SERVER,
     port=MQTT_PORT,
     topic=MQTT_TOPIC
-))
+)
+parser = argparse.ArgumentParser(description = description, formatter_class = argparse.RawDescriptionHelpFormatter)
+parser.add_argument( '-H', '--host', default = MQTT_SERVER,
+                        help = 'MQTT broker to connect to' )
+parser.add_argument( '-P', '--port', default = MQTT_PORT, type = int,
+                        help = 'port on MQTT broker to connect to' )
+parser.add_argument( '-T', '--topic', default = MQTT_TOPIC,
+                        help = 'MQTT topic to subscribe to' )
+parser.add_argument( '-u', '--user',
+                        help = 'MQTT broker user name' )
+parser.add_argument( '-p', '--pass', dest = 'pw',
+                        help = 'MQTT broker password' )
+parser.add_argument( '-q', '--quiet', default = False, action = 'store_true',
+                        help = 'Minimal output (eg for running as a daemon)' )
+parser.add_argument( '-g', '--green-hack', default = False, action = 'store_true',
+                        help = 'Apply hack to green channel to improve colour saturation' )
+parser.add_argument( '-D', '--daemon', metavar='PIDFILE',
+                        help = 'Run as a daemon (implies -q)' )
+args = parser.parse_args()
+
+if args.daemon:
+    import signal
+    try:
+        import daemon
+    except ImportError:
+        exit("--daemon requires the daemon module.  Install with: sudo pip install python-daemon")
+    try:
+        import lockfile.pidlockfile
+    except ImportError:
+        exit("--daemon requires the lockfile module.  Install with: sudo pip install lockfile")
+
+MQTT_SERVER = args.host
+MQTT_PORT = args.port
+MQTT_TOPIC = args.topic
+MQTT_USER = args.user
+MQTT_PASS = args.pw
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+    if not args.quiet:
+        print("Connected to {s}:{p}/{t} with result code {r}.\nSee {c} --help for options.".format(s = MQTT_SERVER, p = MQTT_PORT, t = MQTT_TOPIC, r = rc, c = parser.prog))
 
     client.subscribe(MQTT_TOPIC)
 
@@ -49,6 +87,16 @@ def on_message(client, userdata, msg):
 
     if command == "clr" and len(data) == 0:
         blinkt.clear()
+        blinkt.show()
+        return
+
+    if command == "bri" and len(data) == 1:
+        try:
+            bri = float(data[0])
+        except ValueError:
+            print("Malformed command: ", str(msg.payload))
+            return
+        blinkt.set_brightness(bri)
         blinkt.show()
         return
 
@@ -65,6 +113,18 @@ def on_message(client, userdata, msg):
                     return
 
             r, g, b = [int(x) & 0xff for x in data]
+            if args.green_hack:
+                # Green is about twice the luminosity for a given value
+                # than red or blue, so apply a hackish linear compensation
+                # here taking care of corner cases at 0 and 255.  To do it
+                # properly, it should really be a curve but this approximation
+                # is quite a lot better than nothing.
+                if r not in [0,255]:
+                    r = r + 1
+                if g not in [0]:
+                    g = g/2 + 1
+                if b not in [0,255]:
+                    b = b + 1
 
             print(command, pixel, r, g, b)
 
@@ -81,17 +141,36 @@ def on_message(client, userdata, msg):
         blinkt.show()
         return
 
+def mqtt_subscriber():
+    blinkt.set_clear_on_exit()
+    # Some stuff doesn't get set up until the first time show() is called
+    blinkt.show()
 
-blinkt.set_clear_on_exit()
+    global client
+    client = mqtt.Client()
+    client.on_connect = on_connect
+    client.on_message = on_message
 
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
+    if MQTT_USER is not None and MQTT_PASS is not None:
+        print("Using username: {un} and password: {pw}".format(un=MQTT_USER, pw="*" * len(MQTT_PASS)))
+        client.username_pw_set(username=MQTT_USER, password=MQTT_PASS)
 
-if MQTT_USER is not None and MQTT_PASS is not None:
-    print("Using username: {un} and password: {pw}".format(un=MQTT_USER, pw="*" * len(MQTT_PASS)))
-    client.username_pw_set(username=MQTT_USER, password=MQTT_PASS)
+    client.connect(MQTT_SERVER, MQTT_PORT, 60)
 
-client.connect(MQTT_SERVER, MQTT_PORT, 60)
+    client.loop_forever()
 
-client.loop_forever()
+def sigterm( signum, frame ):
+    client._thread_terminate = True
+
+if args.daemon:
+    # Monkey-patch daemon so's the daemon starts reasonably quickly.  FDs don't
+    # strictly speaking need closing anyway because we haven't opened any (yet).
+    daemon.daemon.get_maximum_file_descriptors = lambda: 32
+    args.quiet = True
+    pidlf = lockfile.pidlockfile.PIDLockFile( args.daemon )
+    with daemon.DaemonContext(
+            pidfile = pidlf,
+            signal_map = {signal.SIGTERM: sigterm} ):
+        mqtt_subscriber()
+else:
+    mqtt_subscriber()
