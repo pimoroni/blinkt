@@ -163,6 +163,9 @@ def sigterm( signum, frame ):
     client._thread_terminate = True
 
 if args.daemon:
+    # Monkey-patch daemon so's the daemon starts reasonably quickly.  FDs don't
+    # strictly speaking need closing anyway because we haven't opened any (yet).
+    daemon.daemon.get_maximum_file_descriptors = lambda: 32
     args.quiet = True
     pidlf = lockfile.pidlockfile.PIDLockFile( args.daemon )
     with daemon.DaemonContext(
