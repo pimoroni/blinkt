@@ -84,12 +84,8 @@ if args.daemon:
         import lockfile.pidlockfile
     except ImportError:
         exit("--daemon requires the lockfile module.  Install with: sudo pip install lockfile")
-
-MQTT_SERVER = args.host
-MQTT_PORT = args.port
-MQTT_TOPIC = args.topic and args.topic or [MQTT_TOPIC]
-MQTT_USER = args.user
-MQTT_PASS = args.pw
+if not args.topic:
+    args.topic = [MQTT_TOPIC]
 
 class PixelClient( mqtt.Client ):
     def __init__( self, prog_args, *args, **kwargs ):
@@ -98,6 +94,14 @@ class PixelClient( mqtt.Client ):
         self.update_time = [None] * blinkt.NUM_PIXELS
         self.on_connect = self.on_connect
         self.on_message = self.on_message
+
+        blinkt.set_clear_on_exit()
+        # Some stuff doesn't get set up until the first time show() is called
+        blinkt.show()
+
+        if self.args.user is not None and self.args.pw is not None:
+            self.username_pw_set(username=self.args.user, password=self.args.pw)
+        self.connect(self.args.host, self.args.port, 60)
 
     def cmd_clear( self ):
         blinkt.clear()
@@ -123,7 +127,7 @@ class PixelClient( mqtt.Client ):
                     return
 
             r, g, b = [int(x) & 0xff for x in data]
-            if args.green_hack:
+            if self.args.green_hack:
                 # Green is about twice the luminosity for a given value
                 # than red or blue, so apply a hackish linear compensation
                 # here taking care of corner cases at 0 and 255.  To do it
@@ -154,10 +158,10 @@ class PixelClient( mqtt.Client ):
         blinkt.show()
 
     def on_connect(self, client, userdata, flags, rc):
-        if not args.quiet:
-            print("Connected to {s}:{p} listening for topics {t} with result code {r}.\nSee {c} --help for options.".format(s = MQTT_SERVER, p = MQTT_PORT, t = ', '.join(MQTT_TOPIC), r = rc, c = parser.prog))
+        if not self.args.quiet:
+            print("Connected to {s}:{p} listening for topics {t} with result code {r}.\nSee {c} --help for options.".format(s = self.args.host, p = self.args.port, t = ', '.join(self.args.topic), r = rc, c = parser.prog))
 
-        for topic in MQTT_TOPIC:
+        for topic in self.args.topic:
             client.subscribe(topic)
 
     def on_message(self, client, userdata, msg):
@@ -244,22 +248,6 @@ class PixelClient( mqtt.Client ):
 
         return rc
 
-def mqtt_subscriber():
-    blinkt.set_clear_on_exit()
-    # Some stuff doesn't get set up until the first time show() is called
-    blinkt.show()
-
-    global client
-    client = PixelClient( args )
-
-    if MQTT_USER is not None and MQTT_PASS is not None:
-        print("Using username: {un} and password: {pw}".format(un=MQTT_USER, pw="*" * len(MQTT_PASS)))
-        client.username_pw_set(username=MQTT_USER, password=MQTT_PASS)
-
-    client.connect(MQTT_SERVER, MQTT_PORT, 60)
-
-    client.loop_forever()
-
 def sigterm( signum, frame ):
     client._thread_terminate = True
 
@@ -272,6 +260,8 @@ if args.daemon:
     with daemon.DaemonContext(
             pidfile = pidlf,
             signal_map = {signal.SIGTERM: sigterm} ):
-        mqtt_subscriber()
+        client = PixelClient( args )
+        client.loop_forever()
 else:
-    mqtt_subscriber()
+    client = PixelClient( args )
+    client.loop_forever()
