@@ -2,9 +2,11 @@
 
 from sys import exit
 import argparse
+import time
 
 try:
     import paho.mqtt.client as mqtt
+    from paho.mqtt.client import mqtt_cs_new, mqtt_cs_connected, mqtt_cs_disconnecting, mqtt_cs_connect_async, MQTT_ERR_AGAIN, MQTT_ERR_SUCCESS, MQTT_ERR_NOMEM, MQTT_ERR_PROTOCOL, MQTT_ERR_INVAL, MQTT_ERR_NO_CONN, MQTT_ERR_CONN_REFUSED, MQTT_ERR_NOT_FOUND, MQTT_ERR_CONN_LOST, MQTT_ERR_TLS, MQTT_ERR_PAYLOAD_SIZE, MQTT_ERR_NOT_SUPPORTED, MQTT_ERR_AUTH, MQTT_ERR_ACL_DENIED, MQTT_ERR_UNKNOWN, MQTT_ERR_ERRNO, MQTT_ERR_QUEUE_SIZE
 except ImportError:
     exit("This example requires the paho-mqtt module\nInstall with: sudo pip install paho-mqtt")
 
@@ -53,9 +55,24 @@ parser.add_argument( '-q', '--quiet', default = False, action = 'store_true',
                         help = 'Minimal output (eg for running as a daemon)' )
 parser.add_argument( '-g', '--green-hack', default = False, action = 'store_true',
                         help = 'Apply hack to green channel to improve colour saturation' )
+parser.add_argument( '--timeout', default = '0',
+                        help = 'Pixel timeout(s).  Pixel will blank if last update older than X seconds.  May be a single number or comma-separated list.  Use 0 for no timeout' )
 parser.add_argument( '-D', '--daemon', metavar='PIDFILE',
                         help = 'Run as a daemon (implies -q)' )
 args = parser.parse_args()
+
+# Get timeout list into expected form
+args.timeout = args.timeout.split( ',' )
+if len(args.timeout) == 1:
+    args.timeout = args.timeout * blinkt.NUM_PIXELS
+elif len(args.timeout) != blinkt.NUM_PIXELS:
+    exit("--timeout list must be %s elements long" % (blinkt.NUM_PIXELS,))
+try:
+    args.timeout = [int(x) for x in args.timeout]
+except ValueError as e:
+    exit("Bad timeout value: %s" % (e,))
+args.timeout = [x and x or None for x in args.timeout]
+args.min_timeout = min(args.timeout)
 
 if args.daemon:
     import signal
@@ -78,6 +95,7 @@ class PixelClient( mqtt.Client ):
     def __init__( self, prog_args, *args, **kwargs ):
         super( PixelClient, self ).__init__( *args, **kwargs )
         self.args = prog_args
+        self.update_time = [None] * blinkt.NUM_PIXELS
         self.on_connect = self.on_connect
         self.on_message = self.on_message
 
@@ -128,8 +146,10 @@ class PixelClient( mqtt.Client ):
         if pixel is None:
             for x in range(blinkt.NUM_PIXELS):
                 blinkt.set_pixel(x, r, g, b)
+                self.update_time[x] = time.time()
         else:
             blinkt.set_pixel(pixel, r, g, b)
+            self.update_time[pixel] = time.time()
 
         blinkt.show()
 
@@ -155,6 +175,73 @@ class PixelClient( mqtt.Client ):
         if command == "rgb" and len(data) == 4:
             self.cmd_rgb( data[0], data[1:] )
             return
+
+    def blank_timed_out_pixels( self ):
+        now = time.time()
+        to_upt_pairs = zip(self.args.timeout,self.update_time)
+        for pixel, (to, uptime) in enumerate(to_upt_pairs):
+            if to is not None and uptime is not None and uptime < now - to:
+                blinkt.set_pixel( pixel, 0, 0, 0 )
+                self.update_time[pixel] = None
+        blinkt.show()
+
+
+    def loop_forever(self, timeout=1.0, max_packets=1, retry_first_connection=False):
+        """This is a copy-and-paste of the parent loop_forever() function with
+        a call to self.blank_timed_out_pixels() inserted after the call to
+        self.loop()."""
+        run = True
+
+        while run:
+            if self._thread_terminate is True:
+                break
+
+            if self._state == mqtt_cs_connect_async:
+                try:
+                    self.reconnect()
+                except (socket.error, WebsocketConnectionError):
+                    if not retry_first_connection:
+                        raise
+                    self._easy_log(MQTT_LOG_DEBUG, "Connection failed, retrying")
+                    self._reconnect_wait()
+            else:
+                break
+
+        while run:
+            rc = MQTT_ERR_SUCCESS
+            while rc == MQTT_ERR_SUCCESS:
+                rc = self.loop(timeout, max_packets)
+                self.blank_timed_out_pixels()
+                # We don't need to worry about locking here, because we've
+                # either called loop_forever() when in single threaded mode, or
+                # in multi threaded mode when loop_stop() has been called and
+                # so no other threads can access _current_out_packet,
+                # _out_packet or _messages.
+                if (self._thread_terminate is True
+                    and self._current_out_packet is None
+                    and len(self._out_packet) == 0
+                    and len(self._out_messages) == 0):
+                    rc = 1
+                    run = False
+
+
+            def should_exit():
+                return self._state == mqtt_cs_disconnecting or run is False or self._thread_terminate is True
+
+            if should_exit():
+                run = False
+            else:
+                self._reconnect_wait()
+
+                if should_exit():
+                    run = False
+                else:
+                    try:
+                        self.reconnect()
+                    except (socket.error, WebsocketConnectionError):
+                        pass
+
+        return rc
 
 def mqtt_subscriber():
     blinkt.set_clear_on_exit()
