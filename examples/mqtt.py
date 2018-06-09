@@ -45,8 +45,8 @@ parser.add_argument( '-H', '--host', default = MQTT_SERVER,
                         help = 'MQTT broker to connect to' )
 parser.add_argument( '-P', '--port', default = MQTT_PORT, type = int,
                         help = 'port on MQTT broker to connect to' )
-parser.add_argument( '-T', '--topic', default = MQTT_TOPIC,
-                        help = 'MQTT topic to subscribe to' )
+parser.add_argument( '-T', '--topic', action = 'append',
+                        help = 'MQTT topic to subscribe to; can be repeated for multiple topics' )
 parser.add_argument( '-u', '--user',
                         help = 'MQTT broker user name' )
 parser.add_argument( '-p', '--pass', dest = 'pw',
@@ -87,7 +87,7 @@ if args.daemon:
 
 MQTT_SERVER = args.host
 MQTT_PORT = args.port
-MQTT_TOPIC = args.topic
+MQTT_TOPIC = args.topic and args.topic or [MQTT_TOPIC]
 MQTT_USER = args.user
 MQTT_PASS = args.pw
 
@@ -155,9 +155,10 @@ class PixelClient( mqtt.Client ):
 
     def on_connect(self, client, userdata, flags, rc):
         if not args.quiet:
-            print("Connected to {s}:{p}/{t} with result code {r}.\nSee {c} --help for options.".format(s = MQTT_SERVER, p = MQTT_PORT, t = MQTT_TOPIC, r = rc, c = parser.prog))
+            print("Connected to {s}:{p} listening for topics {t} with result code {r}.\nSee {c} --help for options.".format(s = MQTT_SERVER, p = MQTT_PORT, t = ', '.join(MQTT_TOPIC), r = rc, c = parser.prog))
 
-        client.subscribe(MQTT_TOPIC)
+        for topic in MQTT_TOPIC:
+            client.subscribe(topic)
 
     def on_message(self, client, userdata, msg):
 
