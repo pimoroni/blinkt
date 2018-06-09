@@ -53,15 +53,20 @@ parser.add_argument( '-q', '--quiet', default = False, action = 'store_true',
                         help = 'Minimal output (eg for running as a daemon)' )
 parser.add_argument( '-g', '--green-hack', default = False, action = 'store_true',
                         help = 'Apply hack to green channel to improve colour saturation' )
-parser.add_argument( '-D', '--daemon', default = False, action = 'store_true',
+parser.add_argument( '-D', '--daemon', metavar='PIDFILE',
                         help = 'Run as a daemon (implies -q)' )
 args = parser.parse_args()
 
 if args.daemon:
+    import signal
     try:
         import daemon
     except ImportError:
         exit("--daemon requires the daemon module.  Install with: sudo pip install python-daemon")
+    try:
+        import lockfile.pidlockfile
+    except ImportError:
+        exit("--daemon requires the lockfile module.  Install with: sudo pip install lockfile")
 
 MQTT_SERVER = args.host
 MQTT_PORT = args.port
@@ -136,10 +141,12 @@ def on_message(client, userdata, msg):
         blinkt.show()
         return
 
-
 def mqtt_subscriber():
     blinkt.set_clear_on_exit()
+    # Some stuff doesn't get set up until the first time show() is called
+    blinkt.show()
 
+    global client
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
@@ -152,9 +159,15 @@ def mqtt_subscriber():
 
     client.loop_forever()
 
+def sigterm( signum, frame ):
+    client._thread_terminate = True
+
 if args.daemon:
     args.quiet = True
-    with daemon.DaemonContext():
-            mqtt_subscriber()
+    pidlf = lockfile.pidlockfile.PIDLockFile( args.daemon )
+    with daemon.DaemonContext(
+            pidfile = pidlf,
+            signal_map = {signal.SIGTERM: sigterm} ):
+        mqtt_subscriber()
 else:
     mqtt_subscriber()
