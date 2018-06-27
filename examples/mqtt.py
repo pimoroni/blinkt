@@ -6,7 +6,6 @@ import time
 
 try:
     import paho.mqtt.client as mqtt
-    from paho.mqtt.client import mqtt_cs_new, mqtt_cs_connected, mqtt_cs_disconnecting, mqtt_cs_connect_async, MQTT_ERR_AGAIN, MQTT_ERR_SUCCESS, MQTT_ERR_NOMEM, MQTT_ERR_PROTOCOL, MQTT_ERR_INVAL, MQTT_ERR_NO_CONN, MQTT_ERR_CONN_REFUSED, MQTT_ERR_NOT_FOUND, MQTT_ERR_CONN_LOST, MQTT_ERR_TLS, MQTT_ERR_PAYLOAD_SIZE, MQTT_ERR_NOT_SUPPORTED, MQTT_ERR_AUTH, MQTT_ERR_ACL_DENIED, MQTT_ERR_UNKNOWN, MQTT_ERR_ERRNO, MQTT_ERR_QUEUE_SIZE
 except ImportError:
     exit("This example requires the paho-mqtt module\nInstall with: sudo pip install paho-mqtt")
 
@@ -190,63 +189,10 @@ class PixelClient( mqtt.Client ):
                 self.update_time[pixel] = None
         blinkt.show()
 
+    def loop( self, timeout = 1.0, max_packets = 1 ):
+        self.blank_timed_out_pixels()
+        return super( PixelClient, self ).loop( timeout, max_packets )
 
-    def loop_forever(self, timeout=1.0, max_packets=1, retry_first_connection=False):
-        """This is a copy-and-paste of the parent loop_forever() function with
-        a call to self.blank_timed_out_pixels() inserted after the call to
-        self.loop()."""
-        run = True
-
-        while run:
-            if self._thread_terminate is True:
-                break
-
-            if self._state == mqtt_cs_connect_async:
-                try:
-                    self.reconnect()
-                except (socket.error, WebsocketConnectionError):
-                    if not retry_first_connection:
-                        raise
-                    self._easy_log(MQTT_LOG_DEBUG, "Connection failed, retrying")
-                    self._reconnect_wait()
-            else:
-                break
-
-        while run:
-            rc = MQTT_ERR_SUCCESS
-            while rc == MQTT_ERR_SUCCESS:
-                rc = self.loop(timeout, max_packets)
-                self.blank_timed_out_pixels()
-                # We don't need to worry about locking here, because we've
-                # either called loop_forever() when in single threaded mode, or
-                # in multi threaded mode when loop_stop() has been called and
-                # so no other threads can access _current_out_packet,
-                # _out_packet or _messages.
-                if (self._thread_terminate is True
-                    and self._current_out_packet is None
-                    and len(self._out_packet) == 0
-                    and len(self._out_messages) == 0):
-                    rc = 1
-                    run = False
-
-
-            def should_exit():
-                return self._state == mqtt_cs_disconnecting or run is False or self._thread_terminate is True
-
-            if should_exit():
-                run = False
-            else:
-                self._reconnect_wait()
-
-                if should_exit():
-                    run = False
-                else:
-                    try:
-                        self.reconnect()
-                    except (socket.error, WebsocketConnectionError):
-                        pass
-
-        return rc
 
 def sigterm( signum, frame ):
     client._thread_terminate = True
