@@ -6,16 +6,16 @@ import blinkt
 
 
 colours = [
-[  0,  0,  0],#0 black
-[139, 69, 19],#1 brown
-[255,  0,  0],#2 red
-[255, 69,  0],#3 orange
-[255,255,  0],#4 yellow
-[  0,255,  0],#5 green
-[  0,  0,255],#6 blue
-[128,  0,128],#7 violet
-[255,255,100],#8 grey
-[255,255,255],#9 white
+    [0, 0, 0],        # 0 black
+    [139, 69, 19],    # 1 brown
+    [255, 0, 0],      # 2 red
+    [255, 69, 0],     # 3 orange
+    [255, 255, 0],    # 4 yellow
+    [0, 255, 0],      # 5 green
+    [0, 0, 255],      # 6 blue
+    [128, 0, 128],    # 7 violet
+    [255, 255, 100],  # 8 grey
+    [255, 255, 255],  # 9 white
 ]
 
 blinkt.set_clear_on_exit()

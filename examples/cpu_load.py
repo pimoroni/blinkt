@@ -1,16 +1,16 @@
 #!/usr/bin/env python
-
 import time
 from sys import exit
 
 try:
     import psutil
 except ImportError:
-    exit("This script requires the psutil module\nInstall with: sudo pip install psutil")
+    exit('This script requires the psutil module\nInstall with: sudo pip install psutil')
 
 import blinkt
 
 blinkt.set_clear_on_exit()
+
 
 def show_graph(v, r, g, b):
     v *= blinkt.NUM_PIXELS
@@ -23,6 +23,7 @@ def show_graph(v, r, g, b):
         v -= 1
 
     blinkt.show()
+
 
 blinkt.set_brightness(0.1)
 

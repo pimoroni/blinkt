@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import time
-import math
 
 import blinkt
 
@@ -21,7 +20,7 @@ while True:
     offset = int(abs((delta % len(REDS)) - blinkt.NUM_PIXELS))
 
     for i in range(blinkt.NUM_PIXELS):
-        blinkt.set_pixel(i , REDS[offset + i], 0, 0)
+        blinkt.set_pixel(i, REDS[offset + i], 0, 0)
 
     blinkt.show()
 
