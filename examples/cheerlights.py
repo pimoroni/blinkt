@@ -20,7 +20,14 @@ def hex_to_rgb(col_hex):
 
 while True:
     r = requests.get('http://api.thingspeak.com/channels/1417/field/2/last.json', timeout=2)
-    r, g, b = hex_to_rgb(r.json()['field2'])
+    json = r.json()
+
+    if 'field2' not in json:
+        print('Error {status}: {error}'.format(status=json['status'], error=json['error']))
+        time.sleep(5)
+        continue
+
+    r, g, b = hex_to_rgb(json['field2'])
 
     for i in range(blinkt.NUM_PIXELS):
         blinkt.set_pixel(i, r, g, b)
