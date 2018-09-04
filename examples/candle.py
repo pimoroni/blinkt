@@ -7,7 +7,7 @@ from sys import exit
 try:
     import numpy as np
 except ImportError:
-    exit("This script requires the numpy module\nInstall with: sudo pip install numpy")
+    exit('This script requires the numpy module\nInstall with: sudo pip install numpy')
 
 import blinkt
 
@@ -26,7 +26,7 @@ while True:
 
     for pixel in range(limit):
         hue = start + (((end - start) / float(blinkt.NUM_PIXELS)) * pixel)
-        r, g, b = [int(c * 255) for c in colorsys.hsv_to_rgb(hue/360.0, 1.0, 1.0)]
+        r, g, b = [int(c * 255) for c in colorsys.hsv_to_rgb(hue / 360.0, 1.0, 1.0)]
         blinkt.set_pixel(pixel, r, g, b)
         blinkt.show()
         time.sleep(0.05 / (pixel + 1))

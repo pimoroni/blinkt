@@ -6,7 +6,7 @@ from sys import exit
 try:
     from envirophat import motion
 except ImportError:
-    exit("This script requires the envirophat module\nInstall with: sudo pip install envirophat")
+    exit('This script requires the envirophat module\nInstall with: sudo pip install envirophat')
 
 import blinkt
 
@@ -31,15 +31,17 @@ while True:
     elif x > 0:
         val = abs(x) * 4.0
         for x in range(4):
-            if val < 0: break
-            blinkt.set_pixel(3-x, int(255.0 * min(val, 1.0)), 0, 0)
+            if val < 0:
+                break
+            blinkt.set_pixel(3 - x, int(255.0 * min(val, 1.0)), 0, 0)
             val -= 1
 
     elif x < 0:
         val = abs(x) * 4.0
         for x in range(4):
-            if val < 0: break
-            blinkt.set_pixel(4+x, int(255.0 * min(val, 1.0)), 0, 0)
+            if val < 0:
+                break
+            blinkt.set_pixel(4 + x, int(255.0 * min(val, 1.0)), 0, 0)
             val -= 1
 
     blinkt.show()

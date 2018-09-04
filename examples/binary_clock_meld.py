@@ -5,7 +5,7 @@ from time import localtime, sleep
 import blinkt
 
 
-print("Hour = Red, Minute = Green, Second = Blue")
+print('Hour = Red, Minute = Green, Second = Blue')
 
 blinkt.set_clear_on_exit()
 
@@ -17,13 +17,13 @@ while True:
     t = localtime()
     h, m, s = t.tm_hour, t.tm_min, t.tm_sec
 
-    print("{h}:{m}:{s}".format(h=h, m=m, s=s))
+    print('{h}:{m}:{s}'.format(h=h, m=m, s=s))
 
     blinkt.clear()
 
     # Blink LED 0
-    c = on_value * (s % 2)
-    blinkt.set_pixel(0, c, c, c)
+    v = on_value * (s % 2)
+    blinkt.set_pixel(0, v, v, v)
 
     for n in range(6):
         # Grab the n'th bit from hour, min and second

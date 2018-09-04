@@ -1,4 +1,10 @@
 ![Blinkt!](blinkt-logo.png)
+
+[![Build Status](https://travis-ci.com/pimoroni/blinkt.svg?branch=master)](https://travis-ci.com/pimoroni/blinkt)
+[![Coverage Status](https://coveralls.io/repos/github/pimoroni/blinkt/badge.svg?branch=master)](https://coveralls.io/github/pimoroni/blinkt?branch=master)
+[![PyPi Package](https://img.shields.io/pypi/v/blinkt.svg)](https://pypi.python.org/pypi/blinkt)
+[![Python Versions](https://img.shields.io/pypi/pyversions/blinkt.svg)](https://pypi.python.org/pypi/blinkt)
+
 https://shop.pimoroni.com/products/blinkt
 
 Eight super-bright RGB LED indicators, ideal for adding visual notifications to your Raspberry Pi on their own or on a pHAT stacking header.
