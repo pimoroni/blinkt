@@ -114,7 +114,11 @@ def set_all(r, g, b, brightness=None):
 
 
 def get_pixel(x):
-    """Get the RGB and brightness value of a specific pixel."""
+    """Get the RGB and brightness value of a specific pixel.
+
+    :param x: The horizontal position of the pixel: 0 to 7
+
+    """
     r, g, b, brightness = pixels[x]
     brightness /= 31.0
 
