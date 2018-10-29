@@ -84,3 +84,4 @@ sudo python3 setup.py install
 
 * Golang library & examples by [Alex Ellis](https://www.alexellis.io) - https://github.com/alexellis/blinkt_go_examples
 * Java library by Jim Darby - https://github.com/hackerjimbo/PiJava
+* Java library by @HoldYourWaffle - https://github.com/HoldYourWaffle/blinkt4j
