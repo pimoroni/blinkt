@@ -17,7 +17,7 @@ while True:
     t = localtime()
     h, m, s = t.tm_hour, t.tm_min, t.tm_sec
 
-    print('{h}:{m}:{s}'.format(h=h, m=m, s=s))
+    print('{h:2d}:{m:02d}:{s:02d}'.format(h=h, m=m, s=s))
 
     blinkt.clear()
 

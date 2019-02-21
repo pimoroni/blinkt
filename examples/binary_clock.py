@@ -9,6 +9,9 @@ blinkt.set_clear_on_exit()
 MODE_HOUR = 0
 MODE_MIN = 1
 MODE_SEC = 2
+MODE_NAMES = {MODE_HOUR: 'Hour mode',
+              MODE_MIN: 'Minute mode',
+              MODE_SEC: 'Seconds mode'}
 
 time_to_stay_in_mode = 3
 time_in_mode = 0
@@ -20,7 +23,6 @@ lm = 0
 while True:
     t = localtime()
     h, m, s = t.tm_hour, t.tm_min, t.tm_sec
-    print(h, m, s, mode, time_in_mode)
 
     if h != lh:
         mode = MODE_HOUR
@@ -60,6 +62,11 @@ while True:
             blinkt.set_pixel(7 - x, r, g, b)
 
     blinkt.show()
+    print('{h:2d}:{m:02d}:{s:02d}; mode: {mode}; time in mode: {tim}'.format(h=h,
+                                                                             m=m,
+                                                                             s=s,
+                                                                             mode=MODE_NAMES[mode],
+                                                                             tim=time_in_mode))
 
     time_in_mode += 1
     if time_in_mode == time_to_stay_in_mode:
