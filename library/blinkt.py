@@ -14,6 +14,8 @@ BRIGHTNESS = 7
 
 pixels = [[0, 0, 0, BRIGHTNESS]] * NUM_PIXELS
 
+sleep_time = 0
+
 _gpio_setup = False
 _clear_on_exit = True
 
@@ -48,10 +50,10 @@ def _write_byte(byte):
     for x in range(8):
         GPIO.output(DAT, byte & 0b10000000)
         GPIO.output(CLK, 1)
-        time.sleep(0)
+        time.sleep(sleep_time)
         byte <<= 1
         GPIO.output(CLK, 0)
-        time.sleep(0)
+        time.sleep(sleep_time)
 
 
 # Emit exactly enough clock pulses to latch the small dark die APA102s which are weird
@@ -60,18 +62,18 @@ def _eof():
     GPIO.output(DAT, 0)
     for x in range(36):
         GPIO.output(CLK, 1)
-        time.sleep(0)
+        time.sleep(sleep_time)
         GPIO.output(CLK, 0)
-        time.sleep(0)
+        time.sleep(sleep_time)
 
 
 def _sof():
     GPIO.output(DAT, 0)
     for x in range(32):
         GPIO.output(CLK, 1)
-        time.sleep(0)
+        time.sleep(sleep_time)
         GPIO.output(CLK, 0)
-        time.sleep(0)
+        time.sleep(sleep_time)
 
 
 def show():
