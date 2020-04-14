@@ -5,7 +5,7 @@ from sys import exit
 try:
     import psutil
 except ImportError:
-    exit('This script requires the psutil module\nInstall with: sudo pip install psutil')
+    exit('This script requires the psutil module\nInstall with: sudo apt install python3-psutil')
 
 import blinkt
 
