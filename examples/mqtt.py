@@ -45,7 +45,10 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
 
-    data = msg.payload.split(',')
+    data = msg.payload
+    if type(data) is bytes:
+        data = data.decode('utf-8')
+    data = data.split(',')
     command = data.pop(0)
 
     if command == 'clr' and len(data) == 0:
