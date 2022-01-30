@@ -4,10 +4,10 @@ from sys import exit # so the blinkt lights can turn off
 import time          # so we can wait between frames
 import blinkt        # so we can talk to our blinkt lights!
 
-BRIGHTNESS = 0.2  # range is 0.0 to 1.0
-MAX_COLOUR = 255  # range is 0 to 255
-DECAY_FACTOR = 3  # how quickly should MAX_COLOUR fade?
-TIME_SLEEP = 0.04 # seconds (0.04 works well)
+BRIGHTNESS = 0.2     # range is 0.0 to 1.0
+MAX_COLOUR = 255     # range is 0 to 255
+DECAY_FACTOR = 1.5   # how quickly should MAX_COLOUR fade? (1.5 works well)
+TIME_SLEEP = 0.04    # seconds (0.04 works well)
 
 PIXELS = blinkt.NUM_PIXELS # usually 8, can use fewer if you like!
 
