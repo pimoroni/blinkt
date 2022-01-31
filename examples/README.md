@@ -14,6 +14,7 @@ The examples in the `extra_examples` folder are designed to work with other pHAT
 - cheerlights - reads twitter for any tweets with the hashtag "cheerlights" and a colour. Changes all the pixels to that colour. Online.
 - cpu_load - shows a graph of cpu usage as a percentage. May require a psutil install. Offline.
 - cpu_temp - shows a graph of the cpu temperature as a percentage. Offline.
+- eyedropper - shows the rgb value at cursor location real time. Offline.
 - gradient_graph - pulses a rainbow across the blinkt and back again. Offline.
 - graph - pulses a magenta graph across the blinkt and back again. Offline.
 - larson - remember Knight Rider? Offline.
