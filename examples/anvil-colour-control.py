@@ -28,18 +28,21 @@ app = create_app("blinkt")
 # Define functions that can be called from your Anvil app on the web
 anvil.server.connect(app.uplink_key)
 
+
 @anvil.server.callable
 def set_color(color_string):
     print("Setting LEDs to {}".format(color_string))
     c = Color(color_string)
-    blinkt.set_all(c.red*255, c.green*255, c.blue*255, 1.0)
+    blinkt.set_all(c.red * 255, c.green * 255, c.blue * 255, 1.0)
     blinkt.show()
+
 
 @anvil.server.callable
 def clear():
     print("Clearing LEDs")
     blinkt.clear()
     blinkt.show()
+
 
 # Display the URL where you can control the Blinkt LEDS
 print("Control your Blinkt LEDs at {}".format(app.origin))
