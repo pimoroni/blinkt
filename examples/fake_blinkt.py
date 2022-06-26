@@ -7,7 +7,7 @@ import signal
 _clear_on_exit = True
 _true_color    = True
 NUM_PIXELS     = 8
-pixels         = [(0,0,0)] * NUM_PIXELS
+pixels         = [(0,0,0,1)] * NUM_PIXELS
 
 def _exit():
     if _clear_on_exit:
@@ -21,12 +21,12 @@ def set_brightness(brightness):
     pass
 
 def clear():
-    pixels[:] = [(0,0,0)] * NUM_PIXELS
+    pixels[:] = [(0,0,0,1)] * NUM_PIXELS
 
 
 def show():
     sys.stdout.write(" ")
-    for (r,g,b) in pixels:
+    for (r,g,b,_) in pixels:
         if _true_color:
             sys.stdout.write("\033[48;2;%d;%d;%dm   " % (r,g,b))
         else:
@@ -43,14 +43,14 @@ def set_all(r, g, b, brightness=None):
     global _brightness
     if brightness is not None:
         _brightness = brightness
-    pixels[:] = [(r, g, b)] * NUM_PIXELS
+    pixels[:] = [(r, g, b, 1)] * NUM_PIXELS
 
 
 def set_pixel(x, r, g, b, brightness=None):
     global _brightness
     if brightness is not None:
         _brightness = brightness
-    pixels[x] = (r, g, b)
+    pixels[x] = (r, g, b, 1)
 
 
 def get_pixel(x):
