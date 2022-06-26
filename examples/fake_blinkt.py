@@ -1,13 +1,12 @@
 """fake_blink terminal simulation of blinkt, to use rename to blinkt.py and place in same directory as blinkt program"""
 import sys
-import pantilthat
 import atexit
-import signal
 
 _clear_on_exit = True
-_true_color    = True
-NUM_PIXELS     = 8
-pixels         = [(0,0,0,1)] * NUM_PIXELS
+_true_color = True
+NUM_PIXELS = 8
+pixels = [(0, 0, 0, 1)] * NUM_PIXELS
+
 
 def _exit():
     if _clear_on_exit:
@@ -20,20 +19,21 @@ def _exit():
 def set_brightness(brightness):
     pass
 
+
 def clear():
-    pixels[:] = [(0,0,0,1)] * NUM_PIXELS
+    pixels[:] = [(0, 0, 0, 1)] * NUM_PIXELS
 
 
 def show():
     sys.stdout.write(" ")
-    for (r,g,b,_) in pixels:
+    for (r, g, b, _) in pixels:
         if _true_color:
-            sys.stdout.write("\033[48;2;%d;%d;%dm   " % (r,g,b))
+            sys.stdout.write("\033[48;2;%d;%d;%dm   " % (r, g, b))
         else:
-            if r==g==b:
-                col = 232 + r*24//256
+            if r == g == b:
+                col = 232 + (r * 24) // 256
             else:
-                col = 16 + (b*6//256) + (g*6//256)*6 + (r*6//256)*36
+                col = 16 + ((b * 6) // 256) + ((g * 6) // 256) * 6 + ((r * 6) // 256) * 36
             sys.stdout.write("\033[48;5;%dm   " % col)
     sys.stdout.write("\033[0m\r")
     sys.stdout.flush()
