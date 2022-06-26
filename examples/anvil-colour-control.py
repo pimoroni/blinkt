@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Basic example for controlling the Blinkt LED colours via Anvil
 # Learn more at: https://anvil.works/
 #

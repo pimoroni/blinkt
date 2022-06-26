@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import time          # so we can wait between frames
 import blinkt        # so we can talk to our blinkt lights!

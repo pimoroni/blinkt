@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Data from OpenWeatherMap
 # show_graph function adapted from cpu_temp.py
