@@ -14,7 +14,7 @@ try:
         rawrgb = list(im.getdata())
         rgb = str(rawrgb)[2:-2]
         r, g, b = rgb.split(', ')
-        blinkt.set_all(r, g, b)
+        blinkt.set_all(int(r), int(g), int(b))
         blinkt.set_brightness(1)
         blinkt.show()
         time.sleep(0.01)
