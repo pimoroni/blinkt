@@ -4,13 +4,12 @@ import time
 from sys import exit
 
 try:
-    from tweepy import Stream, OAuthHandler
+    from tweepy import OAuthHandler, Stream
     from tweepy.streaming import StreamListener
 except ImportError:
     exit('This script requires the tweepy module\nInstall with: sudo pip install tweepy')
 
 import blinkt
-
 
 ckey = ''     # Consumer key
 csecret = ''  # Consumer secret

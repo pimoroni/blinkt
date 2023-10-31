@@ -2,6 +2,7 @@
 
 import sys
 from sys import argv
+
 import blinkt
 
 if len(argv) < 4 or len(argv) > 5:

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-import time          # so we can wait between frames
-import blinkt        # so we can talk to our blinkt lights!
+import time  # so we can wait between frames
+
+import blinkt  # so we can talk to our blinkt lights!
 
 BRIGHTNESS = 0.2     # range is 0.0 to 1.0
 MAX_COLOUR = 255     # range is 0 to 255

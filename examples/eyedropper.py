@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
-from PIL import ImageGrab
-import pyautogui
-import blinkt
 import time
+
+import pyautogui
+from PIL import ImageGrab
+
+import blinkt
 
 print('Press Ctrl-C to quit.')
 

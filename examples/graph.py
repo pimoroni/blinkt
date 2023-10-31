@@ -5,7 +5,6 @@ import time
 
 import blinkt
 
-
 blinkt.set_clear_on_exit()
 
 

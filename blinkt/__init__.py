@@ -3,9 +3,7 @@ import atexit
 import time
 
 import gpiod
-
 from gpiod.line import Direction, Value
-
 
 __version__ = '0.1.2'
 

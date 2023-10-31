@@ -4,7 +4,6 @@ from time import localtime, sleep
 
 import blinkt
 
-
 print('Hour = Red, Minute = Green, Second = Blue')
 
 blinkt.set_clear_on_exit()

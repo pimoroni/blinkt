@@ -4,7 +4,6 @@ import time
 
 import blinkt
 
-
 colours = [
     [0, 0, 0],        # 0 black
     [139, 69, 19],    # 1 brown

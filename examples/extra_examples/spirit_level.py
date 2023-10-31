@@ -10,7 +10,6 @@ except ImportError:
 
 import blinkt
 
-
 x_avg = []
 
 while True:

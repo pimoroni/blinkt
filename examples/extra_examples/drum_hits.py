@@ -17,7 +17,6 @@ except ImportError:
 
 import blinkt
 
-
 DRUM_FOLDER = 'drums2'
 
 BANK = os.path.join(os.path.dirname(__file__), DRUM_FOLDER)

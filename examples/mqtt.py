@@ -8,7 +8,6 @@ except ImportError:
 
 import blinkt
 
-
 MQTT_SERVER = 'iot.eclipse.org'
 MQTT_PORT = 1883
 MQTT_TOPIC = 'pimoroni/blinkt'

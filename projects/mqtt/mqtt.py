@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from sys import exit
 import argparse
 import time
+from sys import exit
 
 try:
     import paho.mqtt.client as mqtt
@@ -10,7 +10,6 @@ except ImportError:
     raise ImportError("This example requires the paho-mqtt module\nInstall with: sudo pip install paho-mqtt")
 
 import blinkt
-
 
 MQTT_SERVER = "localhost"
 MQTT_PORT = 1883

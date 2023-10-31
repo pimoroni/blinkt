@@ -3,8 +3,8 @@
 # Data from OpenWeatherMap
 # show_graph function adapted from cpu_temp.py
 
-from time import sleep
 from sys import exit
+from time import sleep
 
 try:
     import requests
@@ -12,7 +12,6 @@ except ImportError:
     exit('This script requires the requests module\nInstall with: sudo pip install requests')
 
 import blinkt
-
 
 # Grab your API key here: http://openweathermap.org
 # List of city ID city.list.json.gz can be downloaded here http://bulk.openweathermap.org/sample/

@@ -16,11 +16,11 @@
 # hit the "Run" button at the top to start remote-controlling
 # your Blinkt!
 
-import blinkt
+import anvil.server
+from anvil.app_creator import create_app
 from colour import Color
 
-from anvil.app_creator import create_app
-import anvil.server
+import blinkt
 
 # Create the Blinkt demo app in your Anvil account
 app = create_app("blinkt")

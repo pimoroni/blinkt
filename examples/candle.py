@@ -11,7 +11,6 @@ except ImportError:
 
 import blinkt
 
-
 blinkt.clear()
 start = 0
 end = 60

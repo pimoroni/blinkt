@@ -1,6 +1,8 @@
-import pytest
-import mock
 import sys
+
+import mock
+import pytest
+
 
 @pytest.fixture(scope='function', autouse=False)
 def gpiod():
