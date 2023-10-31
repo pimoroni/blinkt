@@ -1,5 +1,6 @@
 """Library for the Pimoroni Blinkt! - 8-pixel APA102 LED display."""
 import atexit
+import glob
 import time
 
 import gpiod
@@ -11,7 +12,10 @@ DAT = 23
 CLK = 24
 NUM_PIXELS = 8
 BRIGHTNESS = 7
-GPIOCHIP = "/dev/gpiochip4"
+RPI_GPIO_LABELS = [
+    "pinctrl-rp1", # Pi 5 - Bookworm, /dev/gpiochip4 maybe
+    "pinctrl-bcm2711" # Pi 4 - Bullseye, /dev/gpiochip1 maybe
+]
 
 pixels = [[0, 0, 0, BRIGHTNESS]] * NUM_PIXELS
 
@@ -26,6 +30,14 @@ def _exit():
         clear()
         show()
     gpio_lines.release()
+
+
+def get_gpiochip():
+    for path in glob.glob("/dev/gpiochip*"):
+        if gpiod.is_gpiochip_device(path):
+            if gpiod.Chip(path).get_info().label in RPI_GPIO_LABELS:
+                return path
+    raise RuntimeError("Compatible /dev/gpiochipN device not found!")
 
 
 def set_brightness(brightness):
@@ -83,7 +95,7 @@ def show():
 
     if not gpio_lines:
         gpio_lines = gpiod.request_lines(
-            GPIOCHIP,
+            get_gpiochip(),
             consumer="blinkt",
             config={
                 DAT: gpiod.LineSettings(direction=Direction.OUTPUT, output_value=Value.INACTIVE),
