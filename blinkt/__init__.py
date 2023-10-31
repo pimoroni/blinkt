@@ -14,7 +14,7 @@ NUM_PIXELS = 8
 BRIGHTNESS = 7
 RPI_GPIO_LABELS = [
     "pinctrl-rp1", # Pi 5 - Bookworm, /dev/gpiochip4 maybe
-    "pinctrl-bcm2711" # Pi 4 - Bullseye, /dev/gpiochip1 maybe
+    "pinctrl-bcm2711" # Pi 4 - Bullseye, /dev/gpiochip0 maybe
 ]
 
 pixels = [[0, 0, 0, BRIGHTNESS]] * NUM_PIXELS
@@ -32,11 +32,25 @@ def _exit():
     gpio_lines.release()
 
 
-def get_gpiochip():
+def check_pins_available(chip, pins):
+    err = []
+    for (label, pin) in pins.items():
+        pin_info = chip.get_line_info(pin)
+        if pin_info.used:
+            err.append(f" ⚠️  {label} (GPIO {DAT}) is currently claimed by {pin_info.consumer}")
+    if len(err):
+        err.insert(0, "some pins we need are in use:")
+        raise RuntimeError("\n".join(err))
+
+
+def get_gpiochip(pins=None):
     for path in glob.glob("/dev/gpiochip*"):
         if gpiod.is_gpiochip_device(path):
             if gpiod.Chip(path).get_info().label in RPI_GPIO_LABELS:
-                return path
+                chip = gpiod.Chip(path)
+                if pins is not None:
+                    check_pins_available(chip, pins)
+                return chip
     raise RuntimeError("Compatible /dev/gpiochipN device not found!")
 
 
@@ -94,8 +108,8 @@ def show():
     global gpio_lines
 
     if not gpio_lines:
-        gpio_lines = gpiod.request_lines(
-            get_gpiochip(),
+        chip = get_gpiochip({"Data": DAT, "Clock": CLK})
+        gpio_lines = chip.request_lines(
             consumer="blinkt",
             config={
                 DAT: gpiod.LineSettings(direction=Direction.OUTPUT, output_value=Value.INACTIVE),
