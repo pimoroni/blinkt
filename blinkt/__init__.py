@@ -20,6 +20,14 @@ pixels = [[0, 0, 0, BRIGHTNESS]] * NUM_PIXELS
 sleep_time = 0
 
 gpio_lines = None
+_clear_on_exit = True
+
+
+def _exit():
+    if _clear_on_exit:
+        clear()
+        show()
+    gpio_lines.release()
 
 
 def set_brightness(brightness):
@@ -84,6 +92,7 @@ def show():
                 CLK: gpiod.LineSettings(direction=Direction.OUTPUT, output_value=Value.INACTIVE)
             }
         )
+        atexit.register(_exit)
 
     _sof()
 
