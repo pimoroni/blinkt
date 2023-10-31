@@ -2,7 +2,9 @@
 import atexit
 import time
 
-import RPi.GPIO as GPIO
+import gpiod
+
+from gpiod.line import Direction, Value
 
 
 __version__ = '0.1.2'
@@ -11,20 +13,13 @@ DAT = 23
 CLK = 24
 NUM_PIXELS = 8
 BRIGHTNESS = 7
+GPIOCHIP = "/dev/gpiochip4"
 
 pixels = [[0, 0, 0, BRIGHTNESS]] * NUM_PIXELS
 
 sleep_time = 0
 
-_gpio_setup = False
-_clear_on_exit = True
-
-
-def _exit():
-    if _clear_on_exit:
-        clear()
-        show()
-    GPIO.cleanup()
+gpio_lines = None
 
 
 def set_brightness(brightness):
@@ -48,45 +43,47 @@ def clear():
 
 def _write_byte(byte):
     for x in range(8):
-        GPIO.output(DAT, byte & 0b10000000)
-        GPIO.output(CLK, 1)
+        gpio_lines.set_value(DAT, Value.ACTIVE if (byte & 0b10000000) else Value.INACTIVE)
+        gpio_lines.set_value(CLK, Value.ACTIVE)
         time.sleep(sleep_time)
         byte <<= 1
-        GPIO.output(CLK, 0)
+        gpio_lines.set_value(CLK, Value.INACTIVE)
         time.sleep(sleep_time)
 
 
 # Emit exactly enough clock pulses to latch the small dark die APA102s which are weird
 # for some reason it takes 36 clocks, the other IC takes just 4 (number of pixels/2)
 def _eof():
-    GPIO.output(DAT, 0)
+    gpio_lines.set_value(DAT, Value.INACTIVE)
     for x in range(36):
-        GPIO.output(CLK, 1)
+        gpio_lines.set_value(CLK, Value.ACTIVE)
         time.sleep(sleep_time)
-        GPIO.output(CLK, 0)
+        gpio_lines.set_value(CLK, Value.INACTIVE)
         time.sleep(sleep_time)
 
 
 def _sof():
-    GPIO.output(DAT, 0)
+    gpio_lines.set_value(DAT, Value.INACTIVE)
     for x in range(32):
-        GPIO.output(CLK, 1)
+        gpio_lines.set_value(CLK, Value.ACTIVE)
         time.sleep(sleep_time)
-        GPIO.output(CLK, 0)
+        gpio_lines.set_value(CLK, Value.INACTIVE)
         time.sleep(sleep_time)
 
 
 def show():
     """Output the buffer to Blinkt!."""
-    global _gpio_setup
+    global gpio_lines
 
-    if not _gpio_setup:
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        GPIO.setup(DAT, GPIO.OUT)
-        GPIO.setup(CLK, GPIO.OUT)
-        atexit.register(_exit)
-        _gpio_setup = True
+    if not gpio_lines:
+        gpio_lines = gpiod.request_lines(
+            GPIOCHIP,
+            consumer="blinkt",
+            config={
+                DAT: gpiod.LineSettings(direction=Direction.OUTPUT, output_value=Value.INACTIVE),
+                CLK: gpiod.LineSettings(direction=Direction.OUTPUT, output_value=Value.INACTIVE)
+            }
+        )
 
     _sof()
 
