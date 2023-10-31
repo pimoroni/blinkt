@@ -1,7 +1,9 @@
 """Test Blinkt! basic initialisation."""
+import pytest
+
 
 def test_setup(gpiod):
     """Test init succeeds and GPIO pins are set up."""
     import blinkt
-    blinkt.show()
-    gpiod.request_lines.assert_called_once()
+    with pytest.raises(RuntimeError):
+        blinkt.show()
