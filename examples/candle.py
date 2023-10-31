@@ -7,7 +7,7 @@ from sys import exit
 try:
     import numpy as np
 except ImportError:
-    exit('This script requires the numpy module\nInstall with: sudo apt install python3-numpy')
+    exit('This script requires the numpy module\nInstall with: python3 -m pip install numpy')
 
 import blinkt
 
