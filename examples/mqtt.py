@@ -45,7 +45,7 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
 
     data = msg.payload
-    if type(data) is bytes:
+    if isinstance(data, bytes):
         data = data.decode('utf-8')
     data = data.split(',')
     command = data.pop(0)
