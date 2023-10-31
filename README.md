@@ -63,3 +63,4 @@ make pytest
 * Java library by @HoldYourWaffle - https://github.com/HoldYourWaffle/blinkt4j
 * Node.js library by @irrelon - https://github.com/irrelon/node-blinkt
 * Rust library by @golemparts - https://github.com/golemparts/blinkt
+* Web-based Prequel simulator by Hugo Simoes - https://prequel-lang.org/examples/blinkp/
