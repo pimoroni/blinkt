@@ -14,7 +14,7 @@ NUM_PIXELS = 8
 BRIGHTNESS = 7
 RPI_GPIO_LABELS = [
     "pinctrl-rp1", # Pi 5 - Bookworm, /dev/gpiochip4 maybe
-    "pinctrl-bcm2711" # Pi 4 - Bullseye, /dev/gpiochip0 maybe
+    "pinctrl-bcm2711" # Pi 4, Pi 400 - Bullseye and Ubuntu, /dev/gpiochip0 maybe
 ]
 
 pixels = [[0, 0, 0, BRIGHTNESS]] * NUM_PIXELS
@@ -33,6 +33,11 @@ def _exit():
 
 
 def check_pins_available(chip, pins):
+    """Check if a list of pins are in use on a given gpiochip device.
+
+    Raise a RuntimeError with a friendly list of in-use pins and their consumer if
+    any are in used.
+    """
     err = []
     for (label, pin) in pins.items():
         pin_info = chip.get_line_info(pin)
@@ -43,15 +48,28 @@ def check_pins_available(chip, pins):
         raise RuntimeError("\n".join(err))
 
 
-def get_gpiochip(pins=None):
+def find_gpiochip(labels, pins=None):
+    """Try to find a /dev/gpiochipN device matching one of a set of labels.
+
+    Raise a RuntimeError with a friendly error digest if one is not found.
+    """
+    err = []
     for path in glob.glob("/dev/gpiochip*"):
         if gpiod.is_gpiochip_device(path):
-            if gpiod.Chip(path).get_info().label in RPI_GPIO_LABELS:
+            try:
+                label = gpiod.Chip(path).get_info().label
+            except PermissionError:
+                err.append(f" ⚠️  {path}: Permission error!")
+                continue
+            if label in labels:
                 chip = gpiod.Chip(path)
                 if pins is not None:
                     check_pins_available(chip, pins)
                 return chip
-    raise RuntimeError("Compatible /dev/gpiochipN device not found!")
+            else:
+                err.append(f" ⚠️  {path}: This is not the GPIO we're looking for! ({label})") 
+    err.insert(0, "Compatible /dev/gpiochipN device not found!")
+    raise RuntimeError("\n".join(err))
 
 
 def set_brightness(brightness):
@@ -108,7 +126,7 @@ def show():
     global gpio_lines
 
     if not gpio_lines:
-        chip = get_gpiochip({"Data": DAT, "Clock": CLK})
+        chip = find_gpiochip(RPI_GPIO_LABELS, {"Data": DAT, "Clock": CLK})
         gpio_lines = chip.request_lines(
             consumer="blinkt",
             config={
