@@ -42,7 +42,7 @@ def check_pins_available(chip, pins):
     for (label, pin) in pins.items():
         pin_info = chip.get_line_info(pin)
         if pin_info.used:
-            err.append(f" ⚠️  {label} (GPIO {DAT}) is currently claimed by {pin_info.consumer}")
+            err.append(f" ⚠️  {label} (GPIO {pin}) is currently claimed by {pin_info.consumer}")
     if len(err):
         err.insert(0, "some pins we need are in use:")
         raise RuntimeError("\n".join(err))
