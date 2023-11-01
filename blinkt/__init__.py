@@ -11,20 +11,23 @@ import gpiodevice
 
 __version__ = '0.1.2'
 
-DAT = 23
-CLK = 24
+OUTL = gpiod.LineSettings(direction=Direction.OUTPUT, output_value=Value.INACTIVE)
+PLATFORMS = {
+        "Radxa ROCK 5B": {"dat": ("PIN_16", OUTL), "clk": ("PIN_18", OUTL)},
+        "Raspberry Pi 5": {"dat": ("PIN23", OUTL), "clk": ("PIN24", OUTL)},
+        "Raspberry Pi 4": {"dat": ("GPIO23", OUTL), "clk": ("GPIO24", OUTL)}
+}
 NUM_PIXELS = 8
 BRIGHTNESS = 7
-RPI_GPIO_LABELS = [
-    "pinctrl-rp1", # Pi 5 - Bookworm, /dev/gpiochip4 maybe
-    "pinctrl-bcm2711" # Pi 4, Pi 400 - Bullseye and Ubuntu, /dev/gpiochip0 maybe
-]
 
 pixels = [[0, 0, 0, BRIGHTNESS]] * NUM_PIXELS
 
 sleep_time = 0
 
-gpio_lines = None
+clk_lines = None
+clk_line = None
+dat_lines = None
+dat_line = None
 _clear_on_exit = True
 
 gpiodevice.friendly_errors = True
@@ -34,7 +37,8 @@ def _exit():
     if _clear_on_exit:
         clear()
         show()
-    gpio_lines.release()
+    dat_lines.release()
+    clk_lines.release()
 
 
 def set_brightness(brightness):
@@ -58,48 +62,61 @@ def clear():
 
 def _write_byte(byte):
     for x in range(8):
-        gpio_lines.set_value(DAT, Value.ACTIVE if (byte & 0b10000000) else Value.INACTIVE)
-        gpio_lines.set_value(CLK, Value.ACTIVE)
+        dat_lines.set_value(dat_line, Value.ACTIVE if (byte & 0b10000000) else Value.INACTIVE)
+        clk_lines.set_value(clk_line, Value.ACTIVE)
         time.sleep(sleep_time)
         byte <<= 1
-        gpio_lines.set_value(CLK, Value.INACTIVE)
+        clk_lines.set_value(clk_line, Value.INACTIVE)
         time.sleep(sleep_time)
 
 
 # Emit exactly enough clock pulses to latch the small dark die APA102s which are weird
 # for some reason it takes 36 clocks, the other IC takes just 4 (number of pixels/2)
 def _eof():
-    gpio_lines.set_value(DAT, Value.INACTIVE)
+    dat_lines.set_value(dat_line, Value.INACTIVE)
     for x in range(36):
-        gpio_lines.set_value(CLK, Value.ACTIVE)
+        clk_lines.set_value(clk_line, Value.ACTIVE)
         time.sleep(sleep_time)
-        gpio_lines.set_value(CLK, Value.INACTIVE)
+        clk_lines.set_value(clk_line, Value.INACTIVE)
         time.sleep(sleep_time)
 
 
 def _sof():
-    gpio_lines.set_value(DAT, Value.INACTIVE)
+    dat_lines.set_value(dat_line, Value.INACTIVE)
     for x in range(32):
-        gpio_lines.set_value(CLK, Value.ACTIVE)
+        clk_lines.set_value(clk_line, Value.ACTIVE)
         time.sleep(sleep_time)
-        gpio_lines.set_value(CLK, Value.INACTIVE)
+        clk_lines.set_value(clk_line, Value.INACTIVE)
         time.sleep(sleep_time)
+
+
+def set_pins(pin_dat, pin_clk):
+    global clk_lines, dat_lines, dat_line, clk_line
+
+    chip_dat = gpiodevice.find_chip_by_pins(pin_dat)
+    dat_line = chip_dat.line_offset_from_id(pin_dat)
+    dat_lines = chip_dat.request_lines(consumer="blinkt", config={dat_line: OUTL})
+
+    chip_clk = gpiodevice.find_chip_by_pins(pin_clk)
+    clk_line = chip_clk.line_offset_from_id(pin_clk)
+    clk_lines = chip_clk.request_lines(consumer="blinkt", config={clk_line: OUTL})
+
+
+def default_pins():
+    global clk_lines, dat_lines, dat_line, clk_line
+
+    dat, clk = gpiodevice.get_pins_for_platform(PLATFORMS)
+    dat_lines, dat_line = dat
+    clk_lines, clk_line = clk
 
 
 def show():
     """Output the buffer to Blinkt!."""
-    global gpio_lines
+    if not clk_line:
+        default_pins()
 
-    if not gpio_lines:
-        chip = gpiodevice.find_chip_by_label(RPI_GPIO_LABELS, {"Data": DAT, "Clock": CLK})
-        gpio_lines = chip.request_lines(
-            consumer="blinkt",
-            config={
-                DAT: gpiod.LineSettings(direction=Direction.OUTPUT, output_value=Value.INACTIVE),
-                CLK: gpiod.LineSettings(direction=Direction.OUTPUT, output_value=Value.INACTIVE)
-            }
-        )
-        atexit.register(_exit)
+    atexit.unregister(_exit)
+    atexit.register(_exit)
 
     _sof()
 
