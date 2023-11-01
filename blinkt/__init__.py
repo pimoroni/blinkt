@@ -14,7 +14,7 @@ __version__ = '0.1.2'
 OUTL = gpiod.LineSettings(direction=Direction.OUTPUT, output_value=Value.INACTIVE)
 PLATFORMS = {
         "Radxa ROCK 5B": {"dat": ("PIN_16", OUTL), "clk": ("PIN_18", OUTL)},
-        "Raspberry Pi 5": {"dat": ("PIN23", OUTL), "clk": ("PIN24", OUTL)},
+        "Raspberry Pi 5": {"dat": ("PIN16", OUTL), "clk": ("PIN18", OUTL)},
         "Raspberry Pi 4": {"dat": ("GPIO23", OUTL), "clk": ("GPIO24", OUTL)}
 }
 NUM_PIXELS = 8
