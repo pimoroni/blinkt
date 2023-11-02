@@ -37,8 +37,6 @@ def _exit():
     if _clear_on_exit:
         clear()
         show()
-    dat_lines.release()
-    clk_lines.release()
 
 
 def set_brightness(brightness):
