@@ -1,6 +1,5 @@
 """Library for the Pimoroni Blinkt! - 8-pixel APA102 LED display."""
 import atexit
-import glob
 import time
 
 import gpiod
