@@ -91,13 +91,25 @@ def _sof():
 def set_pins(pin_dat, pin_clk):
     global clk_lines, dat_lines, dat_line, clk_line
 
+    try:
+        chip = gpiodevice.find_chip_by_pins((pin_dat, pin_clk))
+        dat_line = chip.line_offset_from_id(pin_dat)
+        clk_line = chip.line_offset_from_id(pin_clk)
+        dat_lines = clk_lines = chip.request_lines(consumer="blinkt", config={
+            dat_line: OUTL,
+            clk_line: OUTL
+        })
+        return
+    except SystemExit:
+        pass
+
     chip_dat = gpiodevice.find_chip_by_pins(pin_dat)
     dat_line = chip_dat.line_offset_from_id(pin_dat)
-    dat_lines = chip_dat.request_lines(consumer="blinkt", config={dat_line: OUTL})
+    dat_lines = chip_dat.request_lines(consumer="blinkt-dat", config={dat_line: OUTL})
 
     chip_clk = gpiodevice.find_chip_by_pins(pin_clk)
     clk_line = chip_clk.line_offset_from_id(pin_clk)
-    clk_lines = chip_clk.request_lines(consumer="blinkt", config={clk_line: OUTL})
+    clk_lines = chip_clk.request_lines(consumer="blinkt-clk", config={clk_line: OUTL})
 
 
 def default_pins():
