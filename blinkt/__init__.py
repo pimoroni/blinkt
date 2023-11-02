@@ -4,10 +4,8 @@ import glob
 import time
 
 import gpiod
-from gpiod.line import Direction, Value
-
 import gpiodevice
-
+from gpiod.line import Direction, Value
 
 __version__ = '0.1.2'
 
