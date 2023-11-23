@@ -2,12 +2,11 @@
 
 import colorsys
 import time
-from sys import exit
 
 try:
     import numpy as np
 except ImportError:
-    exit('This script requires the numpy module\nInstall with: sudo pip install numpy')
+    raise ImportError("This script requires the numpy module\nInstall with: python3 -m pip install numpy")
 
 import blinkt
 
@@ -19,7 +18,7 @@ def make_gaussian(fwhm):
     y = x[:, np.newaxis]
     x0, y0 = 3.5, 3.5
     fwhm = fwhm
-    gauss = np.exp(-4 * np.log(2) * ((x - x0) ** 2 + (y - y0) ** 2) / fwhm ** 2)
+    gauss = np.exp(-4 * np.log(2) * ((x - x0) ** 2 + (y - y0) ** 2) / fwhm**2)
     return gauss
 
 

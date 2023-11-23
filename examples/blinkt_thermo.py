@@ -3,40 +3,35 @@
 # Data from OpenWeatherMap
 # show_graph function adapted from cpu_temp.py
 
-from sys import exit
 from time import sleep
 
 try:
     import requests
 except ImportError:
-    exit('This script requires the requests module\nInstall with: sudo pip install requests')
+    raise ImportError("This script requires the requests module\nInstall with: python3 -m pip install requests")
 
 import blinkt
 
 # Grab your API key here: http://openweathermap.org
 # List of city ID city.list.json.gz can be downloaded here http://bulk.openweathermap.org/sample/
-API_KEY = ''
-CITY_ID = ''
+API_KEY = ""
+CITY_ID = ""
 
-url = 'http://api.openweathermap.org/data/2.5/weather'
+url = "http://api.openweathermap.org/data/2.5/weather"
 
 temp = 0
 
 
 def update_weather():
     global temp
-    payload = {
-        'id': CITY_ID,
-        'units': 'metric',
-        'appid': API_KEY
-    }
+    payload = {"id": CITY_ID, "units": "metric", "appid": API_KEY}
     try:
         r = requests.get(url=url, params=payload)
-        temp = r.json().get('main').get('temp')
-        print('Temperture = ' + str(temp) + ' C')
+        temp = r.json().get("main").get("temp")
+        print("Temperture = " + str(temp) + " C")
 
     except requests.exceptions.ConnectionError:
-        print('Connection Error')
+        print("Connection Error")
 
 
 def show_graph(v, r, g, b):
@@ -54,7 +49,7 @@ def show_graph(v, r, g, b):
 def draw_thermo(temp):
     v = temp
     v /= 40
-    v += (1 / 8)
+    v += 1 / 8
     show_graph(v, 255, 0, 0)
 
 

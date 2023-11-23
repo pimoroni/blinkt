@@ -4,7 +4,7 @@ from time import localtime, sleep
 
 import blinkt
 
-print('Hour = Red, Minute = Green, Second = Blue')
+print("Hour = Red, Minute = Green, Second = Blue")
 
 blinkt.set_clear_on_exit()
 
@@ -16,7 +16,7 @@ while True:
     t = localtime()
     h, m, s = t.tm_hour, t.tm_min, t.tm_sec
 
-    print('{h:2d}:{m:02d}:{s:02d}'.format(h=h, m=m, s=s))
+    print(f"{h:2d}:{m:02d}:{s:02d}")
 
     blinkt.clear()
 

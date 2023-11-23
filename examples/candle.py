@@ -2,12 +2,11 @@
 
 import colorsys
 import time
-from sys import exit
 
 try:
     import numpy as np
 except ImportError:
-    exit('This script requires the numpy module\nInstall with: python3 -m pip install numpy')
+    raise ImportError("This script requires the numpy module\nInstall with: python3 -m pip install numpy")
 
 import blinkt
 

@@ -14,7 +14,7 @@ blinkt.set_clear_on_exit()
 start_time = time.time()
 
 while True:
-    delta = (time.time() - start_time)
+    delta = time.time() - start_time
 
     # Offset is a sine wave derived from the time delta
     # we use this to animate both the hue and larson scan
@@ -34,13 +34,13 @@ while True:
         sat = 1.0
 
         val = max_val - (abs(offset - x) * FALLOFF)
-        val /= float(max_val)   # Convert to 0.0 to 1.0
-        val = max(val, 0.0)     # Ditch negative values
+        val /= float(max_val)  # Convert to 0.0 to 1.0
+        val = max(val, 0.0)  # Ditch negative values
 
-        xhue = hue              # Grab hue for this pixel
+        xhue = hue  # Grab hue for this pixel
         xhue += (1 - val) * 10  # Use the val offset to give a slight colour trail variation
-        xhue %= 360             # Clamp to 0-359
-        xhue /= 360.0           # Convert to 0.0 to 1.0
+        xhue %= 360  # Clamp to 0-359
+        xhue /= 360.0  # Convert to 0.0 to 1.0
 
         r, g, b = [int(c * 255) for c in colorsys.hsv_to_rgb(xhue, sat, val)]
 

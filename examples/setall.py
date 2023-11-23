@@ -6,7 +6,7 @@ from sys import argv
 import blinkt
 
 if len(argv) < 4 or len(argv) > 5:
-    sys.stderr.write("Syntax: {0} <red> <green> <blue> [brightness]\n".format(argv[0]))
+    sys.stderr.write(f"Syntax: {argv[0]} <red> <green> <blue> [brightness]\n")
     exit(1)
 
 red = int(argv[1])

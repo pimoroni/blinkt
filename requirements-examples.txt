@@ -1,0 +1,8 @@
+requests
+paho-mqtt
+psutil
+numpy
+envirophat
+drumhat
+pygame
+numpy

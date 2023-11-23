@@ -31,7 +31,7 @@ anvil.server.connect(app.uplink_key)
 
 @anvil.server.callable
 def set_color(color_string):
-    print("Setting LEDs to {}".format(color_string))
+    print(f"Setting LEDs to {color_string}")
     c = Color(color_string)
     blinkt.set_all(c.red * 255, c.green * 255, c.blue * 255, 1.0)
     blinkt.show()
@@ -45,7 +45,7 @@ def clear():
 
 
 # Display the URL where you can control the Blinkt LEDS
-print("Control your Blinkt LEDs at {}".format(app.origin))
+print(f"Control your Blinkt LEDs at {app.origin}")
 print("Press Ctrl-C to exit")
 
 # Keep the script running until the user exits with Ctrl-C

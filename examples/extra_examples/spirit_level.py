@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
 import time
-from sys import exit
 
 try:
     from envirophat import motion
 except ImportError:
-    exit('This script requires the envirophat module\nInstall with: sudo pip install envirophat')
+    raise ImportError("This script requires the envirophat module\nInstall with: python3 -m pip install envirophat")
 
 import blinkt
 

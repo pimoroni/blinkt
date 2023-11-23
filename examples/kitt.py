@@ -4,20 +4,20 @@ import time  # so we can wait between frames
 
 import blinkt  # so we can talk to our blinkt lights!
 
-BRIGHTNESS = 0.2     # range is 0.0 to 1.0
-MAX_COLOUR = 255     # range is 0 to 255
-DECAY_FACTOR = 1.5   # how quickly should MAX_COLOUR fade? (1.5 works well)
-TIME_SLEEP = 0.04    # seconds (0.04 works well)
+BRIGHTNESS = 0.2  # range is 0.0 to 1.0
+MAX_COLOUR = 255  # range is 0 to 255
+DECAY_FACTOR = 1.5  # how quickly should MAX_COLOUR fade? (1.5 works well)
+TIME_SLEEP = 0.04  # seconds (0.04 works well)
 
 PIXELS = blinkt.NUM_PIXELS  # usually 8, can use fewer if you like!
 
-blinkt.clear         # make all pixels blank / black
+blinkt.clear  # make all pixels blank / black
 blinkt.set_brightness(BRIGHTNESS)
 
 brightpixel = -1
 direction = 1
 
-print('Hello Michael.\nHow are you today?')
+print("Hello Michael.\nHow are you today?")
 
 while True:
     # decay all pixels
@@ -31,12 +31,12 @@ while True:
 
     if brightpixel >= PIXELS - 1:
         brightpixel = PIXELS - 1
-        direction = - abs(direction)
+        direction = -abs(direction)
     if brightpixel <= 0:
         brightpixel = 0
         direction = abs(direction)
 
     blinkt.set_pixel(brightpixel, MAX_COLOUR, 0, 0)
 
-    blinkt.show()           # draw the lights!
+    blinkt.show()  # draw the lights!
     time.sleep(TIME_SLEEP)  # wait a bit before working on next frame

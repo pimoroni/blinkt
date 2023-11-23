@@ -7,7 +7,7 @@ from sys import exit
 try:
     import paho.mqtt.client as mqtt
 except ImportError:
-    raise ImportError("This example requires the paho-mqtt module\nInstall with: sudo pip install paho-mqtt")
+    raise ImportError("This example requires the paho-mqtt module\nInstall with: python3 -m pip install paho-mqtt")
 
 import blinkt
 
@@ -19,12 +19,12 @@ MQTT_TOPIC = "pimoroni/blinkt"
 MQTT_USER = None
 MQTT_PASS = None
 
-description = """\
+description = f"""\
 MQTT Blinkt! Control
 
-This example uses MQTT messages from {server} on port {port} to control Blinkt!
+This example uses MQTT messages from {MQTT_SERVER} on port {MQTT_PORT} to control Blinkt!
 
-It will monitor the {topic} topic by default, and understands the following messages:
+It will monitor the {MQTT_TOPIC} topic by default, and understands the following messages:
 
 rgb,<pixel>,<r>,<g>,<b> - Set a single pixel to an RGB colour. Example: rgb,1,255,0,255
 clr - Clear Blinkt!
@@ -32,47 +32,35 @@ bri,<val> - Set global brightness (for val in range 0.0-1.0)
 
 You can use the online MQTT tester at http://www.hivemq.com/demos/websocket-client/ to send messages.
 
-Use {server} as the host, and port 80 (Eclipse's websocket port). Set the topic to topic: {topic}
-""".format(
-    server=MQTT_SERVER,
-    port=MQTT_PORT,
-    topic=MQTT_TOPIC
-)
+Use {MQTT_SERVER} as the host, and port 80 (Eclipse's websocket port). Set the topic to topic: {MQTT_TOPIC}
+"""
+
 parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawDescriptionHelpFormatter)
-parser.add_argument('-H', '--host', default=MQTT_SERVER,
-                    help='MQTT broker to connect to')
-parser.add_argument('-P', '--port', default=MQTT_PORT, type=int,
-                    help='port on MQTT broker to connect to')
-parser.add_argument('-T', '--topic', action='append',
-                    help='MQTT topic to subscribe to; can be repeated for multiple topics')
-parser.add_argument('-u', '--user',
-                    help='MQTT broker user name')
-parser.add_argument('-p', '--pass', dest='pw',
-                    help='MQTT broker password')
-parser.add_argument('-q', '--quiet', default=False, action='store_true',
-                    help='Minimal output (eg for running as a daemon)')
-parser.add_argument('-g', '--green-hack', default=False, action='store_true',
-                    help='Apply hack to green channel to improve colour saturation')
-parser.add_argument('--timeout', default='0',
-                    help='Pixel timeout(s).  Pixel will blank if last update older than X seconds. May be a single number or comma-separated list. Use 0 for no timeout')
-parser.add_argument('-D', '--daemon', metavar='PIDFILE',
-                    help='Run as a daemon (implies -q)')
+parser.add_argument("-H", "--host", default=MQTT_SERVER, help="MQTT broker to connect to")
+parser.add_argument("-P", "--port", default=MQTT_PORT, type=int, help="port on MQTT broker to connect to")
+parser.add_argument("-T", "--topic", action="append", help="MQTT topic to subscribe to; can be repeated for multiple topics")
+parser.add_argument("-u", "--user", help="MQTT broker user name")
+parser.add_argument("-p", "--pass", dest="pw", help="MQTT broker password")
+parser.add_argument("-q", "--quiet", default=False, action="store_true", help="Minimal output (eg for running as a daemon)")
+parser.add_argument("-g", "--green-hack", default=False, action="store_true", help="Apply hack to green channel to improve colour saturation")
+parser.add_argument("--timeout", default="0", help="Pixel timeout(s).  Pixel will blank if last update older than X seconds. May be a single number or comma-separated list. Use 0 for no timeout")
+parser.add_argument("-D", "--daemon", metavar="PIDFILE", help="Run as a daemon (implies -q)")
 
 args = parser.parse_args()
 
 # Get timeout list into expected form
-args.timeout = args.timeout.split(',')
+args.timeout = args.timeout.split(",")
 
 if len(args.timeout) == 1:
     args.timeout = args.timeout * blinkt.NUM_PIXELS
 elif len(args.timeout) != blinkt.NUM_PIXELS:
-    print("--timeout list must be {} elements long".format(blinkt.NUM_PIXELS))
+    print(f"--timeout list must be {blinkt.NUM_PIXELS} elements long")
     exit(1)
 
 try:
     args.timeout = [int(x) for x in args.timeout]
 except ValueError as e:
-    print("Bad timeout value: {}".format(e))
+    print(f"Bad timeout value: {e}")
     exit(1)
 
 args.timeout = [x and x or 0 for x in args.timeout]
@@ -80,14 +68,17 @@ args.min_timeout = min(args.timeout)
 
 if args.daemon:
     import signal
+
     try:
         import daemon
     except ImportError:
-        raise ImportError("--daemon requires the daemon module.  Install with: sudo pip install python-daemon")
+        print("--daemon requires the daemon module.  Install with: python3 -m pip install python-daemon")
+        exit(1)
     try:
         import lockfile.pidlockfile
     except ImportError:
-        raise ImportError("--daemon requires the lockfile module.  Install with: sudo pip install lockfile")
+        print("--daemon requires the lockfile module.  Install with: python3 -m pip install lockfile")
+        exit(1)
 
 if not args.topic:
     args.topic = [MQTT_TOPIC]
@@ -117,7 +108,7 @@ class PixelClient(mqtt.Client):
         try:
             bri = float(bri)
         except ValueError:
-            print("Malformed command brightness, expected float, got: {}".format(str(bri)))
+            print(f"Malformed command brightness, expected float, got: {bri}")
             return
         blinkt.set_brightness(bri)
         blinkt.show()
@@ -129,10 +120,10 @@ class PixelClient(mqtt.Client):
             else:
                 pixel = int(pixel)
                 if pixel > 7:
-                    print("Pixel out of range: {}".format(str(pixel)))
+                    print(f"Pixel out of range: {pixel}")
                     return
 
-            r, g, b = [int(x) & 0xff for x in data]
+            r, g, b = [int(x) & 0xFF for x in data]
             if self.args.green_hack:
                 # Green is about twice the luminosity for a given value
                 # than red or blue, so apply a hackish linear compensation
@@ -147,10 +138,10 @@ class PixelClient(mqtt.Client):
                     b = b + 1
 
             if not self.args.quiet:
-                print('rgb', pixel, r, g, b)
+                print("rgb", pixel, r, g, b)
 
         except ValueError:
-            print("Malformed RGB command: {} {}".format(str(pixel), str(data)))
+            print(f"Malformed RGB command: {pixel} {data}")
             return
 
         if pixel is None:
@@ -165,20 +156,15 @@ class PixelClient(mqtt.Client):
 
     def on_connect(self, client, userdata, flags, rc):
         if not self.args.quiet:
-            print("Connected to {s}:{p} listening for topics {t} with result code {r}.\nSee {c} --help for options.".format(
-                s=self.args.host,
-                p=self.args.port,
-                t=', '.join(self.args.topic),
-                r=rc,
-                c=parser.prog
-            ))
+            print(f"Connected to {self.args.host}:{self.args.port} with result code {rc}.")
+            print(f"listening for topics {', '.join(self.args.topic)}.")
+            print(f"See {parser.prog} --help for options.")
 
         for topic in self.args.topic:
             client.subscribe(topic)
 
     def on_message(self, client, userdata, msg):
-
-        data = msg.payload.decode('utf-8').strip().split(',')
+        data = msg.payload.decode("utf-8").strip().split(",")
         command = data.pop(0)
         print(command, data)
 
@@ -218,9 +204,7 @@ if args.daemon:
     daemon.daemon.get_maximum_file_descriptors = lambda: 32
     args.quiet = True
     pidlf = lockfile.pidlockfile.PIDLockFile(args.daemon)
-    with daemon.DaemonContext(
-            pidfile=pidlf,
-            signal_map={signal.SIGTERM: sigterm}):
+    with daemon.DaemonContext(pidfile=pidlf, signal_map={signal.SIGTERM: sigterm}):
         client = PixelClient(args)
         client.loop_forever()
 else:

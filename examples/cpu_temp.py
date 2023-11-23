@@ -9,11 +9,11 @@ blinkt.set_clear_on_exit()
 
 
 def get_cpu_temperature():
-    process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE)
+    process = Popen(["vcgencmd", "measure_temp"], stdout=PIPE)
     output, _error = process.communicate()
     output = output.decode()
 
-    pos_start = output.index('=') + 1
+    pos_start = output.index("=") + 1
     pos_end = output.rindex("'")
 
     temp = float(output[pos_start:pos_end])
