@@ -28,7 +28,7 @@ def update_weather():
     try:
         r = requests.get(url=url, params=payload)
         temp = r.json().get("main").get("temp")
-        print("Temperture = " + str(temp) + " C")
+        print("Temperature = " + str(temp) + " C")
 
     except requests.exceptions.ConnectionError:
         print("Connection Error")
