@@ -6,7 +6,7 @@ import blinkt
 
 
 def usage():
-    print('Usage: {} <r> <g> <b>'.format(sys.argv[0]))
+    print(f"Usage: {sys.argv[0]} <r> <g> <b>")
     sys.exit(1)
 
 
@@ -23,7 +23,7 @@ except ValueError:
 if max(r, g, b) > 255:
     usage()
 
-print('Setting Blinkt to {r},{g},{b}'.format(r=r, g=g, b=b))
+print(f"Setting Blinkt to {r},{g},{b}")
 
 blinkt.set_clear_on_exit(False)
 

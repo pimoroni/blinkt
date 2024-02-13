@@ -2,12 +2,11 @@
 
 import time
 from colorsys import hsv_to_rgb
-from sys import exit
 
 try:
     from envirophat import motion
 except ImportError:
-    exit('This script requires the envirophat module\nInstall with: sudo pip install envirophat')
+    raise ImportError("This script requires the envirophat module\nInstall with: python3 -m pip install envirophat")
 
 import blinkt
 
@@ -42,7 +41,7 @@ while True:
     if len(t) > 0:
         total_time = float(sum(t)) / len(t)
 
-    offset = ((millis() - t_start) / total_time)
+    offset = (millis() - t_start) / total_time
 
     # offset += direction * 10
 

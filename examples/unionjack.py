@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import time
+
 import blinkt
 
 RED__ = (255, 0, 0)

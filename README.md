@@ -1,6 +1,6 @@
 ![Blinkt!](blinkt-logo.png)
 
-[![Build Status](https://travis-ci.com/pimoroni/blinkt.svg?branch=master)](https://travis-ci.com/pimoroni/blinkt)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/pimoroni/blinkt/test.yml?branch=main)](https://github.com/pimoroni/blinkt/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/pimoroni/blinkt/badge.svg?branch=master)](https://coveralls.io/github/pimoroni/blinkt?branch=master)
 [![PyPi Package](https://img.shields.io/pypi/v/blinkt.svg)](https://pypi.python.org/pypi/blinkt)
 [![Python Versions](https://img.shields.io/pypi/pyversions/blinkt.svg)](https://pypi.python.org/pypi/blinkt)
@@ -22,56 +22,32 @@ on your Raspberry Pi desktop, as illustrated below:
 In the new terminal window type the command exactly as it appears below (check for typos) and follow the on-screen instructions:
 
 ```bash
-curl https://get.pimoroni.com/blinkt | bash
+git clone https://github.com/pimoroni/blinkt
+cd blinkt
+./install.sh
 ```
-
-Alternatively, on Raspbian, you can download the `pimoroni-dashboard` and install your product by browsing to the relevant entry:
-
-```bash
-sudo apt-get install pimoroni
-```
-(you will find the Dashboard under 'Accessories' too, in the Pi menu - or just run `pimoroni-dashboard` at the command line)
-
-If you choose to download examples you'll find them in `/home/pi/Pimoroni/blinkt/`.
 
 ### Manual install:
 
-#### Library install for Python 3:
-
-on Raspbian:
-
 ```bash
-sudo apt-get install python3-blinkt
+python3 -m pip install blinkt
 ```
-
-other environments: 
-
-```bash
-sudo pip3 install blinkt
-```
-
-#### Library install for Python 2:
-
-on Raspbian:
-
-```bash
-sudo apt-get install python-blinkt
-```
-
-other environments: 
-
-```bash
-sudo pip2 install blinkt
-```
-
 ### Development:
 
 If you want to contribute, or like living on the edge of your seat by having the latest code, you should clone this repository, `cd` to the library directory, and run:
 
 ```bash
-sudo python3 setup.py install
+make dev-deps
+make build
 ```
-(or `sudo python setup.py install` whichever your primary Python environment may be)
+
+To run QA and tests, use:
+
+```bash
+make check
+make qa
+make pytest
+```
 
 ## Documentation & Support
 
@@ -87,3 +63,4 @@ sudo python3 setup.py install
 * Java library by @HoldYourWaffle - https://github.com/HoldYourWaffle/blinkt4j
 * Node.js library by @irrelon - https://github.com/irrelon/node-blinkt
 * Rust library by @golemparts - https://github.com/golemparts/blinkt
+* Web-based Prequel simulator by Hugo Simoes - https://prequel-lang.org/examples/blinkp/

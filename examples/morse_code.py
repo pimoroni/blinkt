@@ -37,13 +37,13 @@ def space():
 
 
 # 0 is a space, 1 is a dot and 2 is a dash
-MORSE = ' -... .. . -..  - -. .  - . -  -.  -. -   '
+MORSE = " -... .. . -..  - -. .  - . -  -.  -. -   "
 
 while True:
     for m in MORSE:
-        if m == ' ':
+        if m == " ":
             space()
-        elif m == '.':
+        elif m == ".":
             dot()
-        elif m == '-':
+        elif m == "-":
             dash()

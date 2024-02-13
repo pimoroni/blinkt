@@ -1,5 +1,0 @@
-include CHANGELOG.txt
-include LICENSE.txt
-include README.rst
-include setup.py
-include blinkt.py
